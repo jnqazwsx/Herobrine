@@ -1,11 +1,5 @@
 package com.nkrecklow.herobrine;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.Properties;
 import java.util.Random;
 import java.util.logging.Logger;
 import org.bukkit.ChatColor;
@@ -30,49 +24,11 @@ public class Herobrine extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        this.config = new Config(this);
         this.actions = new Actions(this);
-        this.config = new Config();
         this.trackingEntity = false;
         this.isAttacking = false;
         this.listener = new Events(this);
-        String mainDirectory = "plugins/Herobrine";
-        File configFile = new File(mainDirectory + File.separator + "Settings.properties");
-        Properties settingsFile = new Properties();
-        new File(mainDirectory).mkdir();
-        if (!configFile.exists()) {
-            try {
-                configFile.createNewFile();
-                FileOutputStream out = new FileOutputStream(configFile);
-                settingsFile.put("modify-world", Boolean.toString(this.config.modifyWorld));
-                settingsFile.put("send-messages", Boolean.toString(this.config.sendMessages));
-                settingsFile.put("change-environment", Boolean.toString(this.config.changeEnvironment));
-                settingsFile.put("remove-mossystone", Boolean.toString(this.config.removeMossyCobblestone));
-                settingsFile.put("action-chance", Integer.toString(this.config.innerChance));
-                settingsFile.put("fire-trails", Boolean.toString(this.config.fireTrails));
-                settingsFile.store(out, "Configuration file for Herobrine 2.1");
-            } catch (IOException ex) {
-                Herobrine.log.info("[Herobrine] Failed to create the configuration file!");
-            }
-        } else {
-            try {
-                FileInputStream in = new FileInputStream(configFile);
-                try {
-                    settingsFile.load(in);
-                    this.config.modifyWorld = Boolean.valueOf(settingsFile.getProperty("modify-world"));
-                    this.config.sendMessages = Boolean.valueOf(settingsFile.getProperty("send-messages"));
-                    this.config.changeEnvironment = Boolean.valueOf(settingsFile.getProperty("change-environment"));
-                    this.config.removeMossyCobblestone = Boolean.valueOf(settingsFile.getProperty("remove-mossystone"));
-                    this.config.innerChance = Integer.parseInt(settingsFile.getProperty("action-chance"));
-                    this.config.fireTrails = Boolean.valueOf(settingsFile.getProperty("fire-trails"));
-                } catch (IOException ex) {
-                    Herobrine.log.info("[Herobrine] Failed to load the configuration file!");
-                    getServer().getPluginManager().disablePlugin(this);
-                }
-            } catch (FileNotFoundException ex) {
-                Herobrine.log.info("[Herobrine] Failed to load the configuration file!");
-                getServer().getPluginManager().disablePlugin(this);
-            }
-        }
         this.getServer().getPluginManager().registerEvents(this.listener, this);
         getServer().getScheduler().scheduleAsyncRepeatingTask(this, new Runnable() {
             

@@ -1,6 +1,5 @@
 package com.nkrecklow.herobrine;
 
-import com.nkrecklow.herobrine.Herobrine;
 import java.util.Random;
 import org.bukkit.Material;
 import org.bukkit.World;

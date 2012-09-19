@@ -50,9 +50,6 @@ public class Actions {
                 signBlock.setLine(1, "Remember me?");
             } else if (signText == 6) {
                 signBlock.setLine(1, "I'm alive.");
-            } else if (signText == 8) {
-                signBlock.setLine(1, "You don't know");
-                signBlock.setLine(2, "what you did.");
             } else {
                 signBlock.setLine(1, "I'm not");
                 signBlock.setLine(2, "a myth.");
@@ -65,12 +62,12 @@ public class Actions {
     }
 
     public void attackPlayer(Player player) {
-        if (plugin.isDead() && plugin.canSpawn(player.getWorld())) {
+        if (plugin.isDead() && this.plugin.canSpawn(player.getWorld())) {
             World world = player.getWorld();
             world.createExplosion(player.getLocation().add(3.0D, 0.0D, 3.0D), -1.0F);
             this.plugin.trackingEntity = true;
             world.spawnEntity(player.getLocation().add(3.0D, 0.0D, 3.0D), EntityType.ZOMBIE);
-            Zombie zombie = (Zombie) plugin.hbEntity;
+            Zombie zombie = (Zombie) this.plugin.hbEntity;
             zombie.setTarget(player);
             this.plugin.isAttacking = true;
             if (this.plugin.getSettings().sendMessages) {
@@ -80,13 +77,13 @@ public class Actions {
     }
 
     public void appearNear(Player player) {
-        if (this.plugin.isDead() && plugin.canSpawn(player.getWorld())) {
+        if (this.plugin.isDead() && this.plugin.canSpawn(player.getWorld())) {
             World world = player.getWorld();
             Block block = player.getLocation().add(5.0D, 0.0D, 0.0D).getBlock();
             if (block.getType().equals(Material.AIR)) {
-                this.plugin.trackingEntity = Boolean.valueOf(true);
+                this.plugin.trackingEntity = true;
                 world.spawnEntity(player.getLocation().add(5.0D, 0.0D, 0.0D), EntityType.ZOMBIE);
-                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                this.plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                     
                     @Override
                     public void run() {

@@ -16,7 +16,6 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Vector;
 
@@ -74,8 +73,7 @@ public class Herobrine extends JavaPlugin {
                 getServer().getPluginManager().disablePlugin(this);
             }
         }
-        PluginManager pm = getServer().getPluginManager();
-        pm.registerEvents(this.listener, this);
+        this.getServer().getPluginManager().registerEvents(this.listener, this);
         getServer().getScheduler().scheduleAsyncRepeatingTask(this, new Runnable() {
             
             @Override

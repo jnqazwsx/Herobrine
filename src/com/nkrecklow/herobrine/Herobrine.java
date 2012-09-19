@@ -23,14 +23,11 @@ import org.bukkit.util.Vector;
 public class Herobrine extends JavaPlugin {
 
     private static final Logger log = Logger.getLogger("Minecraft");
-    private EntityListener entityListener = new EntityListener(this);
-    private BlockListener blockListener = new BlockListener(this);
-    private PlayerListener playerListener = new PlayerListener(this);
+    private Events listener = new Events(this);
     public Boolean trackingEntity = false, isAttacking = false;
     public Entity hbEntity;
-    private PossibleActions actions = new PossibleActions(this);
-    public int innerChance = 100000;
-    public Boolean removeMossyCobblestone = true, changeEnvironment = true, fireTrails = true, sendMessages = true, modifyWorld = true;
+    private Actions actions = new Actions(this);
+    private Config config = new Config();
 
     @Override
     public void onEnable() {
@@ -42,12 +39,12 @@ public class Herobrine extends JavaPlugin {
             try {
                 configFile.createNewFile();
                 FileOutputStream out = new FileOutputStream(configFile);
-                settingsFile.put("modify-world", Boolean.toString(this.modifyWorld));
-                settingsFile.put("send-messages", Boolean.toString(this.sendMessages));
-                settingsFile.put("change-environment", Boolean.toString(this.changeEnvironment));
-                settingsFile.put("remove-mossystone", Boolean.toString(this.removeMossyCobblestone));
-                settingsFile.put("action-chance", Integer.toString(this.innerChance));
-                settingsFile.put("fire-trails", Boolean.toString(this.fireTrails));
+                settingsFile.put("modify-world", Boolean.toString(this.config.modifyWorld));
+                settingsFile.put("send-messages", Boolean.toString(this.config.sendMessages));
+                settingsFile.put("change-environment", Boolean.toString(this.config.changeEnvironment));
+                settingsFile.put("remove-mossystone", Boolean.toString(this.config.removeMossyCobblestone));
+                settingsFile.put("action-chance", Integer.toString(this.config.innerChance));
+                settingsFile.put("fire-trails", Boolean.toString(this.config.fireTrails));
                 settingsFile.store(out, "Configuration file for Herobrine 2.0");
             } catch (IOException ex) {
                 Herobrine.log.info("[Herobrine] Failed to create the configuration file!");
@@ -57,12 +54,12 @@ public class Herobrine extends JavaPlugin {
                 FileInputStream in = new FileInputStream(configFile);
                 try {
                     settingsFile.load(in);
-                    this.modifyWorld = Boolean.valueOf(settingsFile.getProperty("modify-world"));
-                    this.sendMessages = Boolean.valueOf(settingsFile.getProperty("send-messages"));
-                    this.changeEnvironment = Boolean.valueOf(settingsFile.getProperty("change-environment"));
-                    this.removeMossyCobblestone = Boolean.valueOf(settingsFile.getProperty("remove-mossystone"));
-                    this.innerChance = Integer.parseInt(settingsFile.getProperty("action-chance"));
-                    this.fireTrails = Boolean.valueOf(settingsFile.getProperty("fire-trails"));
+                    this.config.modifyWorld = Boolean.valueOf(settingsFile.getProperty("modify-world"));
+                    this.config.sendMessages = Boolean.valueOf(settingsFile.getProperty("send-messages"));
+                    this.config.changeEnvironment = Boolean.valueOf(settingsFile.getProperty("change-environment"));
+                    this.config.removeMossyCobblestone = Boolean.valueOf(settingsFile.getProperty("remove-mossystone"));
+                    this.config.innerChance = Integer.parseInt(settingsFile.getProperty("action-chance"));
+                    this.config.fireTrails = Boolean.valueOf(settingsFile.getProperty("fire-trails"));
                 } catch (IOException ex) {
                     Herobrine.log.info("[Herobrine] Failed to load the configuration file!");
                     getServer().getPluginManager().disablePlugin(this);
@@ -73,9 +70,7 @@ public class Herobrine extends JavaPlugin {
             }
         }
         PluginManager pm = getServer().getPluginManager();
-        pm.registerEvents(this.blockListener, this);
-        pm.registerEvents(this.entityListener, this);
-        pm.registerEvents(this.playerListener, this);
+        pm.registerEvents(this.listener, this);
         getServer().getScheduler().scheduleAsyncRepeatingTask(this, new Runnable() {
             
             @Override
@@ -85,7 +80,7 @@ public class Herobrine extends JavaPlugin {
                     if (new Random().nextInt(4) == 0) {
                         hbEntity.setVelocity(new Vector(hbEntity.getVelocity().getBlockX(), 1.0D, hbEntity.getVelocity().getZ()));
                     }
-                    if (fireTrails && isAttacking) {
+                    if (config.fireTrails && isAttacking) {
                         Block b = hbEntity.getLocation().getBlock();
                         Block g = b.getLocation().subtract(0.0D, 1.0D, 0.0D).getBlock();
                         if (b.getType().equals(Material.AIR) && !g.getType().equals(Material.AIR)) {
@@ -95,18 +90,6 @@ public class Herobrine extends JavaPlugin {
                 }
             }
         }, 0L, 20L);
-    }
-    
-    public String formatMessage(String msg) {
-        return "<" + ChatColor.RED + "> " + msg;
-    }
-
-    public boolean isDead() {
-        return this.hbEntity == null || this.hbEntity.isDead();
-    }
-
-    public boolean canSpawn(World w) {
-        return w.getAllowMonsters();
     }
 
     @Override
@@ -118,7 +101,7 @@ public class Herobrine extends JavaPlugin {
                         Player p = (Player) sender;
                         Player target = getServer().getPlayer(args[1]);
                         if (p.isOp()) {
-                            if (canSpawn(target.getWorld())) {
+                            if (this.canSpawn(target.getWorld())) {
                                 this.actions.appearNear(target);
                                 p.sendMessage(ChatColor.GREEN + "Herobrine has appeared near " + target.getName() + "!");
                             } else {
@@ -187,5 +170,25 @@ public class Herobrine extends JavaPlugin {
             }
         }
         return true;
+    }
+    
+    public String formatMessage(String msg) {
+        return "<" + ChatColor.RED + "> " + msg;
+    }
+
+    public boolean isDead() {
+        return this.hbEntity == null || this.hbEntity.isDead();
+    }
+
+    public boolean canSpawn(World w) {
+        return w.getAllowMonsters();
+    }
+    
+    public Config getSettings() {
+        return this.config;
+    }
+    
+    public Actions getActions() {
+        return this.actions;
     }
 }

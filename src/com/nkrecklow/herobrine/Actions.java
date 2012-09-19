@@ -11,11 +11,11 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Zombie;
 
-public class PossibleActions {
+public class Actions {
 
     private Herobrine plugin;
 
-    public PossibleActions(Herobrine plugin) {
+    public Actions(Herobrine plugin) {
         this.plugin = plugin;
     }
 
@@ -51,7 +51,7 @@ public class PossibleActions {
             } else if (signText == 6) {
                 signBlock.setLine(1, "I'm alive.");
             } else if (signText == 7) {
-                signBlock.setLine(1, "I told you, ");
+                signBlock.setLine(1, "I told you,");
                 signBlock.setLine(2, p.getName() + ".");
             } else if (signText == 8) {
                 signBlock.setLine(1, "You don't know");
@@ -76,8 +76,8 @@ public class PossibleActions {
             Zombie z = (Zombie) plugin.hbEntity;
             z.setTarget(p);
             this.plugin.isAttacking = true;
-            if (this.plugin.sendMessages) {
-                //
+            if (this.plugin.getSettings().sendMessages) {
+                p.sendMessage(this.plugin.formatMessage("Now you're mine!"));
             }
         }
     }

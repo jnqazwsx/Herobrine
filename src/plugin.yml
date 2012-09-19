@@ -1,0 +1,9 @@
+name: Herobrine
+main: com.nkrecklow.herobrine.Herobrine
+author: steaks4uce
+version: 2.0
+description: Hes watching... and waiting.
+commands:
+  hb:
+    description: Various action commands
+    usage: /hb

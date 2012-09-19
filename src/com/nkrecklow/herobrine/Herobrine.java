@@ -23,14 +23,19 @@ import org.bukkit.util.Vector;
 public class Herobrine extends JavaPlugin {
 
     private static final Logger log = Logger.getLogger("Minecraft");
-    private Events listener = new Events(this);
-    public Boolean trackingEntity = false, isAttacking = false;
+    private Events listener;
+    public Boolean trackingEntity, isAttacking;
     public Entity hbEntity;
-    private Actions actions = new Actions(this);
-    private Config config = new Config();
+    private Actions actions;
+    private Config config;
 
     @Override
     public void onEnable() {
+        this.actions = new Actions(this);
+        this.config = new Config();
+        this.trackingEntity = false;
+        this.isAttacking = false;
+        this.listener = new Events(this);
         String mainDirectory = "plugins/Herobrine";
         File configFile = new File(mainDirectory + File.separator + "Settings.properties");
         Properties settingsFile = new Properties();
@@ -45,7 +50,7 @@ public class Herobrine extends JavaPlugin {
                 settingsFile.put("remove-mossystone", Boolean.toString(this.config.removeMossyCobblestone));
                 settingsFile.put("action-chance", Integer.toString(this.config.innerChance));
                 settingsFile.put("fire-trails", Boolean.toString(this.config.fireTrails));
-                settingsFile.store(out, "Configuration file for Herobrine 2.0");
+                settingsFile.store(out, "Configuration file for Herobrine 2.1");
             } catch (IOException ex) {
                 Herobrine.log.info("[Herobrine] Failed to create the configuration file!");
             }

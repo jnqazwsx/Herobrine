@@ -105,6 +105,10 @@ public class Herobrine extends JavaPlugin {
                     if (args[0].equalsIgnoreCase("appear")) {
                         Player p = (Player) sender;
                         Player target = getServer().getPlayer(args[1]);
+                        if (target == null) {
+                            p.sendMessage(ChatColor.RED + "Invalid player!");
+                            return true;
+                        }
                         if (p.isOp()) {
                             if (this.canSpawn(target.getWorld())) {
                                 this.actions.appearNear(target);
@@ -119,6 +123,10 @@ public class Herobrine extends JavaPlugin {
                     } else if (args[0].equalsIgnoreCase("bury")) {
                         Player p = (Player) sender;
                         Player target = getServer().getPlayer(args[1]);
+                        if (target == null) {
+                            p.sendMessage(ChatColor.RED + "Invalid player!");
+                            return true;
+                        }
                         if (p.isOp()) {
                             if (target.isOnline()) {
                                 this.actions.buryPlayer(target);
@@ -138,6 +146,10 @@ public class Herobrine extends JavaPlugin {
                     } else if (args[0].equalsIgnoreCase("attack")) {
                         Player p = (Player) sender;
                         Player target = getServer().getPlayer(args[1]);
+                        if (target == null) {
+                            p.sendMessage(ChatColor.RED + "Invalid player!");
+                            return true;
+                        }
                         if (p.isOp()) {
                             if (this.canSpawn(target.getWorld())) {
                                 this.actions.attackPlayer(target);

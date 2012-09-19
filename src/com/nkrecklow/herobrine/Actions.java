@@ -19,16 +19,16 @@ public class Actions {
         this.plugin = plugin;
     }
 
-    public void createTorch(Player p) {
-        Block torch = p.getLocation().add(5.0D, 0.0D, 0.0D).getBlock();
+    public void createTorch(Player player) {
+        Block torch = player.getLocation().add(5.0D, 0.0D, 0.0D).getBlock();
         Block groundBlock = torch.getLocation().subtract(0.0D, 1.0D, 0.0D).getBlock();
         if (torch.getTypeId() == 0 && groundBlock.getTypeId() != 0) {
             torch.setType(Material.REDSTONE_TORCH_ON);
         }
     }
 
-    public void createSign(Player p) {
-        Block signPost = p.getLocation().add(5.0D, 0.0D, 0.0D).getBlock();
+    public void createSign(Player player) {
+        Block signPost = player.getLocation().add(5.0D, 0.0D, 0.0D).getBlock();
         Block groundBlock = signPost.getLocation().subtract(0.0D, 1.0D, 0.0D).getBlock();
         if (signPost.getTypeId() == 0 && groundBlock.getTypeId() != 0) {
             signPost.setType(Material.SIGN_POST);
@@ -50,9 +50,6 @@ public class Actions {
                 signBlock.setLine(1, "Remember me?");
             } else if (signText == 6) {
                 signBlock.setLine(1, "I'm alive.");
-            } else if (signText == 7) {
-                signBlock.setLine(1, "I told you,");
-                signBlock.setLine(2, p.getName() + ".");
             } else if (signText == 8) {
                 signBlock.setLine(1, "You don't know");
                 signBlock.setLine(2, "what you did.");
@@ -63,32 +60,32 @@ public class Actions {
         }
     }
 
-    public void playSound(Player p) {
-        p.getWorld().playEffect(p.getLocation(), Effect.CLICK2, 5);
+    public void playSound(Player player) {
+        player.getWorld().playEffect(player.getLocation(), Effect.CLICK2, 5);
     }
 
-    public void attackPlayer(Player p) {
-        if (plugin.isDead() && plugin.canSpawn(p.getWorld())) {
-            World w = p.getWorld();
-            w.createExplosion(p.getLocation().add(3.0D, 0.0D, 3.0D), -1.0F);
+    public void attackPlayer(Player player) {
+        if (plugin.isDead() && plugin.canSpawn(player.getWorld())) {
+            World world = player.getWorld();
+            world.createExplosion(player.getLocation().add(3.0D, 0.0D, 3.0D), -1.0F);
             this.plugin.trackingEntity = true;
-            w.spawnEntity(p.getLocation().add(3.0D, 0.0D, 3.0D), EntityType.ZOMBIE);
-            Zombie z = (Zombie) plugin.hbEntity;
-            z.setTarget(p);
+            world.spawnEntity(player.getLocation().add(3.0D, 0.0D, 3.0D), EntityType.ZOMBIE);
+            Zombie zombie = (Zombie) plugin.hbEntity;
+            zombie.setTarget(player);
             this.plugin.isAttacking = true;
             if (this.plugin.getSettings().sendMessages) {
-                p.sendMessage(this.plugin.formatMessage("Now you're mine!"));
+                player.sendMessage(this.plugin.formatMessage("Now you're mine!"));
             }
         }
     }
 
-    public void appearNear(Player p) {
-        if (this.plugin.isDead() && plugin.canSpawn(p.getWorld())) {
-            World w = p.getWorld();
-            Block b = p.getLocation().add(5.0D, 0.0D, 0.0D).getBlock();
-            if (b.getType().equals(Material.AIR)) {
+    public void appearNear(Player player) {
+        if (this.plugin.isDead() && plugin.canSpawn(player.getWorld())) {
+            World world = player.getWorld();
+            Block block = player.getLocation().add(5.0D, 0.0D, 0.0D).getBlock();
+            if (block.getType().equals(Material.AIR)) {
                 this.plugin.trackingEntity = Boolean.valueOf(true);
-                w.spawnEntity(p.getLocation().add(5.0D, 0.0D, 0.0D), EntityType.ZOMBIE);
+                world.spawnEntity(player.getLocation().add(5.0D, 0.0D, 0.0D), EntityType.ZOMBIE);
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                     
                     @Override
@@ -100,20 +97,20 @@ public class Actions {
         }
     }
 
-    public void buryPlayer(Player p) {
-        final Block b1 = p.getLocation().subtract(0.0D, 1.0D, 0.0D).getBlock();
-        Block b2 = b1.getLocation().subtract(0.0D, 1.0D, 0.0D).getBlock();
-        Block b3 = b2.getLocation().subtract(0.0D, 1.0D, 0.0D).getBlock();
-        if (b1.getTypeId() != 0 && b2.getTypeId() != 0 && b3.getTypeId() != 0) {
-            final Material type = b1.getType();
-            b1.setType(Material.AIR);
-            b2.setType(Material.AIR);
-            b3.setType(Material.AIR);
+    public void buryPlayer(Player player) {
+        final Block top = player.getLocation().subtract(0.0D, 1.0D, 0.0D).getBlock();
+        Block middle = top.getLocation().subtract(0.0D, 1.0D, 0.0D).getBlock();
+        Block bottom = middle.getLocation().subtract(0.0D, 1.0D, 0.0D).getBlock();
+        if (top.getTypeId() != 0 && middle.getTypeId() != 0 && bottom.getTypeId() != 0) {
+            final Material type = top.getType();
+            top.setType(Material.AIR);
+            middle.setType(Material.AIR);
+            bottom.setType(Material.AIR);
             this.plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                 
                 @Override
                 public void run() {
-                    b1.setType(type);
+                    top.setType(type);
                 }
             }, 20L);
         }

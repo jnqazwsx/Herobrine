@@ -26,6 +26,7 @@ public class Actions {
         Block groundBlock = torch.getLocation().subtract(0.0D, 1.0D, 0.0D).getBlock();
         if (torch.getType().equals(Material.AIR) && !groundBlock.getType().equals(Material.AIR)) {
             torch.setType(Material.REDSTONE_TORCH_ON);
+            this.plugin.log("Placed a torch near " + player.getName() + ".");
         }
     }
 
@@ -39,8 +40,7 @@ public class Actions {
             signPost.setType(Material.SIGN_POST);
             BlockState signState = signPost.getState();
             Sign signBlock = (Sign) signState;
-            Random signOptions = new Random();
-            int signText = signOptions.nextInt(9);
+            int signText = new Random().nextInt(7);
             if (signText == 1) {
                 signBlock.setLine(1, "I'm watching.");
             } else if (signText == 2) {
@@ -59,6 +59,7 @@ public class Actions {
                 signBlock.setLine(1, "I'm not");
                 signBlock.setLine(2, "a myth.");
             }
+            this.plugin.log("Placed a sign by " + player.getName() + ".");
         }
     }
 
@@ -78,8 +79,15 @@ public class Actions {
             this.plugin.getController().setTarget(player);
             this.plugin.getController().setAttacking(true);
             if (this.plugin.getSettings().canSendMessages()) {
-                player.sendMessage(this.plugin.getSettings().getMessage());
+                player.sendMessage(this.plugin.formatMessage(this.plugin.getSettings().getMessage()));
             }
+            this.plugin.log("Attacked " + player.getName() + ".");
+        }
+    }
+    
+    public void sendMessage(Player player) {
+        if (this.plugin.getController().canSpawn(player.getWorld())) {
+            player.sendMessage(this.plugin.formatMessage(this.plugin.getSettings().getMessage()));
         }
     }
 
@@ -97,6 +105,7 @@ public class Actions {
                         plugin.getController().getEntity().remove();
                     }
                 }, 60L);
+                this.plugin.log("Appeared near " + player.getName() + ".");
             }
         }
     }
@@ -120,6 +129,7 @@ public class Actions {
                     top.setType(type);
                 }
             }, 40L);
+            this.plugin.log("Buried " + player.getName() + ".");
         }
     }
 }

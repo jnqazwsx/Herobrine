@@ -7,7 +7,6 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.Zombie;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockIgniteEvent;
@@ -30,7 +29,7 @@ public class Events implements Listener {
     public void onEntityDamage(EntityDamageEvent event) {
         Entity entity = event.getEntity();
         if (entity.equals(this.plugin.getController().getEntity())) {
-            if (event.getCause().equals(EntityDamageEvent.DamageCause.ENTITY_ATTACK)) {
+            if (!event.getCause().equals(EntityDamageEvent.DamageCause.ENTITY_ATTACK)) {
                 event.setCancelled(true);
                 entity.setFireTicks(0);
             } else {
@@ -55,7 +54,7 @@ public class Events implements Listener {
             world.dropItemNaturally(entity.getLocation(), new ItemStack(Material.GOLDEN_APPLE, 1));
             world.createExplosion(entity.getLocation(), -1.0F);
             this.plugin.getController().setAttacking(false);
-            event.setDroppedExp(50);
+            event.setDroppedExp(0);
             event.getDrops().clear();
             if (this.plugin.getSettings().canSendMessages()) {
                 if (entity.getLastDamageCause() instanceof EntityDamageByEntityEvent) {
@@ -107,11 +106,11 @@ public class Events implements Listener {
         } else if (eventChoice == 3) {
             this.plugin.getActions().playSound(player);
         } else if (eventChoice == 4) {
-            this.plugin.getActions().attackPlayer(player);
-        } else if (eventChoice == 5) {
             this.plugin.getActions().appearNear(player);
-        } else if (eventChoice == 6) {
+        } else if (eventChoice == 5) {
             this.plugin.getActions().buryPlayer(player);
+        } else if (eventChoice == 6) {
+            this.plugin.getActions().sendMessage(player);
         }
     }
 }

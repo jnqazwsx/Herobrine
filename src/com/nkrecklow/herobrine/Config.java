@@ -4,7 +4,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.logging.Logger;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 public class Config {
@@ -29,18 +28,18 @@ public class Config {
     
     public void loadConfig() {
         try {
-            File dir = new File(this.plugin.getDataFolder() + "\\");
-            File file = new File(dir + "config.yml");
+            File dir = this.plugin.getDataFolder();
+            File file = new File(dir + "/config.yml");
             if (!dir.exists()) {
                 if (!dir.mkdir()) {
-                    Logger.getLogger("Minecraft").info("[Herobrine] Failed to create directory!");
+                    this.plugin.log("Failed to create directory!");
                     this.plugin.getServer().getPluginManager().disablePlugin(this.plugin);
                 }
             }
             if (file.exists()) {
                 YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
                 if (!this.build.equals(config.getString("Herobrine.configBuild"))) {
-                    Logger.getLogger("Minecraft").info("[Herobrine] Outdated configuration file!");
+                    this.plugin.log("Outdated configuration file!");
                 }
                 this.actionChance = config.getInt("Herobrine.actionChance");
                 this.sendMessages = config.getBoolean("Herobrine.sendMessages");
@@ -53,14 +52,15 @@ public class Config {
                     this.sendMessages = false;
                 }
                 if (this.allowedWorlds.isEmpty()) {
-                    Logger.getLogger("Minecraft").info("[Herobrine] Must be allowed in atleast one world!");
+                    this.plugin.log("Must be allowed in atleast one world!");
                     this.plugin.getServer().getPluginManager().disablePlugin(this.plugin);
                 }
             } else {
-                this.plugin.saveResource("config.yml", true);
+                this.plugin.saveResource("config.yml", false);
             }
         } catch (Exception ex) {
-            Logger.getLogger("Minecraft").info("[Herobrine] Failed to load configuration file!");
+            this.plugin.log("Failed to load configuration file!");
+            this.plugin.log(ex.getMessage());
             this.plugin.getServer().getPluginManager().disablePlugin(this.plugin);
         }
     }

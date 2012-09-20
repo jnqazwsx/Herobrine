@@ -1,24 +1,19 @@
 package com.nkrecklow.herobrine;
 
-import java.util.Random;
 import java.util.logging.Logger;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.util.Vector;
 
-public class Herobrine extends JavaPlugin {
+public class Plugin extends JavaPlugin {
 
     private static final Logger log = Logger.getLogger("Minecraft");
     private Events listener;
-    public Boolean trackingEntity, isAttacking;
-    public Entity hbEntity;
+    private Controller controller;
     private Actions actions;
     private Config config;
 
@@ -26,24 +21,21 @@ public class Herobrine extends JavaPlugin {
     public void onEnable() {
         this.config = new Config(this);
         this.actions = new Actions(this);
-        this.trackingEntity = false;
-        this.isAttacking = false;
+        this.controller = new Controller(this);
         this.listener = new Events(this);
+        this.config.loadConfig();
         this.getServer().getPluginManager().registerEvents(this.listener, this);
         getServer().getScheduler().scheduleAsyncRepeatingTask(this, new Runnable() {
             
             @Override
             public void run() {
-                if (!isDead()) {
-                    hbEntity.setVelocity(hbEntity.getLocation().getDirection().multiply(0.6D));
-                    if (new Random().nextInt(4) == 0) {
-                        hbEntity.setVelocity(new Vector(hbEntity.getVelocity().getBlockX(), 1.0D, hbEntity.getVelocity().getZ()));
-                    }
-                    if (config.fireTrails && isAttacking) {
-                        Block b = hbEntity.getLocation().getBlock();
-                        Block g = b.getLocation().subtract(0.0D, 1.0D, 0.0D).getBlock();
-                        if (b.getType().equals(Material.AIR) && !g.getType().equals(Material.AIR)) {
-                            b.setType(Material.FIRE);
+                if (!controller.isDead()) {
+                    controller.getEntity().setVelocity(controller.getEntity().getLocation().getDirection().multiply(0.6D));
+                    if (config.canUseFireTrails() && controller.isAttacking()) {
+                        Block location = controller.getEntity().getLocation().getBlock();
+                        Block below = location.getLocation().subtract(0.0D, 1.0D, 0.0D).getBlock();
+                        if (location.getType().equals(Material.AIR) && !below.getType().equals(Material.AIR)) {
+                            below.setType(Material.FIRE);
                         }
                     }
                 }
@@ -64,7 +56,7 @@ public class Herobrine extends JavaPlugin {
                             return true;
                         }
                         if (p.isOp()) {
-                            if (this.canSpawn(target.getWorld())) {
+                            if (this.controller.canSpawn(target.getWorld())) {
                                 this.actions.appearNear(target);
                                 p.sendMessage(ChatColor.GREEN + "Herobrine has appeared near " + target.getName() + "!");
                             } else {
@@ -92,7 +84,7 @@ public class Herobrine extends JavaPlugin {
                     } else if (args[0].equalsIgnoreCase("remove")) {
                         Player p = (Player) sender;
                         if (p.isOp()) {
-                            this.hbEntity.remove();
+                            this.controller.getEntity().remove();
                             p.sendMessage(ChatColor.GREEN + "Herobrine has been removed!");
                         } else {
                             p.sendMessage(ChatColor.RED + "You do not have permission for this!");
@@ -105,7 +97,7 @@ public class Herobrine extends JavaPlugin {
                             return true;
                         }
                         if (p.isOp()) {
-                            if (this.canSpawn(target.getWorld())) {
+                            if (this.controller.canSpawn(target.getWorld())) {
                                 this.actions.attackPlayer(target);
                                 p.sendMessage(ChatColor.GREEN + "Herobrine is now attacking " + target.getName() + "!");
                             } else {
@@ -129,14 +121,14 @@ public class Herobrine extends JavaPlugin {
                         p.sendMessage(ChatColor.RED + "Type '/hb help' for help");
                     }
                 } else {
-                    Herobrine.log.info("[Herobrine] You must be a player to use this command!");
+                    Plugin.log.info("[Herobrine] You must be a player to use this command!");
                 }
             } catch (Exception ex) {
                 if (sender instanceof Player) {
                     Player p = (Player) sender;
                     p.sendMessage(ChatColor.RED + "Type '/hb help' for help");
                 } else {
-                    Herobrine.log.info("[Herobrine] You must be a player to use this command!");
+                    Plugin.log.info("[Herobrine] You must be a player to use this command!");
                 }
             }
         }
@@ -147,19 +139,15 @@ public class Herobrine extends JavaPlugin {
         return "<" + ChatColor.RED + "> " + msg;
     }
 
-    public boolean isDead() {
-        return this.hbEntity == null || this.hbEntity.isDead();
-    }
-
-    public boolean canSpawn(World w) {
-        return w.getAllowMonsters();
-    }
-    
     public Config getSettings() {
         return this.config;
     }
     
     public Actions getActions() {
         return this.actions;
+    }
+    
+    public Controller getController() {
+        return this.controller;
     }
 }

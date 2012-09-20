@@ -20,19 +20,19 @@ import org.bukkit.inventory.ItemStack;
 
 public class Events implements Listener {
 
-    private Herobrine plugin;
+    private Plugin plugin;
 
-    public Events(Herobrine plugin) {
+    public Events(Plugin plugin) {
         this.plugin = plugin;
     }
 
     @EventHandler
     public void onEntityDamage(EntityDamageEvent event) {
-        Entity e = event.getEntity();
-        if (e.equals(this.plugin.hbEntity)) {
-            if (event.getCause() != EntityDamageEvent.DamageCause.ENTITY_ATTACK) {
+        Entity entity = event.getEntity();
+        if (entity.equals(this.plugin.getController().getEntity())) {
+            if (event.getCause().equals(EntityDamageEvent.DamageCause.ENTITY_ATTACK)) {
                 event.setCancelled(true);
-                e.setFireTicks(0);
+                entity.setFireTicks(0);
             } else {
                 event.setDamage(1);
             }
@@ -41,29 +41,28 @@ public class Events implements Listener {
 
     @EventHandler
     public void onCreatureSpawn(CreatureSpawnEvent event) {
-        Entity e = event.getEntity();
-        if (event.getEntityType().equals(EntityType.ZOMBIE) && this.plugin.trackingEntity && this.plugin.isDead()) {
-            this.plugin.hbEntity = e;
-            this.plugin.trackingEntity = false;
+        if (event.getEntityType().equals(EntityType.ZOMBIE) && this.plugin.getController().isTracking() && this.plugin.getController().isDead()) {
+            this.plugin.getController().setEntity(event.getEntity());
+            this.plugin.getController().setTracking(false);
         }
     }
 
     @EventHandler
     public void onEntityDeath(EntityDeathEvent event) {
-        Entity e = event.getEntity();
-        World w = event.getEntity().getWorld();
-        if (e.equals(this.plugin.hbEntity)) {
-            w.dropItemNaturally(e.getLocation(), new ItemStack(Material.GOLDEN_APPLE, 1));
-            w.createExplosion(e.getLocation(), -1.0F);
-            this.plugin.isAttacking = false;
+        Entity entity = event.getEntity();
+        World world = event.getEntity().getWorld();
+        if (entity.equals(this.plugin.getController().getEntity())) {
+            world.dropItemNaturally(entity.getLocation(), new ItemStack(Material.GOLDEN_APPLE, 1));
+            world.createExplosion(entity.getLocation(), -1.0F);
+            this.plugin.getController().setAttacking(false);
             event.setDroppedExp(50);
             event.getDrops().clear();
-            if (this.plugin.getSettings().sendMessages) {
-                if (e.getLastDamageCause() instanceof EntityDamageByEntityEvent) {
-                    EntityDamageByEntityEvent ev = (EntityDamageByEntityEvent) e.getLastDamageCause();
+            if (this.plugin.getSettings().canSendMessages()) {
+                if (entity.getLastDamageCause() instanceof EntityDamageByEntityEvent) {
+                    EntityDamageByEntityEvent ev = (EntityDamageByEntityEvent) entity.getLastDamageCause();
                     if (ev.getDamager() instanceof Player) {
                         Player p = (Player) ev.getDamager();
-                        p.sendMessage(this.plugin.formatMessage("I will prevail!"));
+                        p.sendMessage(this.plugin.formatMessage(this.plugin.getSettings().getMessage()));
                     }
                 }
             }
@@ -72,58 +71,47 @@ public class Events implements Listener {
     
     @EventHandler
     public void onBlockIgnite(BlockIgniteEvent event) {
-        Block b = event.getBlock();
+        Block block = event.getBlock();
         if (event.getCause().equals(BlockIgniteEvent.IgniteCause.FLINT_AND_STEEL)) {
-            Player p = event.getPlayer();
-            World w = event.getBlock().getWorld();
-            Block netherRack = b.getLocation().subtract(0.0D, 1.0D, 0.0D).getBlock();
-            Block mossyCobble = b.getLocation().subtract(0.0D, 2.0D, 0.0D).getBlock();
-            if (netherRack.getType().equals(Material.NETHERRACK) && mossyCobble.getType().equals(Material.MOSSY_COBBLESTONE) && this.plugin.isDead() && this.plugin.canSpawn(p.getWorld())) {
-                this.plugin.isAttacking = true;
-                if (this.plugin.getSettings().changeEnvironment) {
-                    w.setStorm(true);
-                    w.setTime(14200L);
+            World world = event.getBlock().getWorld();
+            Block netherRack = block.getLocation().subtract(0.0D, 1.0D, 0.0D).getBlock();
+            Block mossyCobble = block.getLocation().subtract(0.0D, 2.0D, 0.0D).getBlock();
+            if (netherRack.getType().equals(Material.NETHERRACK) && mossyCobble.getType().equals(Material.MOSSY_COBBLESTONE) && this.plugin.getController().isDead() && this.plugin.getController().canSpawn(event.getPlayer().getWorld())) {
+                this.plugin.getController().setAttacking(true);
+                if (this.plugin.getSettings().canChangeTime()) {
+                    world.setStorm(true);
+                    world.setTime(14200L);
                 }
-                if (this.plugin.getSettings().removeMossyCobblestone) {
-                    mossyCobble.setType(Material.COBBLESTONE);
-                }
-                w.strikeLightning(b.getLocation());
-                w.createExplosion(b.getLocation(), -1.0F);
-                if (this.plugin.getSettings().sendMessages) {
+                world.strikeLightning(block.getLocation());
+                world.createExplosion(block.getLocation(), -1.0F);
+                if (this.plugin.getSettings().canSendMessages()) {
                     for (Player aPlayer : this.plugin.getServer().getOnlinePlayers()) {
-                        aPlayer.sendMessage(this.plugin.formatMessage("I am your God! Bow to me!"));
+                        aPlayer.sendMessage(this.plugin.formatMessage(this.plugin.getSettings().getMessage()));
                     }
                 }
-                this.plugin.trackingEntity = true;
-                w.spawnEntity(b.getLocation(), EntityType.ZOMBIE);
-                Zombie z = (Zombie) this.plugin.hbEntity;
-                z.setTarget(p);
+                this.plugin.getController().setTracking(true);
+                world.spawnEntity(block.getLocation(), EntityType.ZOMBIE);
+                this.plugin.getController().setTarget(event.getPlayer());
             }
         }
     }
     
     @EventHandler
     public void onPlayerMove(PlayerMoveEvent event) {
-        Player p = event.getPlayer();
-        int eventChoice = new Random().nextInt(this.plugin.getSettings().innerChance + 1);
+        Player player = event.getPlayer();
+        int eventChoice = new Random().nextInt(this.plugin.getSettings().getActionChance() + 1);
         if (eventChoice == 1) {
-            if (this.plugin.getSettings().modifyWorld) {
-                this.plugin.getActions().createTorch(p);
-            }
+            this.plugin.getActions().createTorch(player);
         } else if (eventChoice == 2) {
-            if (this.plugin.getSettings().modifyWorld) {
-                this.plugin.getActions().createSign(p);
-            }
+            this.plugin.getActions().createSign(player);
         } else if (eventChoice == 3) {
-            this.plugin.getActions().playSound(p);
+            this.plugin.getActions().playSound(player);
         } else if (eventChoice == 4) {
-            this.plugin.getActions().attackPlayer(p);
+            this.plugin.getActions().attackPlayer(player);
         } else if (eventChoice == 5) {
-            this.plugin.getActions().appearNear(p);
+            this.plugin.getActions().appearNear(player);
         } else if (eventChoice == 6) {
-            if (this.plugin.getSettings().modifyWorld) {
-                this.plugin.getActions().buryPlayer(p);
-            }
+            this.plugin.getActions().buryPlayer(player);
         }
     }
 }

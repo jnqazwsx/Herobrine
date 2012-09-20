@@ -9,28 +9,33 @@ import org.bukkit.block.BlockState;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.Zombie;
 
 public class Actions {
 
-    private Herobrine plugin;
+    private Plugin plugin;
 
-    public Actions(Herobrine plugin) {
+    public Actions(Plugin plugin) {
         this.plugin = plugin;
     }
 
     public void createTorch(Player player) {
+        if (!this.plugin.getSettings().canModifyWorld() || !this.plugin.getController().canSpawn(player.getWorld())) {
+            return;
+        }        
         Block torch = player.getLocation().add(5.0D, 0.0D, 0.0D).getBlock();
         Block groundBlock = torch.getLocation().subtract(0.0D, 1.0D, 0.0D).getBlock();
-        if (torch.getTypeId() == 0 && groundBlock.getTypeId() != 0) {
+        if (torch.getType().equals(Material.AIR) && !groundBlock.getType().equals(Material.AIR)) {
             torch.setType(Material.REDSTONE_TORCH_ON);
         }
     }
 
     public void createSign(Player player) {
+        if (!this.plugin.getSettings().canModifyWorld() || !this.plugin.getController().canSpawn(player.getWorld())) {
+            return;
+        }
         Block signPost = player.getLocation().add(5.0D, 0.0D, 0.0D).getBlock();
         Block groundBlock = signPost.getLocation().subtract(0.0D, 1.0D, 0.0D).getBlock();
-        if (signPost.getTypeId() == 0 && groundBlock.getTypeId() != 0) {
+        if (signPost.getType().equals(Material.AIR) && !groundBlock.getType().equals(Material.AIR)) {
             signPost.setType(Material.SIGN_POST);
             BlockState signState = signPost.getState();
             Sign signBlock = (Sign) signState;
@@ -58,36 +63,38 @@ public class Actions {
     }
 
     public void playSound(Player player) {
+        if (!this.plugin.getController().canSpawn(player.getWorld())) {
+            return;
+        }
         player.getWorld().playEffect(player.getLocation(), Effect.CLICK2, 5);
     }
 
     public void attackPlayer(Player player) {
-        if (plugin.isDead() && this.plugin.canSpawn(player.getWorld())) {
+        if (this.plugin.getController().isDead() && this.plugin.getController().canSpawn(player.getWorld())) {
             World world = player.getWorld();
             world.createExplosion(player.getLocation().add(3.0D, 0.0D, 3.0D), -1.0F);
-            this.plugin.trackingEntity = true;
+            this.plugin.getController().setTracking(true);
             world.spawnEntity(player.getLocation().add(3.0D, 0.0D, 3.0D), EntityType.ZOMBIE);
-            Zombie zombie = (Zombie) this.plugin.hbEntity;
-            zombie.setTarget(player);
-            this.plugin.isAttacking = true;
-            if (this.plugin.getSettings().sendMessages) {
-                player.sendMessage(this.plugin.formatMessage("Now you're mine!"));
+            this.plugin.getController().setTarget(player);
+            this.plugin.getController().setAttacking(true);
+            if (this.plugin.getSettings().canSendMessages()) {
+                player.sendMessage(this.plugin.getSettings().getMessage());
             }
         }
     }
 
     public void appearNear(Player player) {
-        if (this.plugin.isDead() && this.plugin.canSpawn(player.getWorld())) {
+        if (this.plugin.getController().isDead() && this.plugin.getController().canSpawn(player.getWorld())) {
             World world = player.getWorld();
             Block block = player.getLocation().add(5.0D, 0.0D, 0.0D).getBlock();
             if (block.getType().equals(Material.AIR)) {
-                this.plugin.trackingEntity = true;
+                this.plugin.getController().setTracking(true);
                 world.spawnEntity(player.getLocation().add(5.0D, 0.0D, 0.0D), EntityType.ZOMBIE);
                 this.plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                     
                     @Override
                     public void run() {
-                        plugin.hbEntity.remove();
+                        plugin.getController().getEntity().remove();
                     }
                 }, 60L);
             }
@@ -95,10 +102,13 @@ public class Actions {
     }
 
     public void buryPlayer(Player player) {
+        if (!this.plugin.getSettings().canModifyWorld() || !this.plugin.getController().canSpawn(player.getWorld())) {
+            return;
+        }
         final Block top = player.getLocation().subtract(0.0D, 1.0D, 0.0D).getBlock();
         Block middle = top.getLocation().subtract(0.0D, 1.0D, 0.0D).getBlock();
         Block bottom = middle.getLocation().subtract(0.0D, 1.0D, 0.0D).getBlock();
-        if (top.getTypeId() != 0 && middle.getTypeId() != 0 && bottom.getTypeId() != 0) {
+        if (!top.getType().equals(Material.AIR) && !middle.getType().equals(Material.AIR) && !bottom.getType().equals(Material.AIR)) {
             final Material type = top.getType();
             top.setType(Material.AIR);
             middle.setType(Material.AIR);
@@ -109,7 +119,7 @@ public class Actions {
                 public void run() {
                     top.setType(type);
                 }
-            }, 20L);
+            }, 40L);
         }
     }
 }

@@ -1,0 +1,14 @@
+Herobrine:
+  actionChance: 100000
+  sendMessages: true
+  modifyWorld: true
+  changeTime: true
+  fireTrails: false
+  messages:
+    - I am your God!
+    - I will always prevail!
+    - Never doubt my power!
+  allowedWorlds:
+    - world
+    - world_nether
+  configBuild: 2.4

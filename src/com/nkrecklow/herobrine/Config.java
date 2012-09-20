@@ -35,7 +35,7 @@ public class Config {
                 settingsFile.put("remove-mossystone", Boolean.toString(this.removeMossyCobblestone));
                 settingsFile.put("action-chance", Integer.toString(this.innerChance));
                 settingsFile.put("fire-trails", Boolean.toString(this.fireTrails));
-                settingsFile.store(out, "Configuration file for Herobrine 2.2");
+                settingsFile.store(out, "Configuration file for Herobrine 2.3");
             } catch (IOException ex) {
                 
             }

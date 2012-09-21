@@ -11,4 +11,4 @@ Herobrine:
   allowedWorlds:
     - world
     - world_nether
-  configBuild: 2.4
+  configBuild: 2.5

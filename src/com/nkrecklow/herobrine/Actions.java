@@ -2,7 +2,6 @@ package com.nkrecklow.herobrine;
 
 import java.util.Random;
 import org.bukkit.Effect;
-import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
@@ -39,8 +38,7 @@ public class Actions {
         Block groundBlock = signPost.getLocation().subtract(0.0D, 1.0D, 0.0D).getBlock();
         if (signPost.getType().equals(Material.AIR) && !groundBlock.getType().equals(Material.AIR)) {
             signPost.setType(Material.SIGN_POST);
-            BlockState signState = signPost.getState();
-            Sign signBlock = (Sign) signState;
+            Sign signBlock = (Sign) signPost.getState();
             int signText = new Random().nextInt(7);
             if (signText == 1) {
                 signBlock.setLine(1, "I'm watching.");
@@ -60,6 +58,7 @@ public class Actions {
                 signBlock.setLine(1, "I'm not");
                 signBlock.setLine(2, "a myth.");
             }
+            signBlock.update();
             this.plugin.log("Placed a sign by " + player.getName() + ".");
         }
     }

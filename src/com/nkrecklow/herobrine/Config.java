@@ -9,7 +9,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 public class Config {
 
     private int actionChance;
-    private boolean changeTime, fireTrails, sendMessages, modifyWorld;
+    private boolean changeTime, fireTrails, sendMessages, modifyWorld, ignoreCreative;
     private List<String> messages, allowedWorlds;
     private String build;
     private Plugin plugin;
@@ -21,6 +21,7 @@ public class Config {
         this.fireTrails = false;
         this.sendMessages = true;
         this.modifyWorld = true;
+        this.ignoreCreative = true;
         this.messages = new ArrayList<String>();
         this.allowedWorlds = new ArrayList<String>();
         this.build = this.plugin.getDescription().getVersion();
@@ -46,6 +47,7 @@ public class Config {
                 this.modifyWorld = config.getBoolean("Herobrine.modifyWorld");
                 this.changeTime = config.getBoolean("Herobrine.changeTime");
                 this.fireTrails = config.getBoolean("Herobrine.fireTrails");
+                this.ignoreCreative = config.getBoolean("Herobrine.ignoreCreativePlayers");
                 this.messages = config.getStringList("Herobrine.messages");
                 this.allowedWorlds = config.getStringList("Herobrine.allowedWorlds");
                 if (this.messages.isEmpty()) {

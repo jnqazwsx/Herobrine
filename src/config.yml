@@ -4,11 +4,15 @@ Herobrine:
   modifyWorld: true
   changeTime: true
   fireTrails: false
+  ignoreCreativePlayers: true
   messages:
     - I am your God!
     - I will always prevail!
     - Never doubt my power!
+    - Where is your God now?
+    - Bless this!
   allowedWorlds:
     - world
     - world_nether
+    - world_the_end
   configBuild: 2.6

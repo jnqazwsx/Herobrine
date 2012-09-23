@@ -32,7 +32,7 @@ public class Plugin extends JavaPlugin {
                     controller.getEntity().setVelocity(controller.getEntity().getLocation().getDirection().multiply(0.7D));
                     if (config.canUseFireTrails() && controller.isAttacking()) {
                         Block location = controller.getEntity().getLocation().getBlock();
-                        Block below = location.getLocation().subtract(0.0D, 1.0D, 0.0D).getBlock();
+                        Block below = location.getLocation().subtract(0D, 1D, 0D).getBlock();
                         if (location.getType().equals(Material.AIR) && !below.getType().equals(Material.AIR)) {
                             below.setType(Material.FIRE);
                         }

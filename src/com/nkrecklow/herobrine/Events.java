@@ -53,7 +53,7 @@ public class Events implements Listener {
         World world = event.getEntity().getWorld();
         if (entity.equals(this.plugin.getController().getEntity())) {
             world.dropItemNaturally(entity.getLocation(), new ItemStack(Material.GOLDEN_APPLE, 1));
-            world.createExplosion(entity.getLocation(), -1.0F);
+            world.createExplosion(entity.getLocation(), -1F);
             this.plugin.getController().setAttacking(false);
             event.setDroppedExp(0);
             event.getDrops().clear();
@@ -74,8 +74,8 @@ public class Events implements Listener {
         Block block = event.getBlock();
         if (event.getCause().equals(BlockIgniteEvent.IgniteCause.FLINT_AND_STEEL)) {
             World world = event.getBlock().getWorld();
-            Block netherRack = block.getLocation().subtract(0.0D, 1.0D, 0.0D).getBlock();
-            Block mossyCobble = block.getLocation().subtract(0.0D, 2.0D, 0.0D).getBlock();
+            Block netherRack = block.getLocation().subtract(0D, 1D, 0D).getBlock();
+            Block mossyCobble = block.getLocation().subtract(0D, 2D, 0D).getBlock();
             if (netherRack.getType().equals(Material.NETHERRACK) && mossyCobble.getType().equals(Material.MOSSY_COBBLESTONE) && this.plugin.getController().isDead() && this.plugin.getController().canSpawn(event.getPlayer().getWorld())) {
                 this.plugin.getController().setAttacking(true);
                 if (this.plugin.getSettings().canChangeTime()) {
@@ -83,7 +83,7 @@ public class Events implements Listener {
                     world.setTime(14200L);
                 }
                 world.strikeLightning(block.getLocation());
-                world.createExplosion(block.getLocation(), -1.0F);
+                world.createExplosion(block.getLocation(), -1F);
                 if (this.plugin.getSettings().canSendMessages()) {
                     for (Player aPlayer : this.plugin.getServer().getOnlinePlayers()) {
                         aPlayer.sendMessage(this.plugin.formatMessage(this.plugin.getSettings().getMessage()));

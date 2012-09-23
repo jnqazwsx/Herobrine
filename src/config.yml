@@ -1,18 +1,29 @@
 Herobrine:
+  # The higher the chance, the more rare actions are.
   actionChance: 100000
+  # Send messages or be quiet.
   sendMessages: true
+  # Modify the world (bury players, add torches, etc.)
   modifyWorld: true
+  # Change time and weather when summoned.
   changeTime: true
+  # Place fire where he walks.
   fireTrails: false
+  # Don't attack creative players.
   ignoreCreativePlayers: true
+  # Allow theft or addition to player inventories.
+  modifyInventories: true
+  # Possible messages he can send.
   messages:
     - I am your God!
     - I will always prevail!
     - Never doubt my power!
     - Where is your God now?
     - Bless this!
+  # What worlds he can do things in.
   allowedWorlds:
     - world
     - world_nether
     - world_the_end
+  # Don't touch this, this is for me to use.
   configBuild: 2.6

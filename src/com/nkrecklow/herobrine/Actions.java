@@ -5,10 +5,10 @@ import org.bukkit.Effect;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
-import org.bukkit.block.BlockState;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 public class Actions {
 
@@ -22,8 +22,8 @@ public class Actions {
         if (!this.plugin.getSettings().canModifyWorld() || !this.plugin.getController().canSpawn(player.getWorld())) {
             return;
         }        
-        Block torch = player.getLocation().add(5.0D, 0.0D, 0.0D).getBlock();
-        Block groundBlock = torch.getLocation().subtract(0.0D, 1.0D, 0.0D).getBlock();
+        Block torch = player.getLocation().add(5D, 0D, 0D).getBlock();
+        Block groundBlock = torch.getLocation().subtract(0D, 1D, 0D).getBlock();
         if (torch.getType().equals(Material.AIR) && !groundBlock.getType().equals(Material.AIR)) {
             torch.setType(Material.REDSTONE_TORCH_ON);
             this.plugin.log("Placed a torch near " + player.getName() + ".");
@@ -34,8 +34,8 @@ public class Actions {
         if (!this.plugin.getSettings().canModifyWorld() || !this.plugin.getController().canSpawn(player.getWorld())) {
             return;
         }
-        Block signPost = player.getLocation().add(5.0D, 0.0D, 0.0D).getBlock();
-        Block groundBlock = signPost.getLocation().subtract(0.0D, 1.0D, 0.0D).getBlock();
+        Block signPost = player.getLocation().add(5D, 0D, 0D).getBlock();
+        Block groundBlock = signPost.getLocation().subtract(0D, 1D, 0D).getBlock();
         if (signPost.getType().equals(Material.AIR) && !groundBlock.getType().equals(Material.AIR)) {
             signPost.setType(Material.SIGN_POST);
             Sign signBlock = (Sign) signPost.getState();
@@ -73,9 +73,9 @@ public class Actions {
     public void attackPlayer(Player player) {
         if (this.plugin.getController().isDead() && this.plugin.getController().canSpawn(player.getWorld())) {
             World world = player.getWorld();
-            world.createExplosion(player.getLocation().add(3.0D, 0.0D, 3.0D), -1.0F);
+            world.createExplosion(player.getLocation().add(3D, 0D, 3D), -1F);
             this.plugin.getController().setTracking(true);
-            world.spawnEntity(player.getLocation().add(3.0D, 0.0D, 3.0D), EntityType.ZOMBIE);
+            world.spawnEntity(player.getLocation().add(3D, 0D, 3D), EntityType.ZOMBIE);
             this.plugin.getController().setTarget(player);
             this.plugin.getController().setAttacking(true);
             if (this.plugin.getSettings().canSendMessages()) {
@@ -94,10 +94,10 @@ public class Actions {
     public void appearNear(Player player) {
         if (this.plugin.getController().isDead() && this.plugin.getController().canSpawn(player.getWorld())) {
             World world = player.getWorld();
-            Block block = player.getLocation().add(5.0D, 0.0D, 0.0D).getBlock();
+            Block block = player.getLocation().add(5D, 0D, 0D).getBlock();
             if (block.getType().equals(Material.AIR)) {
                 this.plugin.getController().setTracking(true);
-                world.spawnEntity(player.getLocation().add(5.0D, 0.0D, 0.0D), EntityType.ZOMBIE);
+                world.spawnEntity(player.getLocation().add(5D, 0D, 0D), EntityType.ZOMBIE);
                 this.plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                     
                     @Override
@@ -114,9 +114,9 @@ public class Actions {
         if (!this.plugin.getSettings().canModifyWorld() || !this.plugin.getController().canSpawn(player.getWorld())) {
             return;
         }
-        final Block top = player.getLocation().subtract(0.0D, 1.0D, 0.0D).getBlock();
-        Block middle = top.getLocation().subtract(0.0D, 1.0D, 0.0D).getBlock();
-        Block bottom = middle.getLocation().subtract(0.0D, 1.0D, 0.0D).getBlock();
+        final Block top = player.getLocation().subtract(0D, 1D, 0D).getBlock();
+        Block middle = top.getLocation().subtract(0D, 1D, 0D).getBlock();
+        Block bottom = middle.getLocation().subtract(0D, 1D, 0D).getBlock();
         if (!top.getType().equals(Material.AIR) && !middle.getType().equals(Material.AIR) && !bottom.getType().equals(Material.AIR)) {
             final Material type = top.getType();
             top.setType(Material.AIR);
@@ -128,8 +128,20 @@ public class Actions {
                 public void run() {
                     top.setType(type);
                 }
-            }, 40L);
+            }, 60L);
             this.plugin.log("Buried " + player.getName() + ".");
+        }
+    }
+    
+    public void modifyInventory(Player player) {
+        if (this.plugin.getController().canSpawn(player.getWorld()) && this.plugin.getSettings().canModifyInventories()) {
+            if (new Random().nextInt(4) == 0) {
+                ItemStack item = null;
+                while (item == null) {
+                    item = player.getInventory().getItem(new Random().nextInt(player.getInventory().getSize() - 1));
+                }
+                player.sendMessage(this.plugin.formatMessage("Missing something, like a " + item.getType().toString() + "?"));
+            }
         }
     }
 }

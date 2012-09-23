@@ -20,9 +20,6 @@ public class Actions {
     }
 
     public void createTorch(Player player) {
-        if (player.getGameMode().equals(GameMode.CREATIVE)) {
-            return;
-        }
         if (!this.plugin.getSettings().canModifyWorld() || !this.plugin.getController().canSpawn(player.getWorld())) {
             return;
         }        
@@ -35,9 +32,6 @@ public class Actions {
     }
 
     public void createSign(Player player) {
-        if (player.getGameMode().equals(GameMode.CREATIVE)) {
-            return;
-        }
         if (!this.plugin.getSettings().canModifyWorld() || !this.plugin.getController().canSpawn(player.getWorld())) {
             return;
         }
@@ -71,9 +65,6 @@ public class Actions {
     }
 
     public void playSound(Player player) {
-        if (player.getGameMode().equals(GameMode.CREATIVE)) {
-            return;
-        }
         if (!this.plugin.getController().canSpawn(player.getWorld())) {
             return;
         }
@@ -81,9 +72,6 @@ public class Actions {
     }
 
     public void attackPlayer(Player player) {
-        if (player.getGameMode().equals(GameMode.CREATIVE)) {
-            return;
-        }
         if (this.plugin.getController().isDead() && this.plugin.getController().canSpawn(player.getWorld())) {
             World world = player.getWorld();
             world.createExplosion(player.getLocation().add(3.0D, 0.0D, 3.0D), -1.0F);
@@ -99,18 +87,12 @@ public class Actions {
     }
     
     public void sendMessage(Player player) {
-        if (player.getGameMode().equals(GameMode.CREATIVE)) {
-            return;
-        }
         if (this.plugin.getController().canSpawn(player.getWorld())) {
             player.sendMessage(this.plugin.formatMessage(this.plugin.getSettings().getMessage()));
         }
     }
 
     public void appearNear(Player player) {
-        if (player.getGameMode().equals(GameMode.CREATIVE)) {
-            return;
-        }
         if (this.plugin.getController().isDead() && this.plugin.getController().canSpawn(player.getWorld())) {
             World world = player.getWorld();
             Block block = player.getLocation().add(5.0D, 0.0D, 0.0D).getBlock();
@@ -130,9 +112,6 @@ public class Actions {
     }
 
     public void buryPlayer(Player player) {
-        if (player.getGameMode().equals(GameMode.CREATIVE)) {
-            return;
-        }
         if (!this.plugin.getSettings().canModifyWorld() || !this.plugin.getController().canSpawn(player.getWorld())) {
             return;
         }

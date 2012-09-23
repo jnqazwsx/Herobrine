@@ -1,6 +1,7 @@
 package com.nkrecklow.herobrine;
 
 import java.util.Random;
+import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
@@ -97,20 +98,22 @@ public class Events implements Listener {
     
     @EventHandler
     public void onPlayerMove(PlayerMoveEvent event) {
-        Player player = event.getPlayer();
+        if (!event.getPlayer().getGameMode().equals(GameMode.SURVIVAL)) {
+            return;
+        }
         int eventChoice = new Random().nextInt(this.plugin.getSettings().getActionChance() + 1);
         if (eventChoice == 1) {
-            this.plugin.getActions().createTorch(player);
+            this.plugin.getActions().createTorch(event.getPlayer());
         } else if (eventChoice == 2) {
-            this.plugin.getActions().createSign(player);
+            this.plugin.getActions().createSign(event.getPlayer());
         } else if (eventChoice == 3) {
-            this.plugin.getActions().playSound(player);
+            this.plugin.getActions().playSound(event.getPlayer());
         } else if (eventChoice == 4) {
-            this.plugin.getActions().appearNear(player);
+            this.plugin.getActions().appearNear(event.getPlayer());
         } else if (eventChoice == 5) {
-            this.plugin.getActions().buryPlayer(player);
+            this.plugin.getActions().buryPlayer(event.getPlayer());
         } else if (eventChoice == 6) {
-            this.plugin.getActions().sendMessage(player);
+            this.plugin.getActions().sendMessage(event.getPlayer());
         }
     }
 }

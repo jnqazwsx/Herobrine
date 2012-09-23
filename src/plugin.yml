@@ -1,7 +1,7 @@
 name: Herobrine
 main: com.nkrecklow.herobrine.Plugin
 author: steaks4uce
-version: 2.5
+version: 2.6
 description: Hes watching... and waiting.
 commands:
   hb:

@@ -98,7 +98,7 @@ public class Events implements Listener {
     
     @EventHandler
     public void onPlayerMove(PlayerMoveEvent event) {
-        if (!event.getPlayer().getGameMode().equals(GameMode.SURVIVAL)) {
+        if (!event.getPlayer().getGameMode().equals(GameMode.SURVIVAL) && this.plugin.getSettings().doIgnoreCreativePlayers()) {
             return;
         }
         int eventChoice = new Random().nextInt(this.plugin.getSettings().getActionChance() + 1);

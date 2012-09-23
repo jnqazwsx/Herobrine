@@ -87,6 +87,10 @@ public class Config {
         return this.sendMessages;
     }
     
+    public boolean doIgnoreCreativePlayers() {
+        return this.ignoreCreative;
+    }
+    
     public List<String> getAllowedWorlds() {
         return this.allowedWorlds;
     }

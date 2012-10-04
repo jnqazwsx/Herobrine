@@ -18,9 +18,9 @@ public class Commands implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
         try {
             if (sender instanceof Player) {
-                if (args[0].equalsIgnoreCase("appear")) {
+                if (args[1].equalsIgnoreCase("appear")) {
                     Player player = (Player) sender;
-                    Player target = this.plugin.getServer().getPlayer(args[1]);
+                    Player target = this.plugin.getServer().getPlayer(args[2]);
                     if (target == null) {
                         player.sendMessage(ChatColor.RED + "Invalid player!");
                         return true;
@@ -36,9 +36,9 @@ public class Commands implements CommandExecutor {
                     } else {
                         player.sendMessage(ChatColor.RED + "You do not have permission for this!");
                     }
-                } else if (args[0].equalsIgnoreCase("bury")) {
+                } else if (args[1].equalsIgnoreCase("bury")) {
                     Player player = (Player) sender;
-                    Player target = this.plugin.getServer().getPlayer(args[1]);
+                    Player target = this.plugin.getServer().getPlayer(args[2]);
                     if (target == null) {
                         player.sendMessage(ChatColor.RED + "Invalid player!");
                         return true;
@@ -50,8 +50,10 @@ public class Commands implements CommandExecutor {
                         } else {
                             player.sendMessage(ChatColor.RED + "Player not found!");
                         }
+                    } else {
+                        player.sendMessage(ChatColor.RED + "You do not have permission for this!");
                     }
-                } else if (args[0].equalsIgnoreCase("remove")) {
+                } else if (args[1].equalsIgnoreCase("remove")) {
                     Player player = (Player) sender;
                     if (player.isOp()) {
                         this.plugin.getController().getEntity().remove();
@@ -59,9 +61,9 @@ public class Commands implements CommandExecutor {
                     } else {
                         player.sendMessage(ChatColor.RED + "You do not have permission for this!");
                     }
-                } else if (args[0].equalsIgnoreCase("attack")) {
+                } else if (args[1].equalsIgnoreCase("attack")) {
                     Player player = (Player) sender;
-                    Player target = this.plugin.getServer().getPlayer(args[1]);
+                    Player target = this.plugin.getServer().getPlayer(args[2]);
                     if (target == null) {
                         player.sendMessage(ChatColor.RED + "Invalid player!");
                         return true;
@@ -77,7 +79,7 @@ public class Commands implements CommandExecutor {
                     } else {
                         player.sendMessage(ChatColor.RED + "You do not have permission for this!");
                     }
-                } else if (args[0].equalsIgnoreCase("help")) {
+                } else if (args[1].equalsIgnoreCase("help")) {
                     Player player = (Player) sender;
                     ChatColor t = ChatColor.RED;
                     ChatColor w = ChatColor.WHITE;

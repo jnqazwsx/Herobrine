@@ -15,6 +15,7 @@ import org.bukkit.event.block.BlockIgniteEvent;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.inventory.ItemStack;
@@ -81,17 +82,17 @@ public class Events implements Listener {
     public void onEntityDamage(EntityDamageEvent event) {
         Entity entity = event.getEntity();
         if (entity.equals(this.plugin.getController().getEntity())) {
-            if (!event.getCause().equals(EntityDamageEvent.DamageCause.ENTITY_ATTACK)) {
+            if (!event.getCause().equals(DamageCause.ENTITY_ATTACK)) {
                 event.setCancelled(true);
                 entity.setFireTicks(0);
             } else {
-                event.setDamage(1);
+                event.setDamage((Integer) this.plugin.getSettings().getObject("damageAmount"));
             }
         }
     }
 
     @EventHandler
-    public void onCreatureSpawn(CreatureSpawnEvent event) {
+    public void onEntitySpawn(CreatureSpawnEvent event) {
         if (event.getEntityType().equals(EntityType.ZOMBIE) && this.plugin.getController().isTracking() && this.plugin.getController().isDead()) {
             this.plugin.getController().setEntity((Zombie) event.getEntity());
             this.plugin.getController().setTracking(false);

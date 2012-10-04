@@ -19,11 +19,11 @@ public class Actions {
     }
 
     public void createTorch(Player player) {
-        if (!(Boolean) this.plugin.getSettings().getObject("modifyWorld") || !this.plugin.getController().canSpawn(player.getWorld())) {
-            return;
-        }        
         Block torch = player.getLocation().add(5D, 0D, 0D).getBlock();
         Block groundBlock = torch.getLocation().subtract(0D, 1D, 0D).getBlock();
+        if (!(Boolean) this.plugin.getSettings().getObject("modifyWorld") || !this.plugin.getController().canSpawn(player.getWorld())) {
+            return;
+        }
         if (torch.getType().equals(Material.AIR) && !groundBlock.getType().equals(Material.AIR)) {
             torch.setType(Material.REDSTONE_TORCH_ON);
             this.plugin.log("Placed a torch near " + player.getName() + ".");
@@ -84,8 +84,8 @@ public class Actions {
     }
 
     public void attackPlayer(Player player) {
+        World world = player.getWorld();
         if (this.plugin.getController().isDead() && this.plugin.getController().canSpawn(player.getWorld())) {
-            World world = player.getWorld();
             world.createExplosion(player.getLocation().add(3D, 0D, 3D), -1F);
             this.plugin.getController().setTracking(true);
             world.spawnEntity(player.getLocation().add(3D, 0D, 3D), EntityType.ZOMBIE);
@@ -99,15 +99,16 @@ public class Actions {
     }
     
     public void sendMessage(Player player) {
-        if (this.plugin.getController().canSpawn(player.getWorld())) {
+        if (this.plugin.getController().canSpawn(player.getWorld()) && this.plugin.getSettings().canSendMessages()) {
             player.sendMessage(this.plugin.formatMessage(this.plugin.getSettings().getMessage()));
+            this.plugin.log("Sent a message to " + player.getName() + ".");
         }
     }
 
     public void appearNear(Player player) {
+        World world = player.getWorld();
+        Block block = player.getLocation().add(5D, 0D, 0D).getBlock();
         if (this.plugin.getController().isDead() && this.plugin.getController().canSpawn(player.getWorld())) {
-            World world = player.getWorld();
-            Block block = player.getLocation().add(5D, 0D, 0D).getBlock();
             if (block.getType().equals(Material.AIR)) {
                 this.plugin.getController().setTracking(true);
                 world.spawnEntity(player.getLocation().add(5D, 0D, 0D), EntityType.ZOMBIE);
@@ -124,14 +125,14 @@ public class Actions {
     }
 
     public void buryPlayer(Player player) {
-        if (!(Boolean) this.plugin.getSettings().getObject("modifyWorld") || !this.plugin.getController().canSpawn(player.getWorld())) {
-            return;
-        }
         final Block top = player.getLocation().subtract(0D, 1D, 0D).getBlock();
         Block middle = top.getLocation().subtract(0D, 1D, 0D).getBlock();
         Block bottom = middle.getLocation().subtract(0D, 1D, 0D).getBlock();
+        final Material type = top.getType();
+        if (!(Boolean) this.plugin.getSettings().getObject("modifyWorld") || !this.plugin.getController().canSpawn(player.getWorld())) {
+            return;
+        }
         if (!top.getType().equals(Material.AIR) && !middle.getType().equals(Material.AIR) && !bottom.getType().equals(Material.AIR)) {
-            final Material type = top.getType();
             top.setType(Material.AIR);
             middle.setType(Material.AIR);
             bottom.setType(Material.AIR);

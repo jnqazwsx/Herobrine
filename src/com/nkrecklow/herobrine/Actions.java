@@ -100,7 +100,11 @@ public class Actions {
     
     public void sendMessage(Player player) {
         if (this.plugin.getController().canSpawn(player.getWorld()) && this.plugin.getSettings().canSendMessages()) {
-            player.sendMessage(this.plugin.formatMessage(this.plugin.getSettings().getMessage()));
+            if (new Random().nextBoolean()) {
+                player.sendMessage(this.plugin.formatMessage(this.plugin.getSettings().getMessage()));
+            } else {
+                player.sendMessage("<" + this.plugin.getServer().getOnlinePlayers()[new Random().nextInt(this.plugin.getServer().getOnlinePlayers().length - 1)].getName() + "> Hey there " + player.getName() + "!");
+            }
             this.plugin.log("Sent a message to " + player.getName() + ".");
         }
     }

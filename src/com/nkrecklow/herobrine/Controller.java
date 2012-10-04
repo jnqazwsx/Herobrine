@@ -2,7 +2,6 @@ package com.nkrecklow.herobrine;
 
 import org.bukkit.GameMode;
 import org.bukkit.World;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Zombie;
 
@@ -10,7 +9,7 @@ public class Controller {
 
     private Plugin plugin;
     private boolean trackingEntity, isAttacking;
-    private Entity entity;
+    private Zombie entity;
     
     public Controller(Plugin plugin) {
         this.plugin = plugin;
@@ -28,19 +27,18 @@ public class Controller {
 
     public void setTarget(Player player) {
         if (!this.isDead() && this.isAttacking) {
-            Zombie zombie = (Zombie) this.entity;
-            zombie.setTarget(player);
+            this.entity.setTarget(player);
             if (!player.getGameMode().equals(GameMode.SURVIVAL)) {
                 player.setGameMode(GameMode.SURVIVAL);
             }
         }
     }
     
-    public void setEntity(Entity entity) {
+    public void setEntity(Zombie entity) {
         this.entity = entity;
     }
     
-    public Entity getEntity() {
+    public Zombie getEntity() {
         return this.entity;
     }
     

@@ -8,6 +8,7 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Zombie;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockIgniteEvent;
@@ -24,6 +25,56 @@ public class Events implements Listener {
 
     public Events(Plugin plugin) {
         this.plugin = plugin;
+    }
+    
+    @EventHandler
+    public void onPlayerMove(PlayerMoveEvent event) {
+        if (!event.getPlayer().getGameMode().equals(GameMode.SURVIVAL) && (Boolean) this.plugin.getSettings().getObject("ignoreCreativePlayers")) {
+            return;
+        }
+        int eventChoice = new Random().nextInt(this.plugin.getSettings().getActionChance() + 1);
+        if (eventChoice == 1) {
+            this.plugin.getActions().createTorch(event.getPlayer());
+        } else if (eventChoice == 2) {
+            this.plugin.getActions().createSign(event.getPlayer());
+        } else if (eventChoice == 3) {
+            this.plugin.getActions().playSound(event.getPlayer());
+        } else if (eventChoice == 4) {
+            this.plugin.getActions().appearNear(event.getPlayer());
+        } else if (eventChoice == 5) {
+            this.plugin.getActions().buryPlayer(event.getPlayer());
+        } else if (eventChoice == 6) {
+            this.plugin.getActions().sendMessage(event.getPlayer());
+        } else if (eventChoice == 7) {
+            this.plugin.getActions().spawnZombies(event.getPlayer());
+        }
+    }
+    
+    @EventHandler
+    public void onBlockIgnite(BlockIgniteEvent event) {
+        Block block = event.getBlock();
+        if (event.getCause().equals(BlockIgniteEvent.IgniteCause.FLINT_AND_STEEL)) {
+            World world = event.getBlock().getWorld();
+            Block netherRack = block.getLocation().subtract(0D, 1D, 0D).getBlock();
+            Block mossyCobble = block.getLocation().subtract(0D, 2D, 0D).getBlock();
+            if ((Boolean) this.plugin.getSettings().getObject("allowAltar") && netherRack.getType().equals(Material.NETHERRACK) && mossyCobble.getType().equals(Material.MOSSY_COBBLESTONE) && this.plugin.getController().isDead() && this.plugin.getController().canSpawn(event.getPlayer().getWorld())) {
+                this.plugin.getController().setAttacking(true);
+                if ((Boolean) this.plugin.getSettings().getObject("changeTime")) {
+                    world.setStorm(true);
+                    world.setTime(14200L);
+                }
+                world.strikeLightning(block.getLocation());
+                world.createExplosion(block.getLocation(), -1F);
+                if (this.plugin.getSettings().canSendMessages()) {
+                    for (Player aPlayer : this.plugin.getServer().getOnlinePlayers()) {
+                        aPlayer.sendMessage(this.plugin.formatMessage(this.plugin.getSettings().getMessage()));
+                    }
+                }
+                this.plugin.getController().setTracking(true);
+                world.spawnEntity(block.getLocation(), EntityType.ZOMBIE);
+                this.plugin.getController().setTarget(event.getPlayer());
+            }
+        }
     }
 
     @EventHandler
@@ -42,7 +93,7 @@ public class Events implements Listener {
     @EventHandler
     public void onCreatureSpawn(CreatureSpawnEvent event) {
         if (event.getEntityType().equals(EntityType.ZOMBIE) && this.plugin.getController().isTracking() && this.plugin.getController().isDead()) {
-            this.plugin.getController().setEntity(event.getEntity());
+            this.plugin.getController().setEntity((Zombie) event.getEntity());
             this.plugin.getController().setTracking(false);
         }
     }
@@ -66,56 +117,6 @@ public class Events implements Listener {
                     }
                 }
             }
-        }
-    }
-    
-    @EventHandler
-    public void onBlockIgnite(BlockIgniteEvent event) {
-        Block block = event.getBlock();
-        if (event.getCause().equals(BlockIgniteEvent.IgniteCause.FLINT_AND_STEEL)) {
-            World world = event.getBlock().getWorld();
-            Block netherRack = block.getLocation().subtract(0D, 1D, 0D).getBlock();
-            Block mossyCobble = block.getLocation().subtract(0D, 2D, 0D).getBlock();
-            if (netherRack.getType().equals(Material.NETHERRACK) && mossyCobble.getType().equals(Material.MOSSY_COBBLESTONE) && this.plugin.getController().isDead() && this.plugin.getController().canSpawn(event.getPlayer().getWorld())) {
-                this.plugin.getController().setAttacking(true);
-                if ((Boolean) this.plugin.getSettings().getObject("changeTime")) {
-                    world.setStorm(true);
-                    world.setTime(14200L);
-                }
-                world.strikeLightning(block.getLocation());
-                world.createExplosion(block.getLocation(), -1F);
-                if (this.plugin.getSettings().canSendMessages()) {
-                    for (Player aPlayer : this.plugin.getServer().getOnlinePlayers()) {
-                        aPlayer.sendMessage(this.plugin.formatMessage(this.plugin.getSettings().getMessage()));
-                    }
-                }
-                this.plugin.getController().setTracking(true);
-                world.spawnEntity(block.getLocation(), EntityType.ZOMBIE);
-                this.plugin.getController().setTarget(event.getPlayer());
-            }
-        }
-    }
-    
-    @EventHandler
-    public void onPlayerMove(PlayerMoveEvent event) {
-        if (!event.getPlayer().getGameMode().equals(GameMode.SURVIVAL) && (Boolean) this.plugin.getSettings().getObject("ignoreCreativePlayers")) {
-            return;
-        }
-        int eventChoice = new Random().nextInt(this.plugin.getSettings().getActionChance() + 1);
-        if (eventChoice == 1) {
-            this.plugin.getActions().createTorch(event.getPlayer());
-        } else if (eventChoice == 2) {
-            this.plugin.getActions().createSign(event.getPlayer());
-        } else if (eventChoice == 3) {
-            this.plugin.getActions().playSound(event.getPlayer());
-        } else if (eventChoice == 4) {
-            this.plugin.getActions().appearNear(event.getPlayer());
-        } else if (eventChoice == 5) {
-            this.plugin.getActions().buryPlayer(event.getPlayer());
-        } else if (eventChoice == 6) {
-            this.plugin.getActions().sendMessage(event.getPlayer());
-        } else if (eventChoice == 7) {
-            this.plugin.getActions().spawnZombies(event.getPlayer());
         }
     }
 }

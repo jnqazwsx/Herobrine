@@ -1,9 +1,11 @@
 package com.nkrecklow.herobrine;
 
+import java.util.Random;
 import java.util.logging.Logger;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class Plugin extends JavaPlugin {
@@ -28,6 +30,25 @@ public class Plugin extends JavaPlugin {
             
             @Override
             public void run() {
+                boolean exists = false;
+                for (Player player : getServer().getOnlinePlayers()) {
+                    if (player.getPlayerListName().equalsIgnoreCase("Herobrine")) {
+                        exists = true;
+                        break;
+                    }
+                }
+                if (controller.isDead() && exists) {
+                    for (Player player : getServer().getOnlinePlayers()) {
+                        if (player.getPlayerListName().equalsIgnoreCase("Herobrine")) {
+                            player.setPlayerListName(player.getName());
+                        }
+                    }
+                } else {
+                    if (!controller.isDead() && !exists) {
+                        Player player = getServer().getOnlinePlayers()[new Random().nextInt(getServer().getOnlinePlayers().length - 1)];
+                        player.setPlayerListName("Herobrine");
+                    }
+                }
                 if (!controller.isDead()) {
                     controller.getEntity().setVelocity(controller.getEntity().getLocation().getDirection().multiply(0.7D));
                     if ((Boolean) config.getObject("fireTrails") && controller.isAttacking()) {

@@ -18,11 +18,11 @@ public class Commands implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
         try {
             if (sender instanceof Player) {
+                Player player = (Player) sender;
                 if (args[1].equalsIgnoreCase("appear")) {
-                    Player player = (Player) sender;
                     Player target = this.plugin.getServer().getPlayer(args[2]);
                     if (target == null) {
-                        player.sendMessage(ChatColor.RED + "Invalid player!");
+                        player.sendMessage(ChatColor.RED + "I can't seem to find that player!");
                         return true;
                     }
                     if (player.isOp()) {
@@ -31,16 +31,14 @@ public class Commands implements CommandExecutor {
                             player.sendMessage(ChatColor.GREEN + "Herobrine has appeared near " + target.getName() + "!");
                         } else {
                             player.sendMessage(ChatColor.RED + "Herobrine is not allowed to spawn in " + target.getName() + "'s world!");
-                            player.sendMessage(ChatColor.RED + "Please enable monsters in that world to continue!");
                         }
                     } else {
                         player.sendMessage(ChatColor.RED + "You do not have permission for this!");
                     }
                 } else if (args[1].equalsIgnoreCase("bury")) {
-                    Player player = (Player) sender;
                     Player target = this.plugin.getServer().getPlayer(args[2]);
                     if (target == null) {
-                        player.sendMessage(ChatColor.RED + "Invalid player!");
+                        player.sendMessage(ChatColor.RED + "I can't seem to find that player!");
                         return true;
                     }
                     if (player.isOp()) {
@@ -53,19 +51,21 @@ public class Commands implements CommandExecutor {
                     } else {
                         player.sendMessage(ChatColor.RED + "You do not have permission for this!");
                     }
-                } else if (args[1].equalsIgnoreCase("remove")) {
-                    Player player = (Player) sender;
+                } else if (args[1].equalsIgnoreCase("kill")) {
                     if (player.isOp()) {
-                        this.plugin.getController().getEntity().remove();
-                        player.sendMessage(ChatColor.GREEN + "Herobrine has been removed!");
+                        if (!this.plugin.getController().isDead()) {
+                            this.plugin.getController().getEntity().remove();
+                            player.sendMessage(ChatColor.GREEN + "Herobrine has been killed!");
+                        } else {
+                            player.sendMessage(ChatColor.RED + "Herobrine currently isn't alive!");
+                        }
                     } else {
                         player.sendMessage(ChatColor.RED + "You do not have permission for this!");
                     }
                 } else if (args[1].equalsIgnoreCase("attack")) {
-                    Player player = (Player) sender;
                     Player target = this.plugin.getServer().getPlayer(args[2]);
                     if (target == null) {
-                        player.sendMessage(ChatColor.RED + "Invalid player!");
+                        player.sendMessage(ChatColor.RED + "I can't seem to find that player!");
                         return true;
                     }
                     if (player.isOp()) {
@@ -74,23 +74,17 @@ public class Commands implements CommandExecutor {
                             player.sendMessage(ChatColor.GREEN + "Herobrine is now attacking " + target.getName() + "!");
                         } else {
                             player.sendMessage(ChatColor.RED + "Herobrine is not allowed to spawn in " + target.getName() + "'s world!");
-                            player.sendMessage(ChatColor.RED + "Please enable monsters in that world to continue!");
                         }
                     } else {
                         player.sendMessage(ChatColor.RED + "You do not have permission for this!");
                     }
                 } else if (args[1].equalsIgnoreCase("help")) {
-                    Player player = (Player) sender;
-                    ChatColor t = ChatColor.RED;
-                    ChatColor w = ChatColor.WHITE;
-                    player.sendMessage(t + "attack" + w + " - Attack a certain player.");
-                    player.sendMessage(t + "appear" + w + " - Appear near a certain player.");
-                    player.sendMessage(t + "bury" + w + " - Bury a certain player alive.");
-                    player.sendMessage(t + "remove" + w + " - Remove him in case of error.");
+                    player.sendMessage(ChatColor.RED + "attack" + ChatColor.WHITE + " - Attack a certain player.");
+                    player.sendMessage(ChatColor.RED + "appear" + ChatColor.WHITE + " - Appear near a certain player.");
+                    player.sendMessage(ChatColor.RED + "bury" + ChatColor.WHITE + " - Bury a certain player alive.");
+                    player.sendMessage(ChatColor.RED + "kill" + ChatColor.WHITE + " - Remove him in case of error.");
                 } else {
-                    Player player = (Player) sender;
-                    player.sendMessage(ChatColor.RED + "Not a valid command!");
-                    player.sendMessage(ChatColor.RED + "Type '/hb help' for help");
+                    player.sendMessage(ChatColor.RED + "Not a valid command! Type \"/hb help\" for help!");
                 }
             } else {
                 this.plugin.log("You must be a player to use this command!");
@@ -98,9 +92,9 @@ public class Commands implements CommandExecutor {
         } catch (Exception ex) {
             if (sender instanceof Player) {
                 Player player = (Player) sender;
-                player.sendMessage(ChatColor.RED + "Type '/hb help' for help");
+                player.sendMessage(ChatColor.RED + "Type \"/hb help\" for help");
             } else {
-                this.plugin.log("You must be a player to use this command!");
+                this.plugin.log("Not a valid command! Type \"/hb help\" for help!");
             }
         }
         return true;

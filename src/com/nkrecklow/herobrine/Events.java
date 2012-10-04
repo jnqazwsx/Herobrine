@@ -78,7 +78,7 @@ public class Events implements Listener {
             Block mossyCobble = block.getLocation().subtract(0D, 2D, 0D).getBlock();
             if (netherRack.getType().equals(Material.NETHERRACK) && mossyCobble.getType().equals(Material.MOSSY_COBBLESTONE) && this.plugin.getController().isDead() && this.plugin.getController().canSpawn(event.getPlayer().getWorld())) {
                 this.plugin.getController().setAttacking(true);
-                if (this.plugin.getSettings().canChangeTime()) {
+                if ((Boolean) this.plugin.getSettings().getObject("changeTime")) {
                     world.setStorm(true);
                     world.setTime(14200L);
                 }
@@ -98,7 +98,7 @@ public class Events implements Listener {
     
     @EventHandler
     public void onPlayerMove(PlayerMoveEvent event) {
-        if (!event.getPlayer().getGameMode().equals(GameMode.SURVIVAL) && this.plugin.getSettings().doIgnoreCreativePlayers()) {
+        if (!event.getPlayer().getGameMode().equals(GameMode.SURVIVAL) && (Boolean) this.plugin.getSettings().getObject("ignoreCreativePlayers")) {
             return;
         }
         int eventChoice = new Random().nextInt(this.plugin.getSettings().getActionChance() + 1);

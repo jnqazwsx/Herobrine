@@ -49,11 +49,7 @@ public class Controller {
     }
     
     public boolean canSpawn(World world) {
-        if (this.plugin.getSettings().getAllowedWorlds().contains(world.getName())) {
-            return world.getAllowMonsters();
-        } else {
-            return false;
-        }
+        return this.plugin.getSettings().getAllowedWorlds().contains(world.getName());
     }
     
     public boolean isAttacking() {

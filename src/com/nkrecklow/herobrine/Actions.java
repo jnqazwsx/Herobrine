@@ -19,7 +19,7 @@ public class Actions {
     }
 
     public void createTorch(Player player) {
-        if (!this.plugin.getSettings().canModifyWorld() || !this.plugin.getController().canSpawn(player.getWorld())) {
+        if (!(Boolean) this.plugin.getSettings().getObject("modifyWorld") || !this.plugin.getController().canSpawn(player.getWorld())) {
             return;
         }        
         Block torch = player.getLocation().add(5D, 0D, 0D).getBlock();
@@ -31,7 +31,7 @@ public class Actions {
     }
 
     public void createSign(Player player) {
-        if (!this.plugin.getSettings().canModifyWorld() || !this.plugin.getController().canSpawn(player.getWorld())) {
+        if (!(Boolean) this.plugin.getSettings().getObject("modifyWorld") || !this.plugin.getController().canSpawn(player.getWorld())) {
             return;
         }
         Block signPost = player.getLocation().add(5D, 0D, 0D).getBlock();
@@ -111,7 +111,7 @@ public class Actions {
     }
 
     public void buryPlayer(Player player) {
-        if (!this.plugin.getSettings().canModifyWorld() || !this.plugin.getController().canSpawn(player.getWorld())) {
+        if (!(Boolean) this.plugin.getSettings().getObject("modifyWorld") || !this.plugin.getController().canSpawn(player.getWorld())) {
             return;
         }
         final Block top = player.getLocation().subtract(0D, 1D, 0D).getBlock();
@@ -134,14 +134,13 @@ public class Actions {
     }
     
     public void modifyInventory(Player player) {
-        if (this.plugin.getController().canSpawn(player.getWorld()) && this.plugin.getSettings().canModifyInventories()) {
-            if (new Random().nextInt(4) == 0) {
-                ItemStack item = null;
-                while (item == null) {
-                    item = player.getInventory().getItem(new Random().nextInt(player.getInventory().getSize() - 1));
-                }
-                player.sendMessage(this.plugin.formatMessage("Missing something, like a " + item.getType().toString() + "?"));
+        if (this.plugin.getController().canSpawn(player.getWorld()) && (Boolean) this.plugin.getSettings().getObject("modifyInventories")) {
+            ItemStack item = null;
+            while (item == null) {
+                item = player.getInventory().getItem(new Random().nextInt(player.getInventory().getSize() - 1));
             }
+            player.sendMessage(this.plugin.formatMessage("Missing something, like a " + item.getType().toString() + "?"));
+            this.plugin.log("Stole from " + player.getName() + ".");
         }
     }
 }

@@ -87,6 +87,12 @@ public class Events implements Listener {
                 entity.setFireTicks(0);
             } else {
                 event.setDamage((Integer) this.plugin.getSettings().getObject("damageAmount"));
+                if (entity.getLastDamageCause() instanceof EntityDamageByEntityEvent) {
+                    EntityDamageByEntityEvent ev = (EntityDamageByEntityEvent) entity.getLastDamageCause();
+                    if (ev.getDamager() instanceof Player) {
+                        this.plugin.getController().setTarget((Player) ev.getDamager());
+                    }
+                }
             }
         }
     }

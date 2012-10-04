@@ -1,11 +1,9 @@
 package com.nkrecklow.herobrine;
 
-import java.util.Random;
 import java.util.logging.Logger;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class Plugin extends JavaPlugin {
@@ -27,30 +25,11 @@ public class Plugin extends JavaPlugin {
         this.getCommand("hb").setExecutor(this.commands);
         this.getServer().getPluginManager().registerEvents(this.listener, this);
         getServer().getScheduler().scheduleAsyncRepeatingTask(this, new Runnable() {
-            
+
             @Override
             public void run() {
-                boolean exists = false;
-                for (Player player : getServer().getOnlinePlayers()) {
-                    if (player.getPlayerListName().equalsIgnoreCase("Herobrine")) {
-                        exists = true;
-                        break;
-                    }
-                }
-                if (controller.isDead() && exists) {
-                    for (Player player : getServer().getOnlinePlayers()) {
-                        if (player.getPlayerListName().equalsIgnoreCase("Herobrine")) {
-                            player.setPlayerListName(player.getName());
-                        }
-                    }
-                } else {
-                    if (!controller.isDead() && !exists) {
-                        Player player = getServer().getOnlinePlayers()[new Random().nextInt(getServer().getOnlinePlayers().length - 1)];
-                        player.setPlayerListName("Herobrine");
-                    }
-                }
                 if (!controller.isDead()) {
-                    controller.getEntity().setVelocity(controller.getEntity().getLocation().getDirection().multiply(0.7D));
+                    controller.getEntity().setVelocity(controller.getEntity().getLocation().getDirection().multiply(0.5D));
                     if ((Boolean) config.getObject("fireTrails") && controller.isAttacking()) {
                         Block location = controller.getEntity().getLocation().getBlock();
                         Block below = location.getLocation().subtract(0D, 1D, 0D).getBlock();
@@ -58,6 +37,7 @@ public class Plugin extends JavaPlugin {
                             below.setType(Material.FIRE);
                         }
                     }
+                    controller.getEntity().getWorld().strikeLightning(controller.getEntity().getLocation());
                 }
             }
         }, 0L, 20L);

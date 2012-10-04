@@ -35,9 +35,9 @@ public class Config {
                 if (!this.plugin.getDescription().getVersion().equals(config.getString("Herobrine.configBuild"))) {
                     this.plugin.log("Outdated configuration file!");
                 }
-                this.actionChance = config.getInt("Herobrine.actionChance");
-                this.messages = config.getStringList("Herobrine.messages");
-                this.allowedWorlds = config.getStringList("Herobrine.allowedWorlds");
+                this.actionChance = this.config.getInt("Herobrine.actionChance");
+                this.messages = this.config.getStringList("Herobrine.messages");
+                this.allowedWorlds = this.config.getStringList("Herobrine.allowedWorlds");
                 if (this.allowedWorlds.isEmpty()) {
                     this.plugin.log("Must be allowed in atleast one world!");
                     this.plugin.getServer().getPluginManager().disablePlugin(this.plugin);
@@ -53,7 +53,7 @@ public class Config {
     }
     
     public boolean canSendMessages() {
-        return this.config.getBoolean("sendMessages") && this.messages.size() > 0;
+        return (Boolean) this.getObject("sendMessages") && this.messages.size() > 0;
     }
     
     public List<String> getAllowedWorlds() {

@@ -1,6 +1,5 @@
 package com.nkrecklow.herobrine;
 
-import org.bukkit.GameMode;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Zombie;
@@ -28,9 +27,6 @@ public class Controller {
     public void setTarget(Player player) {
         if (!this.isDead() && this.isAttacking) {
             this.entity.setTarget(player);
-            if (!player.getGameMode().equals(GameMode.SURVIVAL)) {
-                player.setGameMode(GameMode.SURVIVAL);
-            }
         }
     }
     

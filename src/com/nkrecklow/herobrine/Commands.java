@@ -16,42 +16,50 @@ public class Commands implements CommandExecutor {
     
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
-        try {
+        if (args.length > 0) {
             if (sender instanceof Player) {
                 Player player = (Player) sender;
-                if (args[1].equalsIgnoreCase("appear")) {
-                    Player target = this.plugin.getServer().getPlayer(args[2]);
-                    if (target == null) {
-                        player.sendMessage(ChatColor.RED + "I can't seem to find that player!");
-                        return true;
-                    }
-                    if (player.isOp()) {
-                        if (this.plugin.getController().canSpawn(target.getWorld())) {
-                            this.plugin.getActions().appearNear(target);
-                            player.sendMessage(ChatColor.GREEN + "Herobrine has appeared near " + target.getName() + "!");
+                if (args[0].equalsIgnoreCase("appear")) {
+                    if (args.length == 2) {
+                        Player target = this.plugin.getServer().getPlayer(args[1]);
+                        if (target == null) {
+                            player.sendMessage(ChatColor.RED + "I can't seem to find that player!");
+                            return true;
+                        }
+                        if (player.isOp()) {
+                            if (this.plugin.getController().canSpawn(target.getWorld())) {
+                                this.plugin.getActions().appearNear(target);
+                                player.sendMessage(ChatColor.GREEN + "Herobrine has appeared near " + target.getName() + "!");
+                            } else {
+                                player.sendMessage(ChatColor.RED + "Herobrine is not allowed to spawn in " + target.getName() + "'s world!");
+                            }
                         } else {
-                            player.sendMessage(ChatColor.RED + "Herobrine is not allowed to spawn in " + target.getName() + "'s world!");
+                            player.sendMessage(ChatColor.RED + "You do not have permission for this!");
                         }
                     } else {
-                        player.sendMessage(ChatColor.RED + "You do not have permission for this!");
+                        player.sendMessage(ChatColor.RED + "Not a valid command! Type \"/hb appear username\"!");
                     }
-                } else if (args[1].equalsIgnoreCase("bury")) {
-                    Player target = this.plugin.getServer().getPlayer(args[2]);
-                    if (target == null) {
-                        player.sendMessage(ChatColor.RED + "I can't seem to find that player!");
-                        return true;
-                    }
-                    if (player.isOp()) {
-                        if (target.isOnline()) {
-                            this.plugin.getActions().buryPlayer(target);
-                            player.sendMessage(ChatColor.GREEN + "Herobrine has buried " + target.getName() + "!");
+                } else if (args[0].equalsIgnoreCase("bury")) {
+                    if (args.length == 2) {
+                        Player target = this.plugin.getServer().getPlayer(args[1]);
+                        if (target == null) {
+                            player.sendMessage(ChatColor.RED + "I can't seem to find that player!");
+                            return true;
+                        }
+                        if (player.isOp()) {
+                            if (target.isOnline()) {
+                                this.plugin.getActions().buryPlayer(target);
+                                player.sendMessage(ChatColor.GREEN + "Herobrine has buried " + target.getName() + "!");
+                            } else {
+                                player.sendMessage(ChatColor.RED + "Player not found!");
+                            }
                         } else {
-                            player.sendMessage(ChatColor.RED + "Player not found!");
+                            player.sendMessage(ChatColor.RED + "You do not have permission for this!");
                         }
                     } else {
-                        player.sendMessage(ChatColor.RED + "You do not have permission for this!");
+                        player.sendMessage(ChatColor.RED + "Not a valid command! Type \"/hb bury username\"!");
                     }
-                } else if (args[1].equalsIgnoreCase("kill")) {
+                } else if (args[0].equalsIgnoreCase("kill")) {
                     if (player.isOp()) {
                         if (!this.plugin.getController().isDead()) {
                             this.plugin.getController().getEntity().remove();
@@ -62,23 +70,27 @@ public class Commands implements CommandExecutor {
                     } else {
                         player.sendMessage(ChatColor.RED + "You do not have permission for this!");
                     }
-                } else if (args[1].equalsIgnoreCase("attack")) {
-                    Player target = this.plugin.getServer().getPlayer(args[2]);
-                    if (target == null) {
-                        player.sendMessage(ChatColor.RED + "I can't seem to find that player!");
-                        return true;
-                    }
-                    if (player.isOp()) {
-                        if (this.plugin.getController().canSpawn(target.getWorld())) {
-                            this.plugin.getActions().attackPlayer(target);
-                            player.sendMessage(ChatColor.GREEN + "Herobrine is now attacking " + target.getName() + "!");
+                } else if (args[0].equalsIgnoreCase("attack")) {
+                    if (args.length == 2) {
+                        Player target = this.plugin.getServer().getPlayer(args[1]);
+                        if (target == null) {
+                            player.sendMessage(ChatColor.RED + "I can't seem to find that player!");
+                            return true;
+                        }
+                        if (player.isOp()) {
+                            if (this.plugin.getController().canSpawn(target.getWorld())) {
+                                this.plugin.getActions().attackPlayer(target);
+                                player.sendMessage(ChatColor.GREEN + "Herobrine is now attacking " + target.getName() + "!");
+                            } else {
+                                player.sendMessage(ChatColor.RED + "Herobrine is not allowed to spawn in " + target.getName() + "'s world!");
+                            }
                         } else {
-                            player.sendMessage(ChatColor.RED + "Herobrine is not allowed to spawn in " + target.getName() + "'s world!");
+                            player.sendMessage(ChatColor.RED + "You do not have permission for this!");
                         }
                     } else {
-                        player.sendMessage(ChatColor.RED + "You do not have permission for this!");
+                        player.sendMessage(ChatColor.RED + "Not a valid command! Type \"/hb attack username\"!");
                     }
-                } else if (args[1].equalsIgnoreCase("help")) {
+                } else if (args[0].equalsIgnoreCase("help")) {
                     player.sendMessage(ChatColor.RED + "attack" + ChatColor.WHITE + " - Attack a certain player.");
                     player.sendMessage(ChatColor.RED + "appear" + ChatColor.WHITE + " - Appear near a certain player.");
                     player.sendMessage(ChatColor.RED + "bury" + ChatColor.WHITE + " - Bury a certain player alive.");
@@ -89,12 +101,12 @@ public class Commands implements CommandExecutor {
             } else {
                 this.plugin.log("You must be a player to use this command!");
             }
-        } catch (Exception ex) {
+        } else {
             if (sender instanceof Player) {
                 Player player = (Player) sender;
-                player.sendMessage(ChatColor.RED + "Type \"/hb help\" for help");
+                player.sendMessage(ChatColor.RED + "Not a valid command! Type \"/hb help\" for help!");
             } else {
-                this.plugin.log("Not a valid command! Type \"/hb help\" for help!");
+                this.plugin.log("You must be a player to use this command!");
             }
         }
         return true;

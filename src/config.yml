@@ -13,6 +13,8 @@ Herobrine:
   ignoreCreativePlayers: true
   # Allow theft or addition to player inventories.
   modifyInventories: true
+  # Can he spawn zombies on players?
+  spawnZombies: true
   # Possible messages he can send.
   messages:
     - I am your God!
@@ -26,4 +28,4 @@ Herobrine:
     - world_nether
     - world_the_end
   # Don't touch this, this is for me to use.
-  configBuild: 2.6
+  configBuild: 2.7

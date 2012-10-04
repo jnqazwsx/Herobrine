@@ -10,7 +10,6 @@ public class Config {
 
     private int actionChance;
     private List<String> messages, allowedWorlds;
-    private String build;
     private Plugin plugin;
     private YamlConfiguration config;
     
@@ -19,7 +18,6 @@ public class Config {
         this.actionChance = 100000;
         this.messages = new ArrayList<String>();
         this.allowedWorlds = new ArrayList<String>();
-        this.build = this.plugin.getDescription().getVersion();
     }
     
     public void loadConfig() {
@@ -34,7 +32,7 @@ public class Config {
             }
             if (file.exists()) {
                 this.config = YamlConfiguration.loadConfiguration(file);
-                if (!this.build.equals(config.getString("Herobrine.configBuild"))) {
+                if (!this.plugin.getDescription().getVersion().equals(config.getString("Herobrine.configBuild"))) {
                     this.plugin.log("Outdated configuration file!");
                 }
                 this.actionChance = config.getInt("Herobrine.actionChance");

@@ -29,6 +29,19 @@ public class Actions {
             this.plugin.log("Placed a torch near " + player.getName() + ".");
         }
     }
+    
+    public void spawnZombies(Player player) {
+        if (!(Boolean) this.plugin.getSettings().getObject("spawnZombies")) {
+            return;
+        }
+        int amount = new Random().nextInt(3);
+        for (int id = 0; id < amount; id++) {
+            player.getWorld().spawnCreature(player.getLocation().add(new Random().nextInt(5), 0, new Random().nextInt(5)), EntityType.ZOMBIE);
+        }
+        if (amount > 0) {
+            this.plugin.log("Spawned " + amount + " zombies near " + player.getName() + ".");
+        }
+    }
 
     public void createSign(Player player) {
         if (!(Boolean) this.plugin.getSettings().getObject("modifyWorld") || !this.plugin.getController().canSpawn(player.getWorld())) {
@@ -67,7 +80,7 @@ public class Actions {
         if (!this.plugin.getController().canSpawn(player.getWorld())) {
             return;
         }
-        player.getWorld().playEffect(player.getLocation(), Effect.CLICK2, 5);
+        player.getWorld().playEffect(player.getLocation(), Effect.GHAST_SHRIEK, 5);
     }
 
     public void attackPlayer(Player player) {

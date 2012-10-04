@@ -114,6 +114,8 @@ public class Events implements Listener {
             this.plugin.getActions().buryPlayer(event.getPlayer());
         } else if (eventChoice == 6) {
             this.plugin.getActions().sendMessage(event.getPlayer());
+        } else if (eventChoice == 7) {
+            this.plugin.getActions().spawnZombies(event.getPlayer());
         }
     }
 }

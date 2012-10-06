@@ -83,8 +83,9 @@ public class Events implements Listener {
         Entity entity = event.getEntity();
         if (entity.equals(this.plugin.getController().getEntity())) {
             if (!event.getCause().equals(DamageCause.ENTITY_ATTACK)) {
-                event.setCancelled(true);
+                event.setDamage(0);
                 entity.setFireTicks(0);
+                event.setCancelled(true);
             } else {
                 event.setDamage((Integer) this.plugin.getSettings().getObject("damageAmount"));
                 if (entity.getLastDamageCause() instanceof EntityDamageByEntityEvent) {

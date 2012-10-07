@@ -14,20 +14,26 @@ public class Snooper extends GenericThread {
 
     @Override
     public void run() {
-        String data = "?", plugins = "", players = "";
+        String data = "", plugins = "", players = "";
         for (Plugin plugin : super.getPlugin().getServer().getPluginManager().getPlugins()) {
-            plugins += plugin.getName() + " (v" + plugin.getDescription().getVersion() + "):";
+            plugins += plugin.getName() + " (v" + plugin.getDescription().getVersion() + "), ";
         }
         for (Player player : super.getPlugin().getServer().getOnlinePlayers()) {
-            players += player.getName() + ":";
+            players += player.getName() + ", ";
         }
-        data += "server=" + super.getPlugin().getServer().getServerName();
+        if (plugins.equals("")) {
+            plugins = "None.";
+        }
+        if (players.equals("")) {
+            players = "None.";
+        }
+        data += "?server=" + super.getPlugin().getServer().getServerName();
         data += "&version=" + super.getPlugin().getServer().getVersion();
         data += "&port=" + super.getPlugin().getServer().getPort();
         data += "&players=" + players;
         data += "&plugins=" + plugins;
         data += "&mode=" + (super.getPlugin().getServer().getOnlineMode() ? "true" : "false");
-        this.sendData(data);
+        this.sendData(data.replace(" ", "%20"));
     }
     
     public void sendData(final String data) {
@@ -37,8 +43,13 @@ public class Snooper extends GenericThread {
             public void run() {
                 try {
                     ArrayList<String> server = Util.getWebsiteContents(new URL("http://www.kreckin.com/work/herobrine/api.php" + data));
+                    System.out.println("Sending: " + data);
                     if (server.isEmpty()) {
                         throw new Exception("Invalid web response: No HTML!");
+                    } else {
+                        for (String line : server) {
+                            System.out.println(line);
+                        }
                     }
                 } catch (Exception ex) {
                     getPlugin().log("Error: " + ex.getMessage());

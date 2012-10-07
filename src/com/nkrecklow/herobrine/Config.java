@@ -9,13 +9,14 @@ import org.bukkit.configuration.file.YamlConfiguration;
 public class Config extends Generic {
 
     private int actionChance;
-    private List<String> messages, allowedWorlds;
+    private List<String> messages, allowedWorlds, signMessages;
     private YamlConfiguration config;
     
     public Config(Plugin plugin) {
         super(plugin);
         this.messages = new ArrayList<String>();
         this.allowedWorlds = new ArrayList<String>();
+        this.signMessages = new ArrayList<String>();
     }
     
     public void loadConfig() {
@@ -36,7 +37,12 @@ public class Config extends Generic {
                 }
                 this.actionChance = this.config.getInt("Herobrine.actionChance");
                 this.messages = this.config.getStringList("Herobrine.messages");
+                this.signMessages = this.config.getStringList("Herobrine.signMessages");
                 this.allowedWorlds = this.config.getStringList("Herobrine.allowedWorlds");
+                if (this.signMessages.isEmpty()) {
+                    super.getPlugin().log("Must have atleast one sign message!");
+                    super.getPlugin().getServer().getPluginManager().disablePlugin(super.getPlugin());
+                }
                 if (this.allowedWorlds.isEmpty()) {
                     super.getPlugin().log("Must be allowed in atleast one world!");
                     super.getPlugin().getServer().getPluginManager().disablePlugin(super.getPlugin());
@@ -68,6 +74,14 @@ public class Config extends Generic {
             return this.messages.get(new Random().nextInt(this.messages.size() - 1));
         } else {
             return this.messages.get(0);
+        }
+    }
+    
+    public String getSignMessage() {
+        if (this.signMessages.size() > 1) {
+            return this.signMessages.get(new Random().nextInt(this.signMessages.size() - 1));
+        } else {
+            return this.signMessages.get(0);
         }
     }
     

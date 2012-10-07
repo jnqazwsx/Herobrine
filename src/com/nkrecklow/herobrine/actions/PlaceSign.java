@@ -22,22 +22,7 @@ public class PlaceSign extends Action {
         if (signPost.getType().equals(Material.AIR) && !groundBlock.getType().equals(Material.AIR)) {
             signPost.setType(Material.SIGN_POST);
             Sign signBlock = (Sign) signPost.getState();
-            int signText = super.getRandom().nextInt(6);
-            if (signText == 1) {
-                signBlock.setLine(1, "I'm watching.");
-            } else if (signText == 2) {
-                signBlock.setLine(1, "Stop.");
-            } else if (signText == 3) {
-                signBlock.setLine(1, "You'll join");
-                signBlock.setLine(2, "me soon.");
-            } else if (signText == 4) {
-                signBlock.setLine(1, "You can't");
-                signBlock.setLine(2, "escape.");
-            } else if (signText == 5) {
-                signBlock.setLine(1, "Remember me?");
-            } else {
-                signBlock.setLine(1, "I'm alive.");
-            }
+            signBlock.setLine(1, super.getPlugin().getConfiguration().getSignMessage());
             signBlock.update();
             super.getPlugin().log("Placed a sign by " + super.getPlayer().getName() + ".");
         }

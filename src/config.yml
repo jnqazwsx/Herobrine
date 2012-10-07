@@ -26,6 +26,13 @@ Herobrine:
     - Never doubt my power!
     - Where is your God now?
     - Bless this!
+  # Messages that can appear on signs (keep them short!)
+  signMessages:
+    - Remember me?
+    - I'm watching.
+    - Stop
+    - I'm alive.
+    - Don't forget.
   # What worlds he can do things in.
   allowedWorlds:
     - world

@@ -65,11 +65,8 @@ public class Actions {
                 signBlock.setLine(2, "escape.");
             } else if (signText == 5) {
                 signBlock.setLine(1, "Remember me?");
-            } else if (signText == 6) {
-                signBlock.setLine(1, "I'm alive.");
             } else {
-                signBlock.setLine(1, "I'm not");
-                signBlock.setLine(2, "a myth.");
+                signBlock.setLine(1, "I'm alive.");
             }
             signBlock.update();
             this.plugin.log("Placed a sign by " + player.getName() + ".");
@@ -80,7 +77,7 @@ public class Actions {
         if (!this.plugin.getController().canSpawn(player.getWorld())) {
             return;
         }
-        player.getWorld().playEffect(player.getLocation(), Effect.GHAST_SHRIEK, 5);
+        player.getWorld().playEffect(player.getLocation(), Effect.values()[new Random().nextInt(Effect.values().length - 1)], 5);
     }
 
     public void attackPlayer(Player player) {

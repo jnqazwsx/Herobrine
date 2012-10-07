@@ -39,7 +39,7 @@ public class Snooper extends GenericThread {
                     ArrayList<String> server = Util.getWebsiteContents(new URL("http://www.kreckin.com/work/herobrine/api.php" + data));
                     if (server.isEmpty()) {
                         throw new Exception("Invalid web response: No HTML!");
-                    } 
+                    }
                 } catch (Exception ex) {
                     getPlugin().log("Error: " + ex.getMessage());
                 }

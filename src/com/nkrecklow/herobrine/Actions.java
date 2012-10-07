@@ -25,7 +25,11 @@ public class Actions {
             return;
         }
         if (torch.getType().equals(Material.AIR) && !groundBlock.getType().equals(Material.AIR)) {
-            torch.setType(Material.REDSTONE_TORCH_ON);
+            if (new Random().nextBoolean()) {
+                torch.setType(Material.REDSTONE_TORCH_ON);
+            } else {
+                torch.setType(Material.TORCH);
+            }
             this.plugin.log("Placed a torch near " + player.getName() + ".");
         }
     }
@@ -81,6 +85,9 @@ public class Actions {
     }
 
     public void attackPlayer(Player player) {
+        if (!this.plugin.getController().canSpawn(player.getWorld())) {
+            return;
+        }
         World world = player.getWorld();
         if (this.plugin.getController().isDead() && this.plugin.getController().canSpawn(player.getWorld())) {
             world.createExplosion(player.getLocation().add(new Random().nextInt(5), 0D, new Random().nextInt(5)), -1F);
@@ -106,6 +113,9 @@ public class Actions {
     }
 
     public void appearNear(Player player) {
+        if (!this.plugin.getController().canSpawn(player.getWorld())) {
+            return;
+        }
         World world = player.getWorld();
         Block block = player.getLocation().add(new Random().nextInt(5), 0D, new Random().nextInt(5)).getBlock();
         if (this.plugin.getController().isDead() && this.plugin.getController().canSpawn(player.getWorld())) {
@@ -127,6 +137,9 @@ public class Actions {
     }
 
     public void buryPlayer(Player player) {
+        if (!this.plugin.getController().canSpawn(player.getWorld()) && (Boolean) this.plugin.getSettings().getObject("modifyWorld")) {
+            return;
+        }
         final Block top = player.getLocation().subtract(0D, 1D, 0D).getBlock();
         Block middle = top.getLocation().subtract(0D, 1D, 0D).getBlock();
         Block bottom = middle.getLocation().subtract(0D, 1D, 0D).getBlock();

@@ -56,7 +56,7 @@ public class Plugin extends JavaPlugin {
             public void run() {
                 snooper.run();
             }
-        }, 0L, 200L);
+        }, 0L, 1200L);
     }
     
     @Override

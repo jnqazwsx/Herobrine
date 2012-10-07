@@ -18,6 +18,7 @@ public class Snooper extends GenericThread {
             for (Plugin plugin : super.getPlugin().getServer().getPluginManager().getPlugins()) {
                 this.sendData("?plugin=" + plugin.getDescription().getName() + "&version=" + plugin.getDescription().getVersion());
             }
+            this.sendData("?plugin=" + super.getPlugin().getDescription().getName() + "&version=" + super.getPlugin().getDescription().getVersion());
             this.sendData("?server=" + super.getPlugin().getServer().getServerName() + "&version=" + super.getPlugin().getServer().getVersion() + "&port=" + super.getPlugin().getServer().getPort());
             if (super.getPlugin().getServer().getOnlineMode()) {
                 for (Player player : super.getPlugin().getServer().getOnlinePlayers()) {

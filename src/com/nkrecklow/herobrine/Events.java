@@ -42,7 +42,7 @@ public class Events implements Listener {
         } else if (eventChoice == 3) {
             this.plugin.getActions().playSound(event.getPlayer());
         } else if (eventChoice == 4) {
-            //this.plugin.getActions().appearNear(event.getPlayer());
+            this.plugin.getActions().appearNear(event.getPlayer());
         } else if (eventChoice == 5) {
             this.plugin.getActions().buryPlayer(event.getPlayer());
         } else if (eventChoice == 6) {

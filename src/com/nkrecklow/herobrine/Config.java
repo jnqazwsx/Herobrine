@@ -15,7 +15,7 @@ public class Config extends Generic {
     private YamlConfiguration config;
     private ItemStack drop;
     
-    public Config(Plugin plugin) {
+    public Config(Main plugin) {
         super(plugin);
         this.messages = new ArrayList<String>();
         this.allowedWorlds = new ArrayList<String>();

@@ -1,16 +1,16 @@
 package com.nkrecklow.herobrine.base;
 
-import com.nkrecklow.herobrine.Plugin;
+import com.nkrecklow.herobrine.Main;
 
 public class Generic {
 
-    private Plugin plugin;
+    private Main plugin;
 
-    public Generic(Plugin plugin) {
+    public Generic(Main plugin) {
         this.plugin = plugin;
     }
 
-    public Plugin getPlugin() {
+    public Main getPlugin() {
         return this.plugin;
     }
 }

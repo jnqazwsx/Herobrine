@@ -1,7 +1,7 @@
 package com.nkrecklow.herobrine.entity;
 
 import com.nkrecklow.herobrine.base.Generic;
-import com.nkrecklow.herobrine.Plugin;
+import com.nkrecklow.herobrine.Main;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Zombie;
@@ -11,7 +11,7 @@ public class Controller extends Generic {
     private boolean trackingEntity;
     private Zombie entity;
     
-    public Controller(Plugin plugin) {
+    public Controller(Main plugin) {
         super(plugin);
         this.trackingEntity = false;
     }

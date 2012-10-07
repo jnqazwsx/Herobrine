@@ -1,12 +1,12 @@
 package com.nkrecklow.herobrine.events;
 
-import com.nkrecklow.herobrine.Plugin;
+import com.nkrecklow.herobrine.Main;
 import java.util.Random;
 import org.bukkit.entity.Player;
 
 public abstract class Action {
 
-    private Plugin plugin;
+    private Main plugin;
     private Player player;
     private ActionType type;
     private Random random;
@@ -18,7 +18,7 @@ public abstract class Action {
     
     public abstract void onAction();
     
-    public void setInstances(Plugin plugin, Player player) {
+    public void setInstances(Main plugin, Player player) {
         this.player = player;
         this.plugin = plugin;
     }
@@ -27,7 +27,7 @@ public abstract class Action {
         return this.player;
     }
     
-    public Plugin getPlugin() {
+    public Main getPlugin() {
         return this.plugin;
     }
 

@@ -1,7 +1,7 @@
 package com.nkrecklow.herobrine;
 
 import com.nkrecklow.herobrine.base.Generic;
-import com.nkrecklow.herobrine.Plugin;
+import com.nkrecklow.herobrine.Main;
 import com.nkrecklow.herobrine.events.ActionType;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -11,7 +11,7 @@ import org.bukkit.entity.Player;
 
 public class Commands extends Generic implements CommandExecutor {
 
-    public Commands(Plugin plugin) {
+    public Commands(Main plugin) {
         super(plugin);
     }
     

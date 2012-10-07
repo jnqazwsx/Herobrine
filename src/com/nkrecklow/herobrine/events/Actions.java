@@ -1,7 +1,7 @@
 package com.nkrecklow.herobrine.events;
 
 import com.nkrecklow.herobrine.base.Generic;
-import com.nkrecklow.herobrine.Plugin;
+import com.nkrecklow.herobrine.Main;
 import com.nkrecklow.herobrine.actions.AppearNear;
 import com.nkrecklow.herobrine.actions.AttackPlayer;
 import com.nkrecklow.herobrine.actions.BuryPlayer;
@@ -19,7 +19,7 @@ public class Actions extends Generic {
 
     private Class<? extends Action> actions[];
     
-    public Actions(Plugin plugin) {
+    public Actions(Main plugin) {
         super(plugin);
         this.actions = new Class[9];
         this.actions[0] = AppearNear.class;

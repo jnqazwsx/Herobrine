@@ -1,7 +1,7 @@
 package com.nkrecklow.herobrine.entity;
 
 import com.nkrecklow.herobrine.base.Generic;
-import com.nkrecklow.herobrine.Plugin;
+import com.nkrecklow.herobrine.Main;
 import java.util.Random;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -24,7 +24,7 @@ import org.bukkit.event.player.PlayerMoveEvent;
 
 public class Events extends Generic implements Listener {
 
-    public Events(Plugin plugin) {
+    public Events(Main plugin) {
         super(plugin);
     }
     

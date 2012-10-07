@@ -4,18 +4,21 @@ import com.nkrecklow.herobrine.base.GenericThread;
 import java.net.URL;
 import java.util.ArrayList;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 
 public class Snooper extends GenericThread {
 
-    public Snooper(Plugin plugin) {
+    public Snooper(Main plugin) {
         super(plugin);
     }
 
     @Override
     public void run() {
         try {
-            this.sendData("?plugin=" + super.getPlugin().getDescription().getVersion());
-            this.sendData("?server=" + super.getPlugin().getServer().getName() + ":" + super.getPlugin().getServer().getVersion());
+            for (Plugin plugin : super.getPlugin().getServer().getPluginManager().getPlugins()) {
+                this.sendData("?plugin=" + plugin.getDescription().getFullName() + "&version=" + plugin.getDescription().getVersion());
+            }
+            this.sendData("?server=" + super.getPlugin().getServer().getName() + "&version=" + super.getPlugin().getServer().getVersion());
             for (Player player : super.getPlugin().getServer().getOnlinePlayers()) {
                 this.sendData("?player=" + player.getName());
             }

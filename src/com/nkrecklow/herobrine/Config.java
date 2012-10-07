@@ -42,8 +42,8 @@ public class Config extends Generic {
                 this.signMessages = this.config.getStringList("Herobrine.signMessages");
                 this.allowedWorlds = this.config.getStringList("Herobrine.allowedWorlds");
                 String dropString = this.config.getString("Herobrine.deathDrop");
-                if (dropString.contains(":")) {
-                    this.drop = new ItemStack(Integer.parseInt(dropString.split(":")[0]), Integer.parseInt(dropString.split(":")[1]));
+                if (dropString.contains(",")) {
+                    this.drop = new ItemStack(Integer.parseInt(dropString.split(",")[0]), Integer.parseInt(dropString.split(",")[1]));
                 } else {
                     super.getPlugin().log("Invalid death item drop!");
                     super.getPlugin().getServer().getPluginManager().disablePlugin(super.getPlugin());

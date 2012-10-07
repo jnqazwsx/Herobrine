@@ -20,7 +20,7 @@ Herobrine:
   # How much damage to take when hit (out of 20).
   damageAmount: 1
   # What he drops on death and the amount.
-  deathDrop: 264:1
+  deathDrop: 264,1
   # Possible messages he can send.
   messages:
     - I am your God!

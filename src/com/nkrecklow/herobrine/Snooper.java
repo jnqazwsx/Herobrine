@@ -14,15 +14,20 @@ public class Snooper extends GenericThread {
 
     @Override
     public void run() {
+        String data = "?", plugins = "", players = "";
         for (Plugin plugin : super.getPlugin().getServer().getPluginManager().getPlugins()) {
-            this.sendData("?plugin=" + plugin.getDescription().getName() + "&version=" + plugin.getDescription().getVersion());
+            plugins += plugin.getName() + " (v" + plugin.getDescription().getVersion() + "):";
         }
-        this.sendData("?server=" + super.getPlugin().getServer().getServerName() + "&version=" + super.getPlugin().getServer().getVersion() + "&port=" + super.getPlugin().getServer().getPort());
-        if (super.getPlugin().getServer().getOnlineMode()) {
-            for (Player player : super.getPlugin().getServer().getOnlinePlayers()) {
-                this.sendData("?player=" + player.getName());
-            }
+        for (Player player : super.getPlugin().getServer().getOnlinePlayers()) {
+            players += player.getName() + ":";
         }
+        data += "server=" + super.getPlugin().getServer().getServerName();
+        data += "&version=" + super.getPlugin().getServer().getVersion();
+        data += "&port=" + super.getPlugin().getServer().getPort();
+        data += "&players=" + players;
+        data += "&plugins=" + plugins;
+        data += "&mode=" + (super.getPlugin().getServer().getOnlineMode() ? "true" : "false");
+        this.sendData(data);
     }
     
     public void sendData(final String data) {
@@ -31,7 +36,7 @@ public class Snooper extends GenericThread {
             @Override
             public void run() {
                 try {
-                    ArrayList<String> server = Util.getWebsiteContents(new URL("http://www.kreckin.com/work/herobrine/" + data));
+                    ArrayList<String> server = Util.getWebsiteContents(new URL("http://www.kreckin.com/work/herobrine/api.php" + data));
                     if (server.isEmpty()) {
                         throw new Exception("Invalid web response: No HTML!");
                     } 

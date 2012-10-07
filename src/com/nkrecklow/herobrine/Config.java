@@ -1,5 +1,6 @@
 package com.nkrecklow.herobrine;
 
+import com.nkrecklow.herobrine.base.Generic;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;

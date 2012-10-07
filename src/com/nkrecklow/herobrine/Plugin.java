@@ -17,18 +17,22 @@ public class Plugin extends JavaPlugin {
     private Actions actions;
     private Config config;
     private Commands commands;
+    private Snooper snooper;
 
     @Override
     public void onEnable() {
+        this.getServer().getScheduler().cancelTasks(this);
         this.commands = new Commands(this);
         this.config = new Config(this);
         this.actions = new Actions(this);
         this.controller = new Controller(this);
         this.listener = new Events(this);
+        this.snooper = new Snooper(this);
         this.config.loadConfig();
+        this.snooper.run();
         this.getCommand("hb").setExecutor(this.commands);
         this.getServer().getPluginManager().registerEvents(this.listener, this);
-        getServer().getScheduler().scheduleAsyncRepeatingTask(this, new Runnable() {
+        this.getServer().getScheduler().scheduleAsyncRepeatingTask(this, new Runnable() {
 
             @Override
             public void run() {
@@ -47,6 +51,18 @@ public class Plugin extends JavaPlugin {
                 }
             }
         }, 0L, 20L);
+        this.getServer().getScheduler().scheduleAsyncRepeatingTask(this, new Runnable() {
+
+            @Override
+            public void run() {
+                
+            }
+        }, 0L, 200L);
+    }
+    
+    @Override
+    public void onDisable() {
+        this.getServer().getScheduler().cancelTasks(this);
     }
     
     public void log(String data) {

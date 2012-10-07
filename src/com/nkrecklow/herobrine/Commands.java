@@ -1,6 +1,6 @@
 package com.nkrecklow.herobrine;
 
-import com.nkrecklow.herobrine.Generic;
+import com.nkrecklow.herobrine.base.Generic;
 import com.nkrecklow.herobrine.Plugin;
 import com.nkrecklow.herobrine.events.ActionType;
 import org.bukkit.ChatColor;

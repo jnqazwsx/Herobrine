@@ -1,6 +1,6 @@
 package com.nkrecklow.herobrine.events;
 
-import com.nkrecklow.herobrine.Generic;
+import com.nkrecklow.herobrine.base.Generic;
 import com.nkrecklow.herobrine.Plugin;
 import com.nkrecklow.herobrine.actions.AppearNear;
 import com.nkrecklow.herobrine.actions.AttackPlayer;

@@ -1,6 +1,6 @@
-package com.nkrecklow.herobrine;
+package com.nkrecklow.herobrine.base;
 
-import java.util.Random;
+import com.nkrecklow.herobrine.Plugin;
 
 public class Generic {
 

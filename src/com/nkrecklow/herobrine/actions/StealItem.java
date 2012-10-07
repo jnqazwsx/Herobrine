@@ -18,7 +18,7 @@ public class StealItem extends Action {
                 item = super.getPlayer().getInventory().getItem(super.getRandom().nextInt(super.getPlayer().getInventory().getSize() - 1));
             }
             super.getPlayer().getInventory().remove(item);
-            super.getPlayer().sendMessage(super.getPlugin().formatMessage("Missing something, like a " + item.getType().toString().replace("_", "").toLowerCase() + "?"));
+            super.getPlayer().sendMessage(super.getPlugin().formatMessage("Missing something, like a " + item.getType().toString().replace("_", " ").toLowerCase() + "?"));
             super.getPlugin().log("Stole from " + super.getPlayer().getName() + ".");
         }
     }

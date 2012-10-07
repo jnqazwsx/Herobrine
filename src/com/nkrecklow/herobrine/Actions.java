@@ -127,6 +127,7 @@ public class Actions {
 
                         @Override
                         public void run() {
+                            plugin.getController().getEntity().setHealth(0);
                             plugin.getController().getEntity().remove();
                         }
                     }, 40L);

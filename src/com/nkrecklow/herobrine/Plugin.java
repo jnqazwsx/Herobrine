@@ -3,6 +3,7 @@ package com.nkrecklow.herobrine;
 import com.nkrecklow.herobrine.entity.Controller;
 import com.nkrecklow.herobrine.entity.Events;
 import com.nkrecklow.herobrine.events.Actions;
+import java.util.Random;
 import java.util.logging.Logger;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -40,7 +41,9 @@ public class Plugin extends JavaPlugin {
                             below.setType(Material.FIRE);
                         }
                     }
-                    controller.getEntity().getWorld().strikeLightning(controller.getEntity().getLocation());
+                    if (new Random().nextInt(3) == 0) {
+                        controller.getEntity().getWorld().strikeLightning(controller.getEntity().getLocation());
+                    }
                 }
             }
         }, 0L, 20L);

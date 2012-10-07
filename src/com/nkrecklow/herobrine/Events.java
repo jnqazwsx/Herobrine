@@ -31,10 +31,10 @@ public class Events implements Listener {
     
     @EventHandler
     public void onPlayerMove(PlayerMoveEvent event) {
-        if (!event.getPlayer().getGameMode().equals(GameMode.SURVIVAL) && (Boolean) this.plugin.getSettings().getObject("ignoreCreativePlayers")) {
+        if (!event.getPlayer().getGameMode().equals(GameMode.SURVIVAL) && (Boolean) this.plugin.getConfiguration().getObject("ignoreCreativePlayers")) {
             return;
         }
-        int eventChoice = new Random().nextInt(this.plugin.getSettings().getActionChance() + 1);
+        int eventChoice = new Random().nextInt(this.plugin.getConfiguration().getActionChance() + 1);
         if (eventChoice == 1) {
             this.plugin.getActions().createTorch(event.getPlayer());
         } else if (eventChoice == 2) {
@@ -59,16 +59,16 @@ public class Events implements Listener {
             World world = event.getBlock().getWorld();
             Block netherRack = block.getLocation().subtract(0D, 1D, 0D).getBlock();
             Block mossyCobble = block.getLocation().subtract(0D, 2D, 0D).getBlock();
-            if ((Boolean) this.plugin.getSettings().getObject("allowAltar") && netherRack.getType().equals(Material.NETHERRACK) && mossyCobble.getType().equals(Material.MOSSY_COBBLESTONE) && this.plugin.getController().isDead() && this.plugin.getController().canSpawn(event.getPlayer().getWorld())) {
-                if ((Boolean) this.plugin.getSettings().getObject("changeTime")) {
+            if ((Boolean) this.plugin.getConfiguration().getObject("allowAltar") && netherRack.getType().equals(Material.NETHERRACK) && mossyCobble.getType().equals(Material.MOSSY_COBBLESTONE) && this.plugin.getController().isDead() && this.plugin.getController().canSpawn(event.getPlayer().getWorld())) {
+                if ((Boolean) this.plugin.getConfiguration().getObject("changeTime")) {
                     world.setStorm(true);
                     world.setTime(14200L);
                 }
                 world.strikeLightning(block.getLocation());
                 world.createExplosion(block.getLocation(), -1F);
-                if (this.plugin.getSettings().canSendMessages()) {
+                if (this.plugin.getConfiguration().canSendMessages()) {
                     for (Player aPlayer : this.plugin.getServer().getOnlinePlayers()) {
-                        aPlayer.sendMessage(this.plugin.formatMessage(this.plugin.getSettings().getMessage()));
+                        aPlayer.sendMessage(this.plugin.formatMessage(this.plugin.getConfiguration().getMessage()));
                     }
                 }
                 this.plugin.getController().setTracking(true);
@@ -87,7 +87,7 @@ public class Events implements Listener {
                 entity.setFireTicks(0);
                 event.setCancelled(true);
             } else {
-                event.setDamage((Integer) this.plugin.getSettings().getObject("damageAmount"));
+                event.setDamage((Integer) this.plugin.getConfiguration().getObject("damageAmount"));
                 if (entity.getLastDamageCause() instanceof EntityDamageByEntityEvent) {
                     EntityDamageByEntityEvent ev = (EntityDamageByEntityEvent) entity.getLastDamageCause();
                     if (ev.getDamager() instanceof Player) {
@@ -117,12 +117,12 @@ public class Events implements Listener {
             world.createExplosion(entity.getLocation(), -1F);
             event.setDroppedExp(0);
             event.getDrops().clear();
-            if (this.plugin.getSettings().canSendMessages()) {
+            if (this.plugin.getConfiguration().canSendMessages()) {
                 if (entity.getLastDamageCause() instanceof EntityDamageByEntityEvent) {
                     EntityDamageByEntityEvent ev = (EntityDamageByEntityEvent) entity.getLastDamageCause();
                     if (ev.getDamager() instanceof Player) {
                         Player p = (Player) ev.getDamager();
-                        p.sendMessage(this.plugin.formatMessage(this.plugin.getSettings().getMessage()));
+                        p.sendMessage(this.plugin.formatMessage(this.plugin.getConfiguration().getMessage()));
                     }
                 }
             }

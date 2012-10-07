@@ -15,7 +15,6 @@ public class Config {
     
     public Config(Plugin plugin) {
         this.plugin = plugin;
-        this.actionChance = 100000;
         this.messages = new ArrayList<String>();
         this.allowedWorlds = new ArrayList<String>();
     }
@@ -33,7 +32,8 @@ public class Config {
             if (file.exists()) {
                 this.config = YamlConfiguration.loadConfiguration(file);
                 if (!this.plugin.getDescription().getVersion().equals(config.getString("Herobrine.configBuild"))) {
-                    this.plugin.log("Outdated configuration file!");
+                    this.plugin.log("Outdated configuration file! Please delete it and restart!");
+                    this.plugin.getServer().getPluginManager().disablePlugin(this.plugin);
                 }
                 this.actionChance = this.config.getInt("Herobrine.actionChance");
                 this.messages = this.config.getStringList("Herobrine.messages");
@@ -47,7 +47,7 @@ public class Config {
             }
         } catch (Exception ex) {
             this.plugin.log("Failed to load configuration file!");
-            this.plugin.log(ex.getMessage());
+            this.plugin.log("Error: " + ex.getMessage());
             this.plugin.getServer().getPluginManager().disablePlugin(this.plugin);
         }
     }

@@ -38,7 +38,7 @@ public class Controller {
     }
     
     public boolean canSpawn(World world) {
-        return this.plugin.getSettings().getAllowedWorlds().contains(world.getName());
+        return this.plugin.getConfiguration().getAllowedWorlds().contains(world.getName());
     }
  
     public boolean isTracking() {

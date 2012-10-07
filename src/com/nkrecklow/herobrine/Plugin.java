@@ -51,7 +51,7 @@ public class Plugin extends JavaPlugin {
         return "<" + ChatColor.RED + "Herobrine" + ChatColor.WHITE + "> " + msg;
     }
 
-    public Config getSettings() {
+    public Config getConfiguration() {
         return this.config;
     }
     

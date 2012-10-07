@@ -21,7 +21,7 @@ public class Actions {
     public void createTorch(Player player) {
         Block torch = player.getLocation().add(new Random().nextInt(5), 0D, new Random().nextInt(5)).getBlock();
         Block groundBlock = torch.getLocation().subtract(0D, 1D, 0D).getBlock();
-        if (!(Boolean) this.plugin.getSettings().getObject("modifyWorld") || !this.plugin.getController().canSpawn(player.getWorld())) {
+        if (!(Boolean) this.plugin.getConfiguration().getObject("modifyWorld") || !this.plugin.getController().canSpawn(player.getWorld())) {
             return;
         }
         if (torch.getType().equals(Material.AIR) && !groundBlock.getType().equals(Material.AIR)) {
@@ -35,7 +35,7 @@ public class Actions {
     }
     
     public void spawnZombies(Player player) {
-        if (!(Boolean) this.plugin.getSettings().getObject("spawnZombies")) {
+        if (!(Boolean) this.plugin.getConfiguration().getObject("spawnZombies")) {
             return;
         }
         int amount = new Random().nextInt(3);
@@ -48,7 +48,7 @@ public class Actions {
     }
 
     public void createSign(Player player) {
-        if (!(Boolean) this.plugin.getSettings().getObject("modifyWorld") || !this.plugin.getController().canSpawn(player.getWorld())) {
+        if (!(Boolean) this.plugin.getConfiguration().getObject("modifyWorld") || !this.plugin.getController().canSpawn(player.getWorld())) {
             return;
         }
         Block signPost = player.getLocation().add(new Random().nextInt(5), 0D, new Random().nextInt(5)).getBlock();
@@ -94,17 +94,17 @@ public class Actions {
             this.plugin.getController().setTracking(true);
             world.spawnEntity(player.getLocation().add(new Random().nextInt(5), 0D, new Random().nextInt(5)), EntityType.ZOMBIE);
             this.plugin.getController().setTarget(player);
-            if (this.plugin.getSettings().canSendMessages()) {
-                player.sendMessage(this.plugin.formatMessage(this.plugin.getSettings().getMessage()));
+            if (this.plugin.getConfiguration().canSendMessages()) {
+                player.sendMessage(this.plugin.formatMessage(this.plugin.getConfiguration().getMessage()));
             }
             this.plugin.log("Attacked " + player.getName() + ".");
         }
     }
     
     public void sendMessage(Player player) {
-        if (this.plugin.getController().canSpawn(player.getWorld()) && this.plugin.getSettings().canSendMessages()) {
+        if (this.plugin.getController().canSpawn(player.getWorld()) && this.plugin.getConfiguration().canSendMessages()) {
             if (new Random().nextBoolean()) {
-                player.sendMessage(this.plugin.formatMessage(this.plugin.getSettings().getMessage()));
+                player.sendMessage(this.plugin.formatMessage(this.plugin.getConfiguration().getMessage()));
             } else {
                 player.sendMessage("<" + this.plugin.getServer().getOnlinePlayers()[new Random().nextInt(this.plugin.getServer().getOnlinePlayers().length - 1)].getName() + "> Hey there " + player.getName() + "!");
             }
@@ -138,14 +138,14 @@ public class Actions {
     }
 
     public void buryPlayer(Player player) {
-        if (!this.plugin.getController().canSpawn(player.getWorld()) && (Boolean) this.plugin.getSettings().getObject("modifyWorld")) {
+        if (!this.plugin.getController().canSpawn(player.getWorld()) && (Boolean) this.plugin.getConfiguration().getObject("modifyWorld")) {
             return;
         }
         final Block top = player.getLocation().subtract(0D, 1D, 0D).getBlock();
         Block middle = top.getLocation().subtract(0D, 1D, 0D).getBlock();
         Block bottom = middle.getLocation().subtract(0D, 1D, 0D).getBlock();
         final Material type = top.getType();
-        if (!(Boolean) this.plugin.getSettings().getObject("modifyWorld") || !this.plugin.getController().canSpawn(player.getWorld())) {
+        if (!(Boolean) this.plugin.getConfiguration().getObject("modifyWorld") || !this.plugin.getController().canSpawn(player.getWorld())) {
             return;
         }
         if (!top.getType().equals(Material.AIR) && !middle.getType().equals(Material.AIR) && !bottom.getType().equals(Material.AIR)) {
@@ -164,7 +164,7 @@ public class Actions {
     }
     
     public void modifyInventory(Player player) {
-        if (this.plugin.getController().canSpawn(player.getWorld()) && (Boolean) this.plugin.getSettings().getObject("modifyInventories")) {
+        if (this.plugin.getController().canSpawn(player.getWorld()) && (Boolean) this.plugin.getConfiguration().getObject("modifyInventories")) {
             ItemStack item = null;
             while (item == null) {
                 item = player.getInventory().getItem(new Random().nextInt(player.getInventory().getSize() - 1));

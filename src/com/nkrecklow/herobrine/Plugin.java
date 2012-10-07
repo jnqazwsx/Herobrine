@@ -29,7 +29,6 @@ public class Plugin extends JavaPlugin {
         this.listener = new Events(this);
         this.snooper = new Snooper(this);
         this.config.loadConfig();
-        this.snooper.run();
         this.getCommand("hb").setExecutor(this.commands);
         this.getServer().getPluginManager().registerEvents(this.listener, this);
         this.getServer().getScheduler().scheduleAsyncRepeatingTask(this, new Runnable() {
@@ -55,7 +54,7 @@ public class Plugin extends JavaPlugin {
 
             @Override
             public void run() {
-                
+                snooper.run();
             }
         }, 0L, 200L);
     }

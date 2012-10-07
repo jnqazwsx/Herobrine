@@ -20,7 +20,6 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
-import org.bukkit.inventory.ItemStack;
 
 public class Events extends Generic implements Listener {
 
@@ -89,7 +88,7 @@ public class Events extends Generic implements Listener {
         Entity entity = event.getEntity();
         World world = event.getEntity().getWorld();
         if (entity.equals(super.getPlugin().getController().getEntity())) {
-            world.dropItemNaturally(entity.getLocation(), new ItemStack(Material.DIAMOND, 1));
+            world.dropItemNaturally(entity.getLocation(), super.getPlugin().getConfiguration().getDrop());
             world.createExplosion(entity.getLocation(), -1F);
             event.setDroppedExp(0);
             event.getDrops().clear();

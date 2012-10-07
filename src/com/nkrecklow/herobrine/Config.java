@@ -5,12 +5,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.inventory.ItemStack;
 
 public class Config extends Generic {
 
     private int actionChance;
     private List<String> messages, allowedWorlds, signMessages;
     private YamlConfiguration config;
+    private ItemStack drop;
     
     public Config(Plugin plugin) {
         super(plugin);
@@ -39,6 +41,13 @@ public class Config extends Generic {
                 this.messages = this.config.getStringList("Herobrine.messages");
                 this.signMessages = this.config.getStringList("Herobrine.signMessages");
                 this.allowedWorlds = this.config.getStringList("Herobrine.allowedWorlds");
+                String dropString = this.config.getString("Herobrine.deathDrop");
+                if (dropString.contains(":")) {
+                    this.drop = new ItemStack(Integer.parseInt(dropString.split(":")[0]), Integer.parseInt(dropString.split(":")[1]));
+                } else {
+                    super.getPlugin().log("Invalid death item drop!");
+                    super.getPlugin().getServer().getPluginManager().disablePlugin(super.getPlugin());
+                }
                 if (this.signMessages.isEmpty()) {
                     super.getPlugin().log("Must have atleast one sign message!");
                     super.getPlugin().getServer().getPluginManager().disablePlugin(super.getPlugin());
@@ -83,6 +92,10 @@ public class Config extends Generic {
         } else {
             return this.signMessages.get(0);
         }
+    }
+    
+    public ItemStack getDrop() {
+        return this.drop;
     }
     
     public Object getObject(String name) {

@@ -17,8 +17,10 @@ Herobrine:
   spawnZombies: true
   # Can they summon him by altar?
   allowAltar: true
-  # How much damage to take when hit (out of 20)
+  # How much damage to take when hit (out of 20).
   damageAmount: 1
+  # What he drops on death and the amount.
+  deathDrop: 264:1
   # Possible messages he can send.
   messages:
     - I am your God!

@@ -36,7 +36,6 @@ public class Config extends Generic {
                 this.config = YamlConfiguration.loadConfiguration(file);
                 if (!super.getPlugin().getDescription().getVersion().equals(config.getString("Herobrine.configBuild"))) {
                     super.getPlugin().log("Outdated configuration file! Please delete it and restart!");
-                    super.getPlugin().getServer().getPluginManager().disablePlugin(super.getPlugin());
                 }
                 this.actionChance = this.config.getInt("Herobrine.actionChance");
                 this.messages = this.config.getStringList("Herobrine.messages");

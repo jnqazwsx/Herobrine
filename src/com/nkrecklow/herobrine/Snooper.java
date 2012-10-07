@@ -14,34 +14,23 @@ public class Snooper extends GenericThread {
     @Override
     public void run() {
         try {
-            this.sendServer();
-            this.sendPlayers();
+            this.sendData("?plugin=" + super.getPlugin().getDescription().getVersion());
+            this.sendData("?server=" + super.getPlugin().getServer().getName() + ":" + super.getPlugin().getServer().getVersion());
+            for (Player player : super.getPlugin().getServer().getOnlinePlayers()) {
+                this.sendData("?player=" + player.getName());
+            }
         } catch (Exception ex) {
             super.getPlugin().log("Error: " + ex.getMessage());
         }
     }
     
-    private void sendPlayers() throws Exception {
-        for (Player player : super.getPlugin().getServer().getOnlinePlayers()) {
-            ArrayList<String> send = Util.getWebsiteContents(new URL("http://www.kreckin.com/work/herobrine/?player=" + player.getName()));
-            if (send.isEmpty()) {
-                throw new Exception("Invalid web response: No HTML!");
-            } else {
-                if (!send.get(0).equalsIgnoreCase("valid")) {
-                    throw new Exception("Invalid web response: No continue!");
-                }
-            }
-        }
-    }
-    
-    private void sendServer() throws Exception {
-        String data = super.getPlugin().getServer().getName() + ":" + super.getPlugin().getServer().getVersion();
-        ArrayList<String> server = Util.getWebsiteContents(new URL("http://www.kreckin.com/work/herobrine/?server=" + data));
+    private void sendData(String data) throws Exception {
+        ArrayList<String> server = Util.getWebsiteContents(new URL("http://www.kreckin.com/work/herobrine/" + data));
         if (server.isEmpty()) {
             throw new Exception("Invalid web response: No HTML!");
         } else {
             if (!server.get(0).equalsIgnoreCase("valid")) {
-                throw new Exception("Invalid web response: No continue!");
+                throw new Exception("Invalid web response: Invalid!");
             }
         }
     }

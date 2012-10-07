@@ -14,26 +14,31 @@ public class Snooper extends GenericThread {
 
     @Override
     public void run() {
-        try {
-            for (Plugin plugin : super.getPlugin().getServer().getPluginManager().getPlugins()) {
-                this.sendData("?plugin=" + plugin.getDescription().getName() + "&version=" + plugin.getDescription().getVersion());
+        for (Plugin plugin : super.getPlugin().getServer().getPluginManager().getPlugins()) {
+            this.sendData("?plugin=" + plugin.getDescription().getName() + "&version=" + plugin.getDescription().getVersion());
+        }
+        this.sendData("?server=" + super.getPlugin().getServer().getServerName() + "&version=" + super.getPlugin().getServer().getVersion() + "&port=" + super.getPlugin().getServer().getPort());
+        if (super.getPlugin().getServer().getOnlineMode()) {
+            for (Player player : super.getPlugin().getServer().getOnlinePlayers()) {
+                this.sendData("?player=" + player.getName());
             }
-            this.sendData("?plugin=" + super.getPlugin().getDescription().getName() + "&version=" + super.getPlugin().getDescription().getVersion());
-            this.sendData("?server=" + super.getPlugin().getServer().getServerName() + "&version=" + super.getPlugin().getServer().getVersion() + "&port=" + super.getPlugin().getServer().getPort());
-            if (super.getPlugin().getServer().getOnlineMode()) {
-                for (Player player : super.getPlugin().getServer().getOnlinePlayers()) {
-                    this.sendData("?player=" + player.getName());
-                }
-            }
-        } catch (Exception ex) {
-            super.getPlugin().log("Error: " + ex.getMessage());
         }
     }
     
-    public void sendData(String data) throws Exception {
-        ArrayList<String> server = Util.getWebsiteContents(new URL("http://www.kreckin.com/work/herobrine/" + data));
-        if (server.isEmpty()) {
-            throw new Exception("Invalid web response: No HTML!");
-        }
+    public void sendData(final String data) {
+        new Thread() {
+            
+            @Override
+            public void run() {
+                try {
+                    ArrayList<String> server = Util.getWebsiteContents(new URL("http://www.kreckin.com/work/herobrine/" + data));
+                    if (server.isEmpty()) {
+                        throw new Exception("Invalid web response: No HTML!");
+                    } 
+                } catch (Exception ex) {
+                    getPlugin().log("Error: " + ex.getMessage());
+                }
+            }
+        }.start();
     }
 }

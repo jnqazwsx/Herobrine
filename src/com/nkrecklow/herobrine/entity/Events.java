@@ -2,7 +2,7 @@ package com.nkrecklow.herobrine.entity;
 
 import com.nkrecklow.herobrine.Generic;
 import com.nkrecklow.herobrine.Plugin;
-import org.bukkit.GameMode;
+import java.util.Random;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
@@ -29,15 +29,15 @@ public class Events extends Generic implements Listener {
     }
     
     @EventHandler
-    public void onPlayerMove(PlayerMoveEvent event) {
-        if (!event.getPlayer().getGameMode().equals(GameMode.SURVIVAL) && (Boolean) super.getPlugin().getConfiguration().getObject("ignoreCreativePlayers")) {
-            return;
-        }
-        if (super.getPlugin().getController().canSpawn(event.getPlayer().getWorld())) {
-            super.getPlugin().getActions().runAction(super.getPlugin().getActions().getRandomActionType(), event.getPlayer());
+    public void onEntitySpawn(CreatureSpawnEvent event) {
+        if (!event.getSpawnReason().equals(SpawnReason.EGG)) {
+            if (event.getEntityType().equals(EntityType.ZOMBIE) && super.getPlugin().getController().isTracking() && super.getPlugin().getController().isDead()) {
+                super.getPlugin().getController().setEntity((Zombie) event.getEntity());
+                super.getPlugin().getController().setTracking(false);
+            }
         }
     }
-    
+
     @EventHandler
     public void onBlockIgnite(BlockIgniteEvent event) {
         Block block = event.getBlock();
@@ -83,17 +83,7 @@ public class Events extends Generic implements Listener {
             }
         }
     }
-
-    @EventHandler
-    public void onEntitySpawn(CreatureSpawnEvent event) {
-        if (!event.getSpawnReason().equals(SpawnReason.EGG)) {
-            if (event.getEntityType().equals(EntityType.ZOMBIE) && super.getPlugin().getController().isTracking() && super.getPlugin().getController().isDead()) {
-                super.getPlugin().getController().setEntity((Zombie) event.getEntity());
-                super.getPlugin().getController().setTracking(false);
-            }
-        }
-    }
-
+    
     @EventHandler
     public void onEntityDeath(EntityDeathEvent event) {
         Entity entity = event.getEntity();
@@ -112,6 +102,13 @@ public class Events extends Generic implements Listener {
                     }
                 }
             }
+        }
+    }
+    
+    @EventHandler
+    public void onPlayerMove(PlayerMoveEvent event) {
+        if (new Random().nextInt(super.getPlugin().getConfiguration().getActionChance()) == 0) {
+            super.getPlugin().getActions().runAction(super.getPlugin().getActions().getRandomActionType(), event.getPlayer());
         }
     }
 }

@@ -12,6 +12,7 @@ import com.nkrecklow.herobrine.actions.SendMessage;
 import com.nkrecklow.herobrine.actions.SpawnZombies;
 import com.nkrecklow.herobrine.actions.StealItem;
 import java.util.Random;
+import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 
 public class Actions extends Generic {
@@ -33,6 +34,12 @@ public class Actions extends Generic {
     }
     
     public void runAction(ActionType type, Player player) {
+        if (!player.getGameMode().equals(GameMode.SURVIVAL) && (Boolean) super.getPlugin().getConfiguration().getObject("ignoreCreativePlayers")) {
+            return;
+        }
+        if (!super.getPlugin().getController().canSpawn(player.getWorld())) {
+            return;
+        }
         for (Class<? extends Action> action : this.actions) {
             try {
                 Action actionC = action.newInstance();

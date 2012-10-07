@@ -14,11 +14,11 @@ public class PlaceTorch extends Action {
     
     @Override
     public void onAction() {
-        Block torch = super.getPlayer().getLocation().add(super.getRandom().nextInt(5), 0D, super.getRandom().nextInt(5)).getBlock();
-        Block groundBlock = torch.getLocation().subtract(0D, 1D, 0D).getBlock();
         if (!(Boolean) super.getPlugin().getConfiguration().getObject("modifyWorld")) {
             return;
         }
+        Block torch = super.getPlayer().getLocation().add(super.getRandom().nextInt(5), 0D, super.getRandom().nextInt(5)).getBlock();
+        Block groundBlock = torch.getLocation().subtract(0D, 1D, 0D).getBlock();
         if (torch.getType().equals(Material.AIR) && !groundBlock.getType().equals(Material.AIR)) {
             if (new Random().nextBoolean()) {
                 torch.setType(Material.REDSTONE_TORCH_ON);

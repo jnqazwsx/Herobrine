@@ -11,9 +11,10 @@ public class SendMessage extends Action {
     
     @Override
     public void onAction() {
-        if (super.getPlugin().getConfiguration().canSendMessages()) {
-            super.getPlayer().sendMessage(super.getPlugin().formatMessage(super.getPlugin().getConfiguration().getMessage()));
-            super.getPlugin().log("Sent a message to " + super.getPlayer().getName() + ".");
+        if (!super.getPlugin().getConfiguration().canSendMessages()) {
+            return;
         }
+        super.getPlayer().sendMessage(super.getPlugin().formatMessage(super.getPlugin().getConfiguration().getMessage()));
+        super.getPlugin().log("Sent a message to " + super.getPlayer().getName() + ".");
     }
 }

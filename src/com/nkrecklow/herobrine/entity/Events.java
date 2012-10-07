@@ -13,6 +13,7 @@ import org.bukkit.entity.Zombie;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockIgniteEvent;
+import org.bukkit.event.block.BlockIgniteEvent.IgniteCause;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -39,8 +40,8 @@ public class Events extends Generic implements Listener {
 
     @EventHandler
     public void onBlockIgnite(BlockIgniteEvent event) {
-        Block block = event.getBlock();
-        if (event.getCause().equals(BlockIgniteEvent.IgniteCause.FLINT_AND_STEEL)) {
+        if (event.getCause().equals(IgniteCause.FLINT_AND_STEEL)) {
+            Block block = event.getBlock();
             World world = event.getBlock().getWorld();
             Block netherRack = block.getLocation().subtract(0D, 1D, 0D).getBlock();
             Block mossyCobble = block.getLocation().subtract(0D, 2D, 0D).getBlock();

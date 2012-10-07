@@ -13,8 +13,8 @@ public class AttackPlayer extends Action {
 
     @Override
     public void onAction() {
-        World world = super.getPlayer().getWorld();
         if (super.getPlugin().getController().isDead() && super.getPlugin().getController().canSpawn(super.getPlayer().getWorld())) {
+            World world = super.getPlayer().getWorld();
             world.createExplosion(super.getPlayer().getLocation().add(super.getRandom().nextInt(5), 0D, super.getRandom().nextInt(5)), -1F);
             super.getPlugin().getController().setTracking(true);
             world.spawnEntity(super.getPlayer().getLocation().add(super.getRandom().nextInt(5), 0D, super.getRandom().nextInt(5)), EntityType.ZOMBIE);

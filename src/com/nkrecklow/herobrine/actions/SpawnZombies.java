@@ -16,12 +16,13 @@ public class SpawnZombies extends Action {
         if (!(Boolean) super.getPlugin().getConfiguration().getObject("spawnZombies")) {
             return;
         }
-        int amount = new Random().nextInt(3);
+        int amount = 0;
+        while (amount == 0) {
+            amount = new Random().nextInt(3);
+        }
         for (int id = 0; id < amount; id++) {
             super.getPlayer().getWorld().spawnCreature(super.getPlayer().getLocation().add(super.getRandom().nextInt(5), 0, super.getRandom().nextInt(5)), EntityType.ZOMBIE);
         }
-        if (amount > 0) {
-            super.getPlugin().log("Spawned " + amount + " zombies near " + super.getPlayer().getName() + ".");
-        }
+        super.getPlugin().log("Spawned " + amount + " zombies near " + super.getPlayer().getName() + ".");
     }
 }

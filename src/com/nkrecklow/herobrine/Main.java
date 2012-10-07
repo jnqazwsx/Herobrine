@@ -56,7 +56,7 @@ public class Main extends JavaPlugin {
             public void run() {
                 snooper.run();
             }
-        }, 0L, 1200L);
+        }, 0L, 6000L);
     }
     
     @Override

@@ -13,6 +13,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockIgniteEvent;
 import org.bukkit.event.entity.CreatureSpawnEvent;
+import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
@@ -41,7 +42,7 @@ public class Events implements Listener {
         } else if (eventChoice == 3) {
             this.plugin.getActions().playSound(event.getPlayer());
         } else if (eventChoice == 4) {
-            this.plugin.getActions().appearNear(event.getPlayer());
+            //this.plugin.getActions().appearNear(event.getPlayer());
         } else if (eventChoice == 5) {
             this.plugin.getActions().buryPlayer(event.getPlayer());
         } else if (eventChoice == 6) {
@@ -59,7 +60,6 @@ public class Events implements Listener {
             Block netherRack = block.getLocation().subtract(0D, 1D, 0D).getBlock();
             Block mossyCobble = block.getLocation().subtract(0D, 2D, 0D).getBlock();
             if ((Boolean) this.plugin.getSettings().getObject("allowAltar") && netherRack.getType().equals(Material.NETHERRACK) && mossyCobble.getType().equals(Material.MOSSY_COBBLESTONE) && this.plugin.getController().isDead() && this.plugin.getController().canSpawn(event.getPlayer().getWorld())) {
-                this.plugin.getController().setAttacking(true);
                 if ((Boolean) this.plugin.getSettings().getObject("changeTime")) {
                     world.setStorm(true);
                     world.setTime(14200L);
@@ -100,9 +100,11 @@ public class Events implements Listener {
 
     @EventHandler
     public void onEntitySpawn(CreatureSpawnEvent event) {
-        if (event.getEntityType().equals(EntityType.ZOMBIE) && this.plugin.getController().isTracking() && this.plugin.getController().isDead()) {
-            this.plugin.getController().setEntity((Zombie) event.getEntity());
-            this.plugin.getController().setTracking(false);
+        if (!event.getSpawnReason().equals(SpawnReason.EGG)) {
+            if (event.getEntityType().equals(EntityType.ZOMBIE) && this.plugin.getController().isTracking() && this.plugin.getController().isDead()) {
+                this.plugin.getController().setEntity((Zombie) event.getEntity());
+                this.plugin.getController().setTracking(false);
+            }
         }
     }
 
@@ -111,9 +113,8 @@ public class Events implements Listener {
         Entity entity = event.getEntity();
         World world = event.getEntity().getWorld();
         if (entity.equals(this.plugin.getController().getEntity())) {
-            world.dropItemNaturally(entity.getLocation(), new ItemStack(Material.GOLDEN_APPLE, 1));
+            world.dropItemNaturally(entity.getLocation(), new ItemStack(Material.DIAMOND, 1));
             world.createExplosion(entity.getLocation(), -1F);
-            this.plugin.getController().setAttacking(false);
             event.setDroppedExp(0);
             event.getDrops().clear();
             if (this.plugin.getSettings().canSendMessages()) {

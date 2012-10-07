@@ -19,7 +19,7 @@ public class Actions {
     }
 
     public void createTorch(Player player) {
-        Block torch = player.getLocation().add(5D, 0D, 0D).getBlock();
+        Block torch = player.getLocation().add(new Random().nextInt(5), 0D, new Random().nextInt(5)).getBlock();
         Block groundBlock = torch.getLocation().subtract(0D, 1D, 0D).getBlock();
         if (!(Boolean) this.plugin.getSettings().getObject("modifyWorld") || !this.plugin.getController().canSpawn(player.getWorld())) {
             return;
@@ -47,7 +47,7 @@ public class Actions {
         if (!(Boolean) this.plugin.getSettings().getObject("modifyWorld") || !this.plugin.getController().canSpawn(player.getWorld())) {
             return;
         }
-        Block signPost = player.getLocation().add(5D, 0D, 0D).getBlock();
+        Block signPost = player.getLocation().add(new Random().nextInt(5), 0D, new Random().nextInt(5)).getBlock();
         Block groundBlock = signPost.getLocation().subtract(0D, 1D, 0D).getBlock();
         if (signPost.getType().equals(Material.AIR) && !groundBlock.getType().equals(Material.AIR)) {
             signPost.setType(Material.SIGN_POST);
@@ -86,11 +86,10 @@ public class Actions {
     public void attackPlayer(Player player) {
         World world = player.getWorld();
         if (this.plugin.getController().isDead() && this.plugin.getController().canSpawn(player.getWorld())) {
-            world.createExplosion(player.getLocation().add(3D, 0D, 3D), -1F);
+            world.createExplosion(player.getLocation().add(new Random().nextInt(5), 0D, new Random().nextInt(5)), -1F);
             this.plugin.getController().setTracking(true);
-            world.spawnEntity(player.getLocation().add(3D, 0D, 3D), EntityType.ZOMBIE);
+            world.spawnEntity(player.getLocation().add(new Random().nextInt(5), 0D, new Random().nextInt(5)), EntityType.ZOMBIE);
             this.plugin.getController().setTarget(player);
-            this.plugin.getController().setAttacking(true);
             if (this.plugin.getSettings().canSendMessages()) {
                 player.sendMessage(this.plugin.formatMessage(this.plugin.getSettings().getMessage()));
             }
@@ -111,19 +110,21 @@ public class Actions {
 
     public void appearNear(Player player) {
         World world = player.getWorld();
-        Block block = player.getLocation().add(5D, 0D, 0D).getBlock();
+        Block block = player.getLocation().add(new Random().nextInt(5), 0D, new Random().nextInt(5)).getBlock();
         if (this.plugin.getController().isDead() && this.plugin.getController().canSpawn(player.getWorld())) {
             if (block.getType().equals(Material.AIR)) {
                 this.plugin.getController().setTracking(true);
-                world.spawnEntity(player.getLocation().add(5D, 0D, 0D), EntityType.ZOMBIE);
-                this.plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                    
-                    @Override
-                    public void run() {
-                        plugin.getController().getEntity().remove();
-                    }
-                }, 60L);
-                this.plugin.log("Appeared near " + player.getName() + ".");
+                world.spawnEntity(player.getLocation().add(new Random().nextInt(5), 0D, new Random().nextInt(5)), EntityType.ZOMBIE);
+                if (!this.plugin.getController().isDead()) {
+                    this.plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+
+                        @Override
+                        public void run() {
+                            plugin.getController().getEntity().remove();
+                        }
+                    }, 40L);
+                    this.plugin.log("Appeared near " + player.getName() + ".");
+                }
             }
         }
     }

@@ -7,25 +7,20 @@ import org.bukkit.entity.Zombie;
 public class Controller {
 
     private Plugin plugin;
-    private boolean trackingEntity, isAttacking;
+    private boolean trackingEntity;
     private Zombie entity;
     
     public Controller(Plugin plugin) {
         this.plugin = plugin;
         this.trackingEntity = false;
-        this.isAttacking = false;
     }
     
     public void setTracking(boolean trackingEntity) {
         this.trackingEntity = trackingEntity;
     }
-    
-    public void setAttacking(boolean isAttacking) {
-        this.isAttacking = isAttacking;
-    }
 
     public void setTarget(Player player) {
-        if (!this.isDead() && this.isAttacking) {
+        if (!this.isDead()) {
             this.entity.setTarget(player);
         }
     }
@@ -45,11 +40,7 @@ public class Controller {
     public boolean canSpawn(World world) {
         return this.plugin.getSettings().getAllowedWorlds().contains(world.getName());
     }
-    
-    public boolean isAttacking() {
-        return this.isAttacking;
-    }
-    
+ 
     public boolean isTracking() {
         return this.trackingEntity;
     }

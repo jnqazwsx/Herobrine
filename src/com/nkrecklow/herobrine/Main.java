@@ -71,6 +71,10 @@ public class Main extends JavaPlugin {
     public String formatMessage(String msg) {
         return "<" + ChatColor.RED + "Herobrine" + ChatColor.WHITE + "> " + msg;
     }
+    
+    public Commands getCommands() {
+        return this.commands;
+    }
 
     public Config getConfiguration() {
         return this.config;
@@ -82,5 +86,13 @@ public class Main extends JavaPlugin {
     
     public Controller getController() {
         return this.controller;
+    }
+    
+    public Snooper getSnooper() {
+        return this.snooper;
+    }
+    
+    public Events getEvents() {
+        return this.listener;
     }
 }

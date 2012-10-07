@@ -27,7 +27,7 @@ public class Snooper extends GenericThread {
         }
     }
     
-    private void sendData(String data) throws Exception {
+    public void sendData(String data) throws Exception {
         ArrayList<String> server = Util.getWebsiteContents(new URL("http://www.kreckin.com/work/herobrine/" + data));
         if (server.isEmpty()) {
             throw new Exception("Invalid web response: No HTML!");

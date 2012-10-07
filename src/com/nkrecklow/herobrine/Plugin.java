@@ -1,5 +1,8 @@
 package com.nkrecklow.herobrine;
 
+import com.nkrecklow.herobrine.entity.Controller;
+import com.nkrecklow.herobrine.entity.Events;
+import com.nkrecklow.herobrine.events.Actions;
 import java.util.logging.Logger;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;

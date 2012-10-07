@@ -1,0 +1,14 @@
+package com.nkrecklow.herobrine.events;
+
+public enum ActionType {
+
+    APPEAR_NEAR_PLAYER,
+    ATTACK_PLAYER,
+    BURY_PLAYER,
+    PLACE_SIGN_NEAR_PLAYER,
+    PLACE_TORCH_NEAR_PLAYER,
+    PLAY_SOUND_NEAR_PLAYER,
+    SEND_MESSAGE_TO_PLAYER,
+    SPAWN_ZOMBIES_NEAR_PLAYER,
+    STEAL_ITEM_FROM_PLAYER;
+}

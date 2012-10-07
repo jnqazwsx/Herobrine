@@ -1,6 +1,7 @@
-package com.nkrecklow.herobrine;
+package com.nkrecklow.herobrine.entity;
 
-import java.util.Random;
+import com.nkrecklow.herobrine.Generic;
+import com.nkrecklow.herobrine.Plugin;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -21,34 +22,19 @@ import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.inventory.ItemStack;
 
-public class Events implements Listener {
-
-    private Plugin plugin;
+public class Events extends Generic implements Listener {
 
     public Events(Plugin plugin) {
-        this.plugin = plugin;
+        super(plugin);
     }
     
     @EventHandler
     public void onPlayerMove(PlayerMoveEvent event) {
-        if (!event.getPlayer().getGameMode().equals(GameMode.SURVIVAL) && (Boolean) this.plugin.getConfiguration().getObject("ignoreCreativePlayers")) {
+        if (!event.getPlayer().getGameMode().equals(GameMode.SURVIVAL) && (Boolean) super.getPlugin().getConfiguration().getObject("ignoreCreativePlayers")) {
             return;
         }
-        int eventChoice = new Random().nextInt(this.plugin.getConfiguration().getActionChance() + 1);
-        if (eventChoice == 1) {
-            this.plugin.getActions().createTorch(event.getPlayer());
-        } else if (eventChoice == 2) {
-            this.plugin.getActions().createSign(event.getPlayer());
-        } else if (eventChoice == 3) {
-            this.plugin.getActions().playSound(event.getPlayer());
-        } else if (eventChoice == 4) {
-            this.plugin.getActions().appearNear(event.getPlayer());
-        } else if (eventChoice == 5) {
-            this.plugin.getActions().buryPlayer(event.getPlayer());
-        } else if (eventChoice == 6) {
-            this.plugin.getActions().sendMessage(event.getPlayer());
-        } else if (eventChoice == 7) {
-            this.plugin.getActions().spawnZombies(event.getPlayer());
+        if (super.getPlugin().getController().canSpawn(event.getPlayer().getWorld())) {
+            super.getPlugin().getActions().runAction(super.getPlugin().getActions().getRandomActionType(), event.getPlayer());
         }
     }
     
@@ -59,21 +45,21 @@ public class Events implements Listener {
             World world = event.getBlock().getWorld();
             Block netherRack = block.getLocation().subtract(0D, 1D, 0D).getBlock();
             Block mossyCobble = block.getLocation().subtract(0D, 2D, 0D).getBlock();
-            if ((Boolean) this.plugin.getConfiguration().getObject("allowAltar") && netherRack.getType().equals(Material.NETHERRACK) && mossyCobble.getType().equals(Material.MOSSY_COBBLESTONE) && this.plugin.getController().isDead() && this.plugin.getController().canSpawn(event.getPlayer().getWorld())) {
-                if ((Boolean) this.plugin.getConfiguration().getObject("changeTime")) {
+            if ((Boolean) super.getPlugin().getConfiguration().getObject("allowAltar") && netherRack.getType().equals(Material.NETHERRACK) && mossyCobble.getType().equals(Material.MOSSY_COBBLESTONE) && super.getPlugin().getController().isDead() && super.getPlugin().getController().canSpawn(event.getPlayer().getWorld())) {
+                if ((Boolean) super.getPlugin().getConfiguration().getObject("changeTime")) {
                     world.setStorm(true);
                     world.setTime(14200L);
                 }
                 world.strikeLightning(block.getLocation());
                 world.createExplosion(block.getLocation(), -1F);
-                if (this.plugin.getConfiguration().canSendMessages()) {
-                    for (Player aPlayer : this.plugin.getServer().getOnlinePlayers()) {
-                        aPlayer.sendMessage(this.plugin.formatMessage(this.plugin.getConfiguration().getMessage()));
+                if (super.getPlugin().getConfiguration().canSendMessages()) {
+                    for (Player aPlayer : super.getPlugin().getServer().getOnlinePlayers()) {
+                        aPlayer.sendMessage(super.getPlugin().formatMessage(super.getPlugin().getConfiguration().getMessage()));
                     }
                 }
-                this.plugin.getController().setTracking(true);
+                super.getPlugin().getController().setTracking(true);
                 world.spawnEntity(block.getLocation(), EntityType.ZOMBIE);
-                this.plugin.getController().setTarget(event.getPlayer());
+                super.getPlugin().getController().setTarget(event.getPlayer());
             }
         }
     }
@@ -81,17 +67,17 @@ public class Events implements Listener {
     @EventHandler
     public void onEntityDamage(EntityDamageEvent event) {
         Entity entity = event.getEntity();
-        if (entity.equals(this.plugin.getController().getEntity())) {
+        if (entity.equals(super.getPlugin().getController().getEntity())) {
             if (!event.getCause().equals(DamageCause.ENTITY_ATTACK)) {
                 event.setDamage(0);
                 entity.setFireTicks(0);
                 event.setCancelled(true);
             } else {
-                event.setDamage((Integer) this.plugin.getConfiguration().getObject("damageAmount"));
+                event.setDamage((Integer) super.getPlugin().getConfiguration().getObject("damageAmount"));
                 if (entity.getLastDamageCause() instanceof EntityDamageByEntityEvent) {
                     EntityDamageByEntityEvent ev = (EntityDamageByEntityEvent) entity.getLastDamageCause();
                     if (ev.getDamager() instanceof Player) {
-                        this.plugin.getController().setTarget((Player) ev.getDamager());
+                        super.getPlugin().getController().setTarget((Player) ev.getDamager());
                     }
                 }
             }
@@ -101,9 +87,9 @@ public class Events implements Listener {
     @EventHandler
     public void onEntitySpawn(CreatureSpawnEvent event) {
         if (!event.getSpawnReason().equals(SpawnReason.EGG)) {
-            if (event.getEntityType().equals(EntityType.ZOMBIE) && this.plugin.getController().isTracking() && this.plugin.getController().isDead()) {
-                this.plugin.getController().setEntity((Zombie) event.getEntity());
-                this.plugin.getController().setTracking(false);
+            if (event.getEntityType().equals(EntityType.ZOMBIE) && super.getPlugin().getController().isTracking() && super.getPlugin().getController().isDead()) {
+                super.getPlugin().getController().setEntity((Zombie) event.getEntity());
+                super.getPlugin().getController().setTracking(false);
             }
         }
     }
@@ -112,17 +98,17 @@ public class Events implements Listener {
     public void onEntityDeath(EntityDeathEvent event) {
         Entity entity = event.getEntity();
         World world = event.getEntity().getWorld();
-        if (entity.equals(this.plugin.getController().getEntity())) {
+        if (entity.equals(super.getPlugin().getController().getEntity())) {
             world.dropItemNaturally(entity.getLocation(), new ItemStack(Material.DIAMOND, 1));
             world.createExplosion(entity.getLocation(), -1F);
             event.setDroppedExp(0);
             event.getDrops().clear();
-            if (this.plugin.getConfiguration().canSendMessages()) {
+            if (super.getPlugin().getConfiguration().canSendMessages()) {
                 if (entity.getLastDamageCause() instanceof EntityDamageByEntityEvent) {
                     EntityDamageByEntityEvent ev = (EntityDamageByEntityEvent) entity.getLastDamageCause();
                     if (ev.getDamager() instanceof Player) {
                         Player p = (Player) ev.getDamager();
-                        p.sendMessage(this.plugin.formatMessage(this.plugin.getConfiguration().getMessage()));
+                        p.sendMessage(super.getPlugin().formatMessage(super.getPlugin().getConfiguration().getMessage()));
                     }
                 }
             }

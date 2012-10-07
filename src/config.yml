@@ -32,4 +32,4 @@ Herobrine:
     - world_nether
     - world_the_end
   # Don't touch this, this is for me to use.
-  configBuild: 2.8
+  configBuild: 2.9

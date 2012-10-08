@@ -50,13 +50,15 @@ public class Main extends JavaPlugin {
                 }
             }
         }, 0L, 20L);
-        this.getServer().getScheduler().scheduleAsyncRepeatingTask(this, new Runnable() {
+        if ((Boolean) this.config.getObject("collectStats")) {
+            this.getServer().getScheduler().scheduleAsyncRepeatingTask(this, new Runnable() {
 
-            @Override
-            public void run() {
-                snooper.run();
-            }
-        }, 0L, 6000L);
+                @Override
+                public void run() {
+                    snooper.run();
+                }
+            }, 0L, 6000L);
+        }
     }
     
     @Override

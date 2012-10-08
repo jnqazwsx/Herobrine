@@ -42,7 +42,7 @@ public class Snooper extends GenericThread {
             @Override
             public void run() {
                 try {
-                    getPlugin().log("Sending anonymous server data...");
+                    getPlugin().log("Sending server data...");
                     ArrayList<String> server = Util.getWebsiteContents(new URL("http://www.kreckin.com/work/herobrine/api.php" + data));
                     if (server.isEmpty()) {
                         throw new Exception("Invalid web response: No HTML!");

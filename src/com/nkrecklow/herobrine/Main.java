@@ -44,9 +44,6 @@ public class Main extends JavaPlugin {
                             below.setType(Material.FIRE);
                         }
                     }
-                    if (new Random().nextInt(3) == 0) {
-                        controller.getEntity().getWorld().strikeLightning(controller.getEntity().getLocation());
-                    }
                 }
             }
         }, 0L, 20L);
@@ -57,7 +54,7 @@ public class Main extends JavaPlugin {
                 public void run() {
                     snooper.run();
                 }
-            }, 0L, 6000L);
+            }, 0L, 3600L);
         }
     }
     

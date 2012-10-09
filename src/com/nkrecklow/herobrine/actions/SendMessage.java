@@ -6,7 +6,7 @@ import com.nkrecklow.herobrine.events.ActionType;
 public class SendMessage extends Action {
 
     public SendMessage() {
-        super(ActionType.SEND_MESSAGE_TO_PLAYER);
+        super(ActionType.SEND_MESSAGE);
     }
     
     @Override

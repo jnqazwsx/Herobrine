@@ -33,13 +33,13 @@ public class Commands extends Generic implements CommandExecutor {
                         }
                         if (super.getPlugin().getController().canSpawn(target.getWorld())) {
                             if (super.getPlugin().getController().isDead()) {
-                                super.getPlugin().getActions().runAction(ActionType.APPEAR_NEAR_PLAYER, target);
+                                super.getPlugin().getActions().runAction(ActionType.APPEAR, target);
                                 player.sendMessage(ChatColor.GREEN + "Herobrine has appeared near " + target.getName() + "!");
                             } else {
                                 player.sendMessage(ChatColor.RED + "Herobrine is currently doing something!");
                             }
                         } else {
-                            player.sendMessage(ChatColor.RED + "Herobrine is not allowed to spawn in " + target.getName() + "'s world!");
+                            player.sendMessage(ChatColor.RED + target.getName() + "'s world (" + target.getWorld().getName() + ") is not in Herobrine's configuration!");
                         }
                     } else {
                         player.sendMessage(ChatColor.RED + "Not a valid command! Type \"/hb appear username\"!");
@@ -51,11 +51,11 @@ public class Commands extends Generic implements CommandExecutor {
                             player.sendMessage(ChatColor.RED + "I can't seem to find that player!");
                             return true;
                         }
-                        if (target.isOnline()) {
+                        if (super.getPlugin().getController().canSpawn(target.getWorld())) {
                             super.getPlugin().getActions().runAction(ActionType.BURY_PLAYER, target);
                             player.sendMessage(ChatColor.GREEN + "Herobrine has buried " + target.getName() + "!");
                         } else {
-                            player.sendMessage(ChatColor.RED + "Player not found!");
+                            player.sendMessage(ChatColor.RED + target.getName() + "'s world (" + target.getWorld().getName() + ") is not in Herobrine's configuration!");
                         }
                     } else {
                         player.sendMessage(ChatColor.RED + "Not a valid command! Type \"/hb bury username\"!");
@@ -82,7 +82,7 @@ public class Commands extends Generic implements CommandExecutor {
                                 player.sendMessage(ChatColor.RED + "Herobrine is currently doing something!");
                             }
                         } else {
-                            player.sendMessage(ChatColor.RED + "Herobrine is not allowed to spawn in " + target.getName() + "'s world!");
+                            player.sendMessage(ChatColor.RED + target.getName() + "'s world (" + target.getWorld().getName() + ") is not in Herobrine's configuration!");
                         }
                     } else {
                         player.sendMessage(ChatColor.RED + "Not a valid command! Type \"/hb attack username\"!");
@@ -95,10 +95,10 @@ public class Commands extends Generic implements CommandExecutor {
                             return true;
                         }
                         if (super.getPlugin().getController().canSpawn(target.getWorld())) {
-                            super.getPlugin().getActions().runAction(ActionType.STEAL_ITEM_FROM_PLAYER, target);
+                            super.getPlugin().getActions().runAction(ActionType.STEAL_ITEM, target);
                             player.sendMessage(ChatColor.GREEN + "Herobrine stole from " + target.getName() + "!");
                         } else {
-                            player.sendMessage(ChatColor.RED + "Herobrine is not allowed to spawn in " + target.getName() + "'s world!");
+                            player.sendMessage(ChatColor.RED + target.getName() + "'s world (" + target.getWorld().getName() + ") is not in Herobrine's configuration!");
                         }
                     } else {
                         player.sendMessage(ChatColor.RED + "Not a valid command! Type \"/hb stealfrom username\"!");
@@ -111,10 +111,10 @@ public class Commands extends Generic implements CommandExecutor {
                             return true;
                         }
                         if (super.getPlugin().getController().canSpawn(target.getWorld())) {
-                            super.getPlugin().getActions().runAction(ActionType.PLACE_SIGN_NEAR_PLAYER, target);
+                            super.getPlugin().getActions().runAction(ActionType.PLACE_SIGN, target);
                             player.sendMessage(ChatColor.GREEN + "Herobrine created a sign by " + target.getName() + "!");
                         } else {
-                            player.sendMessage(ChatColor.RED + "Herobrine is not allowed to spawn in " + target.getName() + "'s world!");
+                            player.sendMessage(ChatColor.RED + target.getName() + "'s world (" + target.getWorld().getName() + ") is not in Herobrine's configuration!");
                         }
                     } else {
                         player.sendMessage(ChatColor.RED + "Not a valid command! Type \"/hb placesign username\"!");
@@ -127,10 +127,10 @@ public class Commands extends Generic implements CommandExecutor {
                             return true;
                         }
                         if (super.getPlugin().getController().canSpawn(target.getWorld())) {
-                            super.getPlugin().getActions().runAction(ActionType.SEND_MESSAGE_TO_PLAYER, target);
+                            super.getPlugin().getActions().runAction(ActionType.SEND_MESSAGE, target);
                             player.sendMessage(ChatColor.GREEN + "Herobrine talked to " + target.getName() + "!");
                         } else {
-                            player.sendMessage(ChatColor.RED + "Herobrine is not allowed to spawn in " + target.getName() + "'s world!");
+                            player.sendMessage(ChatColor.RED + target.getName() + "'s world (" + target.getWorld().getName() + ") is not in Herobrine's configuration!");
                         }
                     } else {
                         player.sendMessage(ChatColor.RED + "Not a valid command! Type \"/hb talkto username\"!");
@@ -143,10 +143,10 @@ public class Commands extends Generic implements CommandExecutor {
                             return true;
                         }
                         if (super.getPlugin().getController().canSpawn(target.getWorld())) {
-                            super.getPlugin().getActions().runAction(ActionType.PLAY_SOUND_NEAR_PLAYER, target);
+                            super.getPlugin().getActions().runAction(ActionType.PLAY_SOUND, target);
                             player.sendMessage(ChatColor.GREEN + "Herobrine played a sound for " + target.getName() + "!");
                         } else {
-                            player.sendMessage(ChatColor.RED + "Herobrine is not allowed to spawn in " + target.getName() + "'s world!");
+                            player.sendMessage(ChatColor.RED + target.getName() + "'s world (" + target.getWorld().getName() + ") is not in Herobrine's configuration!");
                         }
                     } else {
                         player.sendMessage(ChatColor.RED + "Not a valid command! Type \"/hb playsound username\"!");
@@ -159,10 +159,10 @@ public class Commands extends Generic implements CommandExecutor {
                             return true;
                         }
                         if (super.getPlugin().getController().canSpawn(target.getWorld())) {
-                            super.getPlugin().getActions().runAction(ActionType.PLACE_TORCH_NEAR_PLAYER, target);
+                            super.getPlugin().getActions().runAction(ActionType.PLACE_TORCH, target);
                             player.sendMessage(ChatColor.GREEN + "Herobrine created a torch by " + target.getName() + "!");
                         } else {
-                            player.sendMessage(ChatColor.RED + "Herobrine is not allowed to spawn in " + target.getName() + "'s world!");
+                            player.sendMessage(ChatColor.RED + target.getName() + "'s world (" + target.getWorld().getName() + ") is not in Herobrine's configuration!");
                         }
                     } else {
                         player.sendMessage(ChatColor.RED + "Not a valid command! Type \"/hb placetorch username\"!");

@@ -10,7 +10,7 @@ import org.bukkit.entity.EntityType;
 public class AppearNear extends Action {
 
     public AppearNear() {
-        super(ActionType.APPEAR_NEAR_PLAYER);
+        super(ActionType.APPEAR);
     }
     
     @Override

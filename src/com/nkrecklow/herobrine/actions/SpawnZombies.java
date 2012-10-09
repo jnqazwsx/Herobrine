@@ -8,7 +8,7 @@ import org.bukkit.entity.EntityType;
 public class SpawnZombies extends Action {
 
     public SpawnZombies() {
-        super(ActionType.SPAWN_ZOMBIES_NEAR_PLAYER);
+        super(ActionType.SPAWN_ZOMBIES);
     }
     
     @Override

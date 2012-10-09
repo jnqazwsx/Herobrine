@@ -7,7 +7,7 @@ import org.bukkit.inventory.ItemStack;
 public class StealItem extends Action {
 
     public StealItem() {
-        super(ActionType.STEAL_ITEM_FROM_PLAYER);
+        super(ActionType.STEAL_ITEM);
     }
     
     @Override

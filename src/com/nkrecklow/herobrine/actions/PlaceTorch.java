@@ -9,7 +9,7 @@ import org.bukkit.block.Block;
 public class PlaceTorch extends Action {
 
     public PlaceTorch() {
-        super(ActionType.PLACE_TORCH_NEAR_PLAYER);
+        super(ActionType.PLACE_TORCH);
     }
     
     @Override

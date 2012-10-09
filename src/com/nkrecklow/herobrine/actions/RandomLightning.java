@@ -6,7 +6,7 @@ import com.nkrecklow.herobrine.events.ActionType;
 public class RandomLightning extends Action {
 
     public RandomLightning() {
-        super(ActionType.RANDOM_LIGHTING_NEAR_PLAYER);
+        super(ActionType.RANDOM_LIGHTING);
     }
     
     @Override

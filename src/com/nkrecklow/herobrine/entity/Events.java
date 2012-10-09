@@ -1,7 +1,7 @@
 package com.nkrecklow.herobrine.entity;
 
-import com.nkrecklow.herobrine.base.Generic;
 import com.nkrecklow.herobrine.Main;
+import com.nkrecklow.herobrine.base.Generic;
 import java.util.Random;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -30,6 +30,9 @@ public class Events extends Generic implements Listener {
     
     @EventHandler
     public void onEntitySpawn(CreatureSpawnEvent event) {
+        if (!super.getPlugin().getController().canSpawn(event.getEntity().getWorld())) {
+            return;
+        }
         if (!event.getSpawnReason().equals(SpawnReason.EGG)) {
             if (event.getEntityType().equals(EntityType.ZOMBIE) && super.getPlugin().getController().isTracking() && super.getPlugin().getController().isDead()) {
                 super.getPlugin().getController().setEntity((Zombie) event.getEntity());
@@ -40,6 +43,9 @@ public class Events extends Generic implements Listener {
 
     @EventHandler
     public void onBlockIgnite(BlockIgniteEvent event) {
+        if (!super.getPlugin().getController().canSpawn(event.getBlock().getWorld())) {
+            return;
+        }
         if (event.getCause().equals(IgniteCause.FLINT_AND_STEEL)) {
             Block block = event.getBlock();
             World world = event.getBlock().getWorld();
@@ -66,6 +72,9 @@ public class Events extends Generic implements Listener {
 
     @EventHandler
     public void onEntityDamage(EntityDamageEvent event) {
+        if (!super.getPlugin().getController().canSpawn(event.getEntity().getWorld())) {
+            return;
+        }
         Entity entity = event.getEntity();
         if (entity.equals(super.getPlugin().getController().getEntity())) {
             if (!event.getCause().equals(DamageCause.ENTITY_ATTACK)) {
@@ -86,6 +95,9 @@ public class Events extends Generic implements Listener {
     
     @EventHandler
     public void onEntityDeath(EntityDeathEvent event) {
+        if (!super.getPlugin().getController().canSpawn(event.getEntity().getWorld())) {
+            return;
+        }
         Entity entity = event.getEntity();
         World world = event.getEntity().getWorld();
         if (entity.equals(super.getPlugin().getController().getEntity())) {
@@ -107,7 +119,7 @@ public class Events extends Generic implements Listener {
     
     @EventHandler
     public void onPlayerMove(PlayerMoveEvent event) {
-        if (new Random().nextInt(super.getPlugin().getConfiguration().getActionChance()) == 0) {
+        if (super.getPlugin().getController().canSpawn(event.getPlayer().getWorld()) && new Random().nextInt(super.getPlugin().getConfiguration().getActionChance()) == 0) {
             super.getPlugin().getActions().runAction(super.getPlugin().getActions().getRandomActionType(), event.getPlayer());
         }
     }

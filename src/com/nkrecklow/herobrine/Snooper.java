@@ -1,6 +1,6 @@
 package com.nkrecklow.herobrine;
 
-import com.nkrecklow.herobrine.base.GenericThread;
+import com.nkrecklow.herobrine.core.GenericThread;
 import java.net.URL;
 import java.util.ArrayList;
 import org.bukkit.entity.Player;

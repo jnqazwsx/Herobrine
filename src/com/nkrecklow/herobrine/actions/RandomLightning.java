@@ -1,7 +1,7 @@
 package com.nkrecklow.herobrine.actions;
 
-import com.nkrecklow.herobrine.events.Action;
-import com.nkrecklow.herobrine.events.ActionType;
+import com.nkrecklow.herobrine.api.Action;
+import com.nkrecklow.herobrine.api.ActionType;
 
 public class RandomLightning extends Action {
 

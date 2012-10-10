@@ -1,4 +1,4 @@
-package com.nkrecklow.herobrine.events;
+package com.nkrecklow.herobrine.api;
 
 public enum ActionType {
 

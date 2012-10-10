@@ -1,6 +1,6 @@
-package com.nkrecklow.herobrine.entity;
+package com.nkrecklow.herobrine.base;
 
-import com.nkrecklow.herobrine.base.Generic;
+import com.nkrecklow.herobrine.core.Generic;
 import com.nkrecklow.herobrine.Main;
 import org.bukkit.World;
 import org.bukkit.entity.Player;

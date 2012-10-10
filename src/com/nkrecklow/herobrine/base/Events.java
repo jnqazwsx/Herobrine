@@ -1,7 +1,7 @@
-package com.nkrecklow.herobrine.entity;
+package com.nkrecklow.herobrine.base;
 
 import com.nkrecklow.herobrine.Main;
-import com.nkrecklow.herobrine.base.Generic;
+import com.nkrecklow.herobrine.core.Generic;
 import java.util.Random;
 import org.bukkit.Material;
 import org.bukkit.World;

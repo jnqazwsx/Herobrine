@@ -1,4 +1,4 @@
-package com.nkrecklow.herobrine.events;
+package com.nkrecklow.herobrine.base;
 
 import com.nkrecklow.herobrine.Main;
 import com.nkrecklow.herobrine.actions.AppearNear;
@@ -12,7 +12,9 @@ import com.nkrecklow.herobrine.actions.RandomLightning;
 import com.nkrecklow.herobrine.actions.SendMessage;
 import com.nkrecklow.herobrine.actions.SpawnZombies;
 import com.nkrecklow.herobrine.actions.StealItem;
-import com.nkrecklow.herobrine.base.Generic;
+import com.nkrecklow.herobrine.api.Action;
+import com.nkrecklow.herobrine.api.ActionType;
+import com.nkrecklow.herobrine.core.Generic;
 import java.util.Random;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;

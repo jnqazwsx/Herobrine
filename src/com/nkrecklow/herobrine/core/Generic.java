@@ -1,4 +1,4 @@
-package com.nkrecklow.herobrine.base;
+package com.nkrecklow.herobrine.core;
 
 import com.nkrecklow.herobrine.Main;
 

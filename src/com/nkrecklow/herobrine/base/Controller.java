@@ -1,7 +1,7 @@
 package com.nkrecklow.herobrine.base;
 
-import com.nkrecklow.herobrine.core.Generic;
 import com.nkrecklow.herobrine.Main;
+import com.nkrecklow.herobrine.core.Generic;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Zombie;

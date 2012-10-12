@@ -2,6 +2,7 @@ package com.nkrecklow.herobrine.base;
 
 import com.nkrecklow.herobrine.Main;
 import com.nkrecklow.herobrine.actions.AppearNear;
+import com.nkrecklow.herobrine.actions.AttackPlayer;
 import com.nkrecklow.herobrine.actions.BuryPlayer;
 import com.nkrecklow.herobrine.actions.PlaceSign;
 import com.nkrecklow.herobrine.actions.PlaceTorch;
@@ -24,7 +25,7 @@ public class Actions extends Generic {
     
     public Actions(Main plugin) {
         super(plugin);
-        this.actions = new Class[10];
+        this.actions = new Class[11];
         this.actions[0] = AppearNear.class;
         this.actions[1] = BuryPlayer.class;
         this.actions[2] = PlaceSign.class;
@@ -35,6 +36,7 @@ public class Actions extends Generic {
         this.actions[7] = RandomLightning.class;
         this.actions[8] = RandomFire.class;
         this.actions[9] = RandomDrop.class;
+        this.actions[10] = AttackPlayer.class;
     }
     
     public void runAction(ActionType type, Player player) {
@@ -60,7 +62,10 @@ public class Actions extends Generic {
             for (Class<? extends Action> action : this.actions) {
                 if (new Random().nextInt(10) == 0) {
                     try {
-                        type = action.newInstance().getActionType();
+                        Action actionI = action.newInstance();
+                        if (actionI.isRandom()) {
+                            type = actionI.getActionType();
+                        }
                         break;
                     } catch (Exception ex) {
                         super.getPlugin().log("Error: " + ex.getMessage());

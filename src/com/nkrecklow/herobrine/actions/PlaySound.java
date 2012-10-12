@@ -7,7 +7,7 @@ import org.bukkit.Effect;
 public class PlaySound extends Action {
 
     public PlaySound() {
-        super(ActionType.PLAY_SOUND);
+        super(ActionType.PLAY_SOUND, true);
     }
     
     @Override

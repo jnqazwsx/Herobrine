@@ -9,7 +9,7 @@ import org.bukkit.block.Sign;
 public class PlaceSign extends Action {
 
     public PlaceSign() {
-        super(ActionType.PLACE_SIGN);
+        super(ActionType.PLACE_SIGN, true);
     }
     
     @Override

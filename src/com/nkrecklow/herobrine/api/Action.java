@@ -10,10 +10,12 @@ public abstract class Action {
     private Player player;
     private ActionType type;
     private Random random;
+    private boolean isRandom;
     
-    public Action(ActionType type) {
+    public Action(ActionType type, boolean isRandom) {
         this.type = type;
         this.random = new Random();
+        this.isRandom = isRandom;
     }
     
     public abstract void onAction();
@@ -37,5 +39,9 @@ public abstract class Action {
     
     public Random getRandom() {
         return this.random;
+    }
+    
+    public boolean isRandom() {
+        return this.isRandom;
     }
 }

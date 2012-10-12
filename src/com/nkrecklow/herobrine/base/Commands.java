@@ -147,7 +147,28 @@ public class Commands extends Generic implements CommandExecutor {
                     } else {
                         player.sendMessage(ChatColor.RED + "Not a valid command! Type \"/hb spawnzombies username\"!");
                     }
+                } else if (args[0].equalsIgnoreCase("attack")) {
+                    if (args.length == 2) {
+                        Player target = super.getPlugin().getServer().getPlayer(args[1]);
+                        if (target == null) {
+                            player.sendMessage(ChatColor.RED + "I can't seem to find that player!");
+                            return true;
+                        }
+                        if (super.getPlugin().getController().canSpawn(target.getWorld())) {
+                            if (super.getPlugin().getController().isDead()) {
+                                super.getPlugin().getActions().runAction(ActionType.ATTACK_PLAYER, target);
+                                player.sendMessage(ChatColor.GREEN + "Herobrine is now attacking " + target.getName() + "!");
+                            } else {
+                                player.sendMessage(ChatColor.RED + "Herobrine is currently doing something!");
+                            }
+                        } else {
+                            player.sendMessage(ChatColor.RED + target.getName() + "'s world (" + target.getWorld().getName() + ") is not in Herobrine's configuration!");
+                        }
+                    } else {
+                        player.sendMessage(ChatColor.RED + "Not a valid command! Type \"/hb attack username\"!");
+                    }
                 } else if (args[0].equalsIgnoreCase("help")) {
+                    player.sendMessage(ChatColor.RED + "attack" + ChatColor.WHITE + " - Attack a certain player.");
                     player.sendMessage(ChatColor.RED + "appear" + ChatColor.WHITE + " - Appear near a certain player.");
                     player.sendMessage(ChatColor.RED + "bury" + ChatColor.WHITE + " - Bury a certain player alive.");
                     player.sendMessage(ChatColor.RED + "placesign" + ChatColor.WHITE + " - Create a sign with a message.");

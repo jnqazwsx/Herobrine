@@ -8,7 +8,7 @@ import org.bukkit.block.Block;
 public class BuryPlayer extends Action {
 
     public BuryPlayer() {
-        super(ActionType.BURY_PLAYER);
+        super(ActionType.BURY_PLAYER, true);
     }
     
     @Override

@@ -8,7 +8,7 @@ import org.bukkit.block.Block;
 public class RandomFire extends Action {
 
     public RandomFire() {
-        super(ActionType.RANDOM_FIRE);
+        super(ActionType.RANDOM_FIRE, true);
     }
     
     @Override

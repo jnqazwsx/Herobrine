@@ -6,7 +6,7 @@ import com.nkrecklow.herobrine.api.ActionType;
 public class SendMessage extends Action {
 
     public SendMessage() {
-        super(ActionType.SEND_MESSAGE);
+        super(ActionType.SEND_MESSAGE, true);
     }
     
     @Override

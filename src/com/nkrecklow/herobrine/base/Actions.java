@@ -25,18 +25,17 @@ public class Actions extends Generic {
     
     public Actions(Main plugin) {
         super(plugin);
-        this.actions = new Class[11];
+        this.actions = new Class[10];
         this.actions[0] = AppearNear.class;
-        this.actions[1] = AttackPlayer.class;
-        this.actions[2] = BuryPlayer.class;
-        this.actions[3] = PlaceSign.class;
-        this.actions[4] = PlaceTorch.class;
-        this.actions[5] = PlaySound.class;
-        this.actions[6] = SendMessage.class;
-        this.actions[7] = SpawnZombies.class;
-        this.actions[8] = RandomLightning.class;
-        this.actions[9] = RandomFire.class;
-        this.actions[10] = RandomDrop.class;
+        this.actions[1] = BuryPlayer.class;
+        this.actions[2] = PlaceSign.class;
+        this.actions[3] = PlaceTorch.class;
+        this.actions[4] = PlaySound.class;
+        this.actions[5] = SendMessage.class;
+        this.actions[6] = SpawnZombies.class;
+        this.actions[7] = RandomLightning.class;
+        this.actions[8] = RandomFire.class;
+        this.actions[9] = RandomDrop.class;
     }
     
     public void runAction(ActionType type, Player player) {

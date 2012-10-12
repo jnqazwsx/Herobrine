@@ -48,8 +48,7 @@ public class Actions extends Generic {
             try {
                 Action actionC = action.newInstance();
                 if (actionC.getActionType().equals(type)) {
-                    actionC.setInstances(super.getPlugin(), player);
-                    actionC.onAction();
+                    actionC.onAction(super.getPlugin(), player);
                 }
             } catch (Exception ex) {
                 super.getPlugin().log("Error: " + ex.getMessage());

@@ -1,8 +1,11 @@
 package com.nkrecklow.herobrine.actions;
 
+import com.nkrecklow.herobrine.Main;
 import com.nkrecklow.herobrine.api.Action;
 import com.nkrecklow.herobrine.api.ActionType;
+import java.util.Random;
 import org.bukkit.Effect;
+import org.bukkit.entity.Player;
 
 public class PlaySound extends Action {
 
@@ -11,8 +14,8 @@ public class PlaySound extends Action {
     }
     
     @Override
-    public void onAction() {
-        super.getPlayer().getWorld().playEffect(super.getPlayer().getLocation(), Effect.values()[super.getRandom().nextInt(Effect.values().length - 1)], 5);
-        super.getPlugin().log("Played a sound near " + super.getPlayer().getName() + ".");
+    public void onAction(Main plugin, Player player) {
+        player.getWorld().playEffect(player.getLocation(), Effect.values()[new Random().nextInt(Effect.values().length - 1)], 5);
+        plugin.log("Played a sound near " + player.getName() + ".");
     }
 }

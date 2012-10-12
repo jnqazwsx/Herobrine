@@ -1,9 +1,11 @@
 package com.nkrecklow.herobrine.actions;
 
+import com.nkrecklow.herobrine.Main;
 import com.nkrecklow.herobrine.api.Action;
 import com.nkrecklow.herobrine.api.ActionType;
 import java.util.Random;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Player;
 
 public class SpawnZombies extends Action {
 
@@ -12,8 +14,8 @@ public class SpawnZombies extends Action {
     }
     
     @Override
-    public void onAction() {
-        if (!(Boolean) super.getPlugin().getConfiguration().getObject("spawnZombies")) {
+    public void onAction(Main plugin, Player player) {
+        if (!(Boolean) plugin.getConfiguration().getObject("spawnZombies")) {
             return;
         }
         int amount = 0;
@@ -21,8 +23,8 @@ public class SpawnZombies extends Action {
             amount = new Random().nextInt(3);
         }
         for (int id = 0; id < amount; id++) {
-            super.getPlayer().getWorld().spawnCreature(super.getPlayer().getLocation().add(super.getRandom().nextInt(5), 0, super.getRandom().nextInt(5)), EntityType.ZOMBIE);
+            player.getWorld().spawnCreature(player.getLocation().add(new Random().nextInt(5), 0, new Random().nextInt(5)), EntityType.ZOMBIE);
         }
-        super.getPlugin().log("Spawned " + amount + " zombies near " + super.getPlayer().getName() + ".");
+        plugin.log("Spawned " + amount + " zombies near " + player.getName() + ".");
     }
 }

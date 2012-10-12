@@ -12,5 +12,6 @@ public enum ActionType {
     RANDOM_LIGHTING,
     RANDOM_FIRE,
     ATTACK_PLAYER,
+    RANDOM_WALLS,
     RANDOM_DROP;
 }

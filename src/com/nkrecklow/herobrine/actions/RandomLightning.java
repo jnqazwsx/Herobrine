@@ -1,7 +1,10 @@
 package com.nkrecklow.herobrine.actions;
 
+import com.nkrecklow.herobrine.Main;
 import com.nkrecklow.herobrine.api.Action;
 import com.nkrecklow.herobrine.api.ActionType;
+import java.util.Random;
+import org.bukkit.entity.Player;
 
 public class RandomLightning extends Action {
 
@@ -10,11 +13,11 @@ public class RandomLightning extends Action {
     }
     
     @Override
-    public void onAction() {
-        if (!(Boolean) super.getPlugin().getConfiguration().getObject("fireTrails")) {
+    public void onAction(Main plugin, Player player) {
+        if (!(Boolean) plugin.getConfiguration().getObject("fireTrails")) {
             return;
         }
-        super.getPlayer().getWorld().strikeLightning(super.getPlayer().getLocation().add(super.getRandom().nextInt(5), 0, super.getRandom().nextInt(5)));
-        super.getPlugin().log("Lightning struck near " + super.getPlayer().getName() + ".");
+        player.getWorld().strikeLightning(player.getLocation().add(new Random().nextInt(5), 0, new Random().nextInt(5)));
+        plugin.log("Lightning struck near " + player.getName() + ".");
     }
 }

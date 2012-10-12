@@ -1,9 +1,12 @@
 package com.nkrecklow.herobrine.actions;
 
+import com.nkrecklow.herobrine.Main;
 import com.nkrecklow.herobrine.api.Action;
 import com.nkrecklow.herobrine.api.ActionType;
+import java.util.Random;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Player;
 
 public class RandomFire extends Action {
 
@@ -12,15 +15,15 @@ public class RandomFire extends Action {
     }
     
     @Override
-    public void onAction() {
-        if (!(Boolean) super.getPlugin().getConfiguration().getObject("fireTrails")) {
+    public void onAction(Main plugin, Player player) {
+        if (!(Boolean) plugin.getConfiguration().getObject("fireTrails")) {
             return;
         }
-        Block block = super.getPlayer().getWorld().getBlockAt(super.getPlayer().getLocation().add(super.getRandom().nextInt(5), 0, super.getRandom().nextInt(5)));
-        Block ground = super.getPlayer().getWorld().getBlockAt(block.getLocation().subtract(0, 1, 0));
+        Block block = player.getWorld().getBlockAt(player.getLocation().add(new Random().nextInt(5), 0, new Random().nextInt(5)));
+        Block ground = player.getWorld().getBlockAt(block.getLocation().subtract(0, 1, 0));
         if (!ground.getType().equals(Material.AIR)) {
             block.setType(Material.FIRE);
         }
-        super.getPlugin().log("Placed fire near " + super.getPlayer().getName() + ".");
+        plugin.log("Placed fire near " + player.getName() + ".");
     }
 }

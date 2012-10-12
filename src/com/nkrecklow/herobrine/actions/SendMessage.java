@@ -1,7 +1,9 @@
 package com.nkrecklow.herobrine.actions;
 
+import com.nkrecklow.herobrine.Main;
 import com.nkrecklow.herobrine.api.Action;
 import com.nkrecklow.herobrine.api.ActionType;
+import org.bukkit.entity.Player;
 
 public class SendMessage extends Action {
 
@@ -10,11 +12,11 @@ public class SendMessage extends Action {
     }
     
     @Override
-    public void onAction() {
-        if (!super.getPlugin().getConfiguration().canSendMessages()) {
+    public void onAction(Main plugin, Player player) {
+        if (!plugin.getConfiguration().canSendMessages()) {
             return;
         }
-        super.getPlayer().sendMessage(super.getPlugin().formatMessage(super.getPlugin().getConfiguration().getMessage()));
-        super.getPlugin().log("Sent a message to " + super.getPlayer().getName() + ".");
+        player.sendMessage(plugin.formatMessage(plugin.getConfiguration().getMessage()));
+        plugin.log("Sent a message to " + player.getName() + ".");
     }
 }

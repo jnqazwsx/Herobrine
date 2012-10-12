@@ -10,6 +10,7 @@ import com.nkrecklow.herobrine.actions.PlaySound;
 import com.nkrecklow.herobrine.actions.RandomDrop;
 import com.nkrecklow.herobrine.actions.RandomFire;
 import com.nkrecklow.herobrine.actions.RandomLightning;
+import com.nkrecklow.herobrine.actions.RandomWalls;
 import com.nkrecklow.herobrine.actions.SendMessage;
 import com.nkrecklow.herobrine.actions.SpawnZombies;
 import com.nkrecklow.herobrine.api.Action;
@@ -26,7 +27,7 @@ public class Actions extends Generic {
     
     public Actions(Main plugin) {
         super(plugin);
-        this.actions = new Class[11];
+        this.actions = new Class[12];
         this.actions[0] = AppearNear.class;
         this.actions[1] = BuryPlayer.class;
         this.actions[2] = PlaceSign.class;
@@ -38,6 +39,7 @@ public class Actions extends Generic {
         this.actions[8] = RandomFire.class;
         this.actions[9] = RandomDrop.class;
         this.actions[10] = AttackPlayer.class;
+        this.actions[11] = RandomWalls.class;
     }
     
     public void runAction(ActionType type, Player player) {

@@ -52,7 +52,7 @@ public class Main extends JavaPlugin {
 
                 @Override
                 public void run() {
-                    snooper.run();
+                    snooper.start();
                 }
             }, 0L, 3600L);
         }
@@ -64,7 +64,7 @@ public class Main extends JavaPlugin {
     }
     
     public void log(String data) {
-        Logger.getLogger("Minecraft").info("[Herobrine] " + data);
+        Logger.getLogger("Minecraft").info("[Herobrine] [0]".replace("[0]", data));
     }
     
     public String formatMessage(String msg) {

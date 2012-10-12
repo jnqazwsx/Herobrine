@@ -34,34 +34,42 @@ public class Config extends Generic {
             }
             if (file.exists()) {
                 this.config = YamlConfiguration.loadConfiguration(file);
-                if (!super.getPlugin().getDescription().getVersion().equals(config.getString("Herobrine.configBuild"))) {
-                    super.getPlugin().log("Outdated configuration file! Please delete it and restart!");
-                }
-                this.actionChance = this.config.getInt("Herobrine.actionChance");
-                this.messages = this.config.getStringList("Herobrine.messages");
-                this.signMessages = this.config.getStringList("Herobrine.signMessages");
-                this.allowedWorlds = this.config.getStringList("Herobrine.allowedWorlds");
-                String dropString = this.config.getString("Herobrine.deathDrop");
-                if (dropString.contains(",")) {
-                    this.drop = new ItemStack(Integer.parseInt(dropString.split(",")[0]), Integer.parseInt(dropString.split(",")[1]));
-                } else {
-                    super.getPlugin().log("Invalid death item drop!");
-                    super.getPlugin().getServer().getPluginManager().disablePlugin(super.getPlugin());
-                }
-                if (this.signMessages.isEmpty()) {
-                    super.getPlugin().log("Must have atleast one sign message!");
-                    super.getPlugin().getServer().getPluginManager().disablePlugin(super.getPlugin());
-                }
-                if (this.allowedWorlds.isEmpty()) {
-                    super.getPlugin().log("Must be allowed in atleast one world!");
-                    super.getPlugin().getServer().getPluginManager().disablePlugin(super.getPlugin());
-                }
+                this.loadSettings();
             } else {
                 super.getPlugin().saveResource("config.yml", false);
+            }
+            if (this.config == null) {
+                this.config = YamlConfiguration.loadConfiguration(file);
+                this.loadSettings();
             }
         } catch (Exception ex) {
             super.getPlugin().log("Failed to load configuration file!");
             super.getPlugin().log("Error: " + ex.getMessage());
+            super.getPlugin().getServer().getPluginManager().disablePlugin(super.getPlugin());
+        }
+    }
+    
+    private void loadSettings() throws Exception {
+        if (!super.getPlugin().getDescription().getVersion().equals(this.config.getString("Herobrine.configBuild"))) {
+            super.getPlugin().log("Outdated configuration file! Please delete it and restart!");
+        }
+        this.actionChance = this.config.getInt("Herobrine.actionChance");
+        this.messages = this.config.getStringList("Herobrine.messages");
+        this.signMessages = this.config.getStringList("Herobrine.signMessages");
+        this.allowedWorlds = this.config.getStringList("Herobrine.allowedWorlds");
+        String dropString = this.config.getString("Herobrine.deathDrop");
+        if (dropString.contains(",")) {
+            this.drop = new ItemStack(Integer.parseInt(dropString.split(",")[0]), Integer.parseInt(dropString.split(",")[1]));
+        } else {
+            super.getPlugin().log("Invalid death item drop!");
+            super.getPlugin().getServer().getPluginManager().disablePlugin(super.getPlugin());
+        }
+        if (this.signMessages.isEmpty()) {
+            super.getPlugin().log("Must have atleast one sign message!");
+            super.getPlugin().getServer().getPluginManager().disablePlugin(super.getPlugin());
+        }
+        if (this.allowedWorlds.isEmpty()) {
+            super.getPlugin().log("Must be allowed in atleast one world!");
             super.getPlugin().getServer().getPluginManager().disablePlugin(super.getPlugin());
         }
     }

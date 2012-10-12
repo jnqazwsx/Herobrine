@@ -2,7 +2,6 @@ package com.nkrecklow.herobrine.base;
 
 import com.nkrecklow.herobrine.Main;
 import com.nkrecklow.herobrine.actions.AppearNear;
-import com.nkrecklow.herobrine.actions.AttackPlayer;
 import com.nkrecklow.herobrine.actions.BuryPlayer;
 import com.nkrecklow.herobrine.actions.PlaceSign;
 import com.nkrecklow.herobrine.actions.PlaceTorch;

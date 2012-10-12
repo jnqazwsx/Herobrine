@@ -12,5 +12,6 @@ public enum ActionType {
     SPAWN_ZOMBIES,
     RANDOM_LIGHTING,
     RANDOM_FIRE,
+    RANDOM_DROP,
     STEAL_ITEM;
 }

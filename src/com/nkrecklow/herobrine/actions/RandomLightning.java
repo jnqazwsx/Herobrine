@@ -12,5 +12,6 @@ public class RandomLightning extends Action {
     @Override
     public void onAction() {
         super.getPlayer().getWorld().strikeLightning(super.getPlayer().getLocation().add(super.getRandom().nextInt(5), 0, super.getRandom().nextInt(5)));
+        super.getPlugin().log("Lightning struck near " + super.getPlayer().getName() + ".");
     }
 }

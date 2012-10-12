@@ -21,5 +21,6 @@ public class RandomFire extends Action {
         if (!ground.getType().equals(Material.AIR)) {
             block.setType(Material.FIRE);
         }
+        super.getPlugin().log("Placed fire near " + super.getPlayer().getName() + ".");
     }
 }

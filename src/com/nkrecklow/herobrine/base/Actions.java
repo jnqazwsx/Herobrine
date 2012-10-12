@@ -7,10 +7,7 @@ import com.nkrecklow.herobrine.actions.BuryPlayer;
 import com.nkrecklow.herobrine.actions.PlaceSign;
 import com.nkrecklow.herobrine.actions.PlaceTorch;
 import com.nkrecklow.herobrine.actions.PlaySound;
-import com.nkrecklow.herobrine.actions.RandomDrop;
-import com.nkrecklow.herobrine.actions.RandomFire;
-import com.nkrecklow.herobrine.actions.RandomLightning;
-import com.nkrecklow.herobrine.actions.RandomWalls;
+import com.nkrecklow.herobrine.actions.old.RandomLightning;
 import com.nkrecklow.herobrine.actions.SendMessage;
 import com.nkrecklow.herobrine.actions.SpawnZombies;
 import com.nkrecklow.herobrine.api.Action;
@@ -27,7 +24,7 @@ public class Actions extends Generic {
     
     public Actions(Main plugin) {
         super(plugin);
-        this.actions = new Class[10];
+        this.actions = new Class[8];
         this.actions[0] = AppearNear.class;
         this.actions[1] = BuryPlayer.class;
         this.actions[2] = PlaceSign.class;
@@ -35,9 +32,7 @@ public class Actions extends Generic {
         this.actions[4] = PlaySound.class;
         this.actions[5] = SendMessage.class;
         this.actions[6] = SpawnZombies.class;
-        this.actions[7] = RandomLightning.class;
-        this.actions[8] = AttackPlayer.class;
-        this.actions[9] = RandomWalls.class;
+        this.actions[7] = AttackPlayer.class;
     }
     
     public void runAction(ActionType type, Player player) {
@@ -67,8 +62,11 @@ public class Actions extends Generic {
                             if (this.lastAction == null) {
                                 type = actionI.getActionType();
                                 this.lastAction = actionI.getActionType();
-                            } else if (!this.lastAction.equals(actionI.getActionType())) {
-                                type = actionI.getActionType();
+                            } else {
+                                if (!this.lastAction.equals(actionI.getActionType())) {
+                                    type = actionI.getActionType();
+                                    this.lastAction = actionI.getActionType();
+                                }
                             }
                         }
                     } catch (Exception ex) {

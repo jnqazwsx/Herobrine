@@ -33,6 +33,9 @@ Herobrine:
     - Stop
     - I'm alive.
     - Don't forget.
+    - I'm here.
+    - Always watching.
+    - Never forget.
   # What worlds he can do things in.
   allowedWorlds:
     - world

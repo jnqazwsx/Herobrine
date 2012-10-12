@@ -1,4 +1,4 @@
-package com.nkrecklow.herobrine.actions;
+package com.nkrecklow.herobrine.actions.old;
 
 import com.nkrecklow.herobrine.Main;
 import com.nkrecklow.herobrine.api.Action;

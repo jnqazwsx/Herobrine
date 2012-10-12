@@ -14,7 +14,7 @@ public class SpawnZombies extends Action {
     }
     
     @Override
-    public void onAction(Main plugin, Player player) {
+        public void onAction(Main plugin, Player player) {
         if (!(Boolean) plugin.getConfiguration().getObject("spawnZombies")) {
             return;
         }

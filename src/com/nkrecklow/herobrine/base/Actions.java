@@ -38,6 +38,9 @@ public class Actions extends Generic {
         if (!player.getGameMode().equals(GameMode.SURVIVAL) && (Boolean) super.getPlugin().getConfiguration().getObject("ignoreCreativePlayers")) {
             return;
         }
+        if (!super.getPlugin().getController().canSpawn(player.getWorld())) {
+            return;
+        }
         for (Class<? extends Action> action : this.actions) {
             try {
                 Action actionC = action.newInstance();

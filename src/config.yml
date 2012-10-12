@@ -39,6 +39,6 @@ Herobrine:
     - world_nether
     - world_the_end
   # Don't touch this, this is for me to use.
-  configBuild: 3.4
+  configBuild: 3.5
   # Allow me to collect server statistics (see BukktDev page).
   collectStats: true

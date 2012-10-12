@@ -22,6 +22,7 @@ import org.bukkit.entity.Player;
 public class Actions extends Generic {
 
     private Class<? extends Action> actions[];
+    private ActionType lastAction;
     
     public Actions(Main plugin) {
         super(plugin);
@@ -64,9 +65,13 @@ public class Actions extends Generic {
                     try {
                         Action actionI = action.newInstance();
                         if (actionI.isRandom()) {
-                            type = actionI.getActionType();
+                            if (this.lastAction == null) {
+                                type = actionI.getActionType();
+                                this.lastAction = actionI.getActionType();
+                            } else if (!this.lastAction.equals(actionI.getActionType())) {
+                                type = actionI.getActionType();
+                            }
                         }
-                        break;
                     } catch (Exception ex) {
                         super.getPlugin().log("Error: " + ex.getMessage());
                         continue;

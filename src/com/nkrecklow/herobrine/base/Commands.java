@@ -87,22 +87,6 @@ public class Commands extends Generic implements CommandExecutor {
                     } else {
                         player.sendMessage(ChatColor.RED + "Not a valid command! Type \"/hb attack username\"!");
                     }
-                } else if (args[0].equalsIgnoreCase("stealfrom")) {
-                    if (args.length == 2) {
-                        Player target = super.getPlugin().getServer().getPlayer(args[1]);
-                        if (target == null) {
-                            player.sendMessage(ChatColor.RED + "I can't seem to find that player!");
-                            return true;
-                        }
-                        if (super.getPlugin().getController().canSpawn(target.getWorld())) {
-                            super.getPlugin().getActions().runAction(ActionType.STEAL_ITEM, target);
-                            player.sendMessage(ChatColor.GREEN + "Herobrine stole from " + target.getName() + "!");
-                        } else {
-                            player.sendMessage(ChatColor.RED + target.getName() + "'s world (" + target.getWorld().getName() + ") is not in Herobrine's configuration!");
-                        }
-                    } else {
-                        player.sendMessage(ChatColor.RED + "Not a valid command! Type \"/hb stealfrom username\"!");
-                    }
                 } else if (args[0].equalsIgnoreCase("placesign")) {
                     if (args.length == 2) {
                         Player target = super.getPlugin().getServer().getPlayer(args[1]);
@@ -167,15 +151,31 @@ public class Commands extends Generic implements CommandExecutor {
                     } else {
                         player.sendMessage(ChatColor.RED + "Not a valid command! Type \"/hb placetorch username\"!");
                     }
+                } else if (args[0].equalsIgnoreCase("spawnzombies")) {
+                    if (args.length == 2) {
+                        Player target = super.getPlugin().getServer().getPlayer(args[1]);
+                        if (target == null) {
+                            player.sendMessage(ChatColor.RED + "I can't seem to find that player!");
+                            return true;
+                        }
+                        if (super.getPlugin().getController().canSpawn(target.getWorld())) {
+                            super.getPlugin().getActions().runAction(ActionType.SPAWN_ZOMBIES, target);
+                            player.sendMessage(ChatColor.GREEN + "Spawned zombies by " + target.getName() + "!");
+                        } else {
+                            player.sendMessage(ChatColor.RED + target.getName() + "'s world (" + target.getWorld().getName() + ") is not in Herobrine's configuration!");
+                        }
+                    } else {
+                        player.sendMessage(ChatColor.RED + "Not a valid command! Type \"/hb spawnzombies username\"!");
+                    }
                 } else if (args[0].equalsIgnoreCase("help")) {
                     player.sendMessage(ChatColor.RED + "attack" + ChatColor.WHITE + " - Attack a certain player.");
                     player.sendMessage(ChatColor.RED + "appear" + ChatColor.WHITE + " - Appear near a certain player.");
                     player.sendMessage(ChatColor.RED + "bury" + ChatColor.WHITE + " - Bury a certain player alive.");
                     player.sendMessage(ChatColor.RED + "placesign" + ChatColor.WHITE + " - Create a sign with a message.");
-                    player.sendMessage(ChatColor.RED + "stealfrom" + ChatColor.WHITE + " - Steal from the player.");
                     player.sendMessage(ChatColor.RED + "talkto" + ChatColor.WHITE + " - Send a message.");
                     player.sendMessage(ChatColor.RED + "playsound" + ChatColor.WHITE + " - Play a random sound.");
                     player.sendMessage(ChatColor.RED + "placetorch" + ChatColor.WHITE + " - Place a torch nearby.");
+                    player.sendMessage(ChatColor.RED + "spawnzombies" + ChatColor.WHITE + " - Spawn zombies.");
                     player.sendMessage(ChatColor.RED + "kill" + ChatColor.WHITE + " - Remove him in case of error.");
                 } else {
                     player.sendMessage(ChatColor.RED + "Not a valid command! Type \"/hb help\" for help!");

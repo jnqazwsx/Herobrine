@@ -11,8 +11,6 @@ Herobrine:
   fireTrails: false
   # Don't attack creative players.
   ignoreCreativePlayers: true
-  # Allow theft or addition to player inventories.
-  modifyInventories: true
   # Can he spawn zombies on players?
   spawnZombies: true
   # Can they summon him by altar?

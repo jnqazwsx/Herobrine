@@ -12,7 +12,6 @@ import com.nkrecklow.herobrine.actions.RandomFire;
 import com.nkrecklow.herobrine.actions.RandomLightning;
 import com.nkrecklow.herobrine.actions.SendMessage;
 import com.nkrecklow.herobrine.actions.SpawnZombies;
-import com.nkrecklow.herobrine.actions.StealItem;
 import com.nkrecklow.herobrine.api.Action;
 import com.nkrecklow.herobrine.api.ActionType;
 import com.nkrecklow.herobrine.core.Generic;
@@ -26,7 +25,7 @@ public class Actions extends Generic {
     
     public Actions(Main plugin) {
         super(plugin);
-        this.actions = new Class[12];
+        this.actions = new Class[11];
         this.actions[0] = AppearNear.class;
         this.actions[1] = AttackPlayer.class;
         this.actions[2] = BuryPlayer.class;
@@ -35,10 +34,9 @@ public class Actions extends Generic {
         this.actions[5] = PlaySound.class;
         this.actions[6] = SendMessage.class;
         this.actions[7] = SpawnZombies.class;
-        this.actions[8] = StealItem.class;
-        this.actions[9] = RandomLightning.class;
-        this.actions[10] = RandomFire.class;
-        this.actions[11] = RandomDrop.class;
+        this.actions[8] = RandomLightning.class;
+        this.actions[9] = RandomFire.class;
+        this.actions[10] = RandomDrop.class;
     }
     
     public void runAction(ActionType type, Player player) {

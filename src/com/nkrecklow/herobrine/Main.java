@@ -52,7 +52,11 @@ public class Main extends JavaPlugin {
 
                 @Override
                 public void run() {
-                    snooper.start();
+                    try {
+                        snooper.start();
+                    } catch (Exception ex) {
+                        
+                    }
                 }
             }, 0L, 3600L);
         }

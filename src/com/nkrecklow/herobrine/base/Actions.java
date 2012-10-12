@@ -27,7 +27,7 @@ public class Actions extends Generic {
     
     public Actions(Main plugin) {
         super(plugin);
-        this.actions = new Class[12];
+        this.actions = new Class[10];
         this.actions[0] = AppearNear.class;
         this.actions[1] = BuryPlayer.class;
         this.actions[2] = PlaceSign.class;
@@ -36,10 +36,8 @@ public class Actions extends Generic {
         this.actions[5] = SendMessage.class;
         this.actions[6] = SpawnZombies.class;
         this.actions[7] = RandomLightning.class;
-        this.actions[8] = RandomFire.class;
-        this.actions[9] = RandomDrop.class;
-        this.actions[10] = AttackPlayer.class;
-        this.actions[11] = RandomWalls.class;
+        this.actions[8] = AttackPlayer.class;
+        this.actions[9] = RandomWalls.class;
     }
     
     public void runAction(ActionType type, Player player) {

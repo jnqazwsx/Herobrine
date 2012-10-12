@@ -7,7 +7,6 @@ import com.nkrecklow.herobrine.actions.BuryPlayer;
 import com.nkrecklow.herobrine.actions.PlaceSign;
 import com.nkrecklow.herobrine.actions.PlaceTorch;
 import com.nkrecklow.herobrine.actions.PlaySound;
-import com.nkrecklow.herobrine.actions.old.RandomLightning;
 import com.nkrecklow.herobrine.actions.SendMessage;
 import com.nkrecklow.herobrine.actions.SpawnZombies;
 import com.nkrecklow.herobrine.api.Action;

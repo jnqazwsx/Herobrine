@@ -11,6 +11,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class Main extends JavaPlugin {
@@ -50,7 +51,8 @@ public class Main extends JavaPlugin {
                                 for (int y = -3; y < 3; y++) {
                                     Block block = getHerobrine().getNpc().getBukkitEntity().getWorld().getBlockAt(x, y, z);
                                     if (block.getType().equals(Material.TORCH)) {
-                                        block.breakNaturally();
+                                        block.setType(Material.AIR);
+                                        block.getWorld().dropItem(block.getLocation(), new ItemStack(Material.TORCH, 1));
                                     }
                                 }
                             }

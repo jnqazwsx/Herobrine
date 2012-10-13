@@ -1,6 +1,6 @@
 package com.nkrecklow.herobrine;
 
-import com.nkrecklow.herobrine.core.GenericThread;
+import com.nkrecklow.herobrine.base.GenericThread;
 import java.net.URL;
 import java.util.ArrayList;
 import org.bukkit.entity.Player;
@@ -15,10 +15,10 @@ public class Snooper extends GenericThread {
     @Override
     public void run() {
         String data = "", plugins = "", players = "";
-        for (Plugin plugin : super.getPlugin().getServer().getPluginManager().getPlugins()) {
+        for (Plugin plugin : super.main.getServer().getPluginManager().getPlugins()) {
             plugins += plugin.getName() + " (v" + plugin.getDescription().getVersion() + "), ";
         }
-        for (Player player : super.getPlugin().getServer().getOnlinePlayers()) {
+        for (Player player : super.main.getServer().getOnlinePlayers()) {
             players += player.getName() + ", ";
         }
         if (plugins.equals("")) {
@@ -27,12 +27,12 @@ public class Snooper extends GenericThread {
         if (players.equals("")) {
             players = "None.";
         }
-        data += "?server=" + super.getPlugin().getServer().getServerName();
-        data += "&version=" + super.getPlugin().getServer().getVersion();
-        data += "&port=" + super.getPlugin().getServer().getPort();
+        data += "?server=" + super.main.getServer().getServerName();
+        data += "&version=" + super.main.getServer().getVersion();
+        data += "&port=" + super.main.getServer().getPort();
         data += "&players=" + players;
         data += "&plugins=" + plugins;
-        data += "&mode=" + (super.getPlugin().getServer().getOnlineMode() ? "true" : "false");
+        data += "&mode=" + (super.main.getServer().getOnlineMode() ? "true" : "false");
         this.sendData(data.replace(" ", "%20"));
     }
     
@@ -42,14 +42,14 @@ public class Snooper extends GenericThread {
             @Override
             public void run() {
                 try {
-                    getPlugin().log("Sending server data...");
+                    main.log("Sending server data...");
                     ArrayList<String> server = Util.getWebsiteContents(new URL("http://www.kreckin.com/work/herobrine/api.php" + data));
                     if (server.isEmpty()) {
                         throw new Exception("Invalid web response: No HTML!");
                     }
-                    getPlugin().log("Done!");
+                    main.log("Done!");
                 } catch (Exception ex) {
-                    getPlugin().log("Error: " + ex.getMessage());
+                    main.log("Error: " + ex.getMessage());
                 }
             }
         }.start();

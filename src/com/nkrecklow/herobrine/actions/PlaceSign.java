@@ -1,8 +1,8 @@
 package com.nkrecklow.herobrine.actions;
 
 import com.nkrecklow.herobrine.Main;
-import com.nkrecklow.herobrine.api.Action;
-import com.nkrecklow.herobrine.api.ActionType;
+import com.nkrecklow.herobrine.events.Action;
+import com.nkrecklow.herobrine.events.ActionType;
 import java.util.Random;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -16,8 +16,8 @@ public class PlaceSign extends Action {
     }
     
     @Override
-    public void onAction(Main plugin, Player player) {
-        if (!(Boolean) plugin.getConfiguration().getObject("modifyWorld")) {
+    public void onAction(Main main, Player player) {
+        if (!(Boolean) main.getConfiguration().getObject("modifyWorld")) {
             return;
         }
         Block signPost = player.getLocation().add(new Random().nextInt(5), 0D, new Random().nextInt(5)).getBlock();
@@ -25,9 +25,9 @@ public class PlaceSign extends Action {
         if (signPost.getType().equals(Material.AIR) && !groundBlock.getType().equals(Material.AIR)) {
             signPost.setType(Material.SIGN_POST);
             Sign signBlock = (Sign) signPost.getState();
-            signBlock.setLine(1, plugin.getConfiguration().getSignMessage());
+            signBlock.setLine(1, main.getConfiguration().getSignMessage());
             signBlock.update();
-            plugin.log("Placed a sign by " + player.getName() + ".");
+            main.log("Placed a sign by " + player.getName() + ".");
         }
     }
 }

@@ -1,8 +1,8 @@
 package com.nkrecklow.herobrine.actions;
 
 import com.nkrecklow.herobrine.Main;
-import com.nkrecklow.herobrine.api.Action;
-import com.nkrecklow.herobrine.api.ActionType;
+import com.nkrecklow.herobrine.events.Action;
+import com.nkrecklow.herobrine.events.ActionType;
 import java.util.Random;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -15,8 +15,8 @@ public class PlaceTorch extends Action {
     }
     
     @Override
-    public void onAction(Main plugin, Player player) {
-        if (!(Boolean) plugin.getConfiguration().getObject("modifyWorld")) {
+    public void onAction(Main main, Player player) {
+        if (!(Boolean) main.getConfiguration().getObject("modifyWorld")) {
             return;
         }
         Block torch = player.getLocation().add(new Random().nextInt(5), 0D, new Random().nextInt(5)).getBlock();
@@ -27,7 +27,7 @@ public class PlaceTorch extends Action {
             } else {
                 torch.setType(Material.TORCH);
             }
-            plugin.log("Placed a torch near " + player.getName() + ".");
+            main.log("Placed a torch near " + player.getName() + ".");
         }
     }
 }

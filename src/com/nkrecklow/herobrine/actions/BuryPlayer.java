@@ -1,8 +1,8 @@
 package com.nkrecklow.herobrine.actions;
 
 import com.nkrecklow.herobrine.Main;
-import com.nkrecklow.herobrine.api.Action;
-import com.nkrecklow.herobrine.api.ActionType;
+import com.nkrecklow.herobrine.events.Action;
+import com.nkrecklow.herobrine.events.ActionType;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -14,8 +14,8 @@ public class BuryPlayer extends Action {
     }
     
     @Override
-    public void onAction(Main plugin, Player player) {
-        if (!(Boolean) plugin.getConfiguration().getObject("modifyWorld")) {
+    public void onAction(Main main, Player player) {
+        if (!(Boolean) main.getConfiguration().getObject("modifyWorld")) {
             return;
         }
         final Block top = player.getLocation().subtract(0D, 1D, 0D).getBlock();
@@ -26,14 +26,14 @@ public class BuryPlayer extends Action {
             top.setType(Material.AIR);
             middle.setType(Material.AIR);
             bottom.setType(Material.AIR);
-            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+            main.getServer().getScheduler().scheduleSyncDelayedTask(main, new Runnable() {
                 
                 @Override
                 public void run() {
                     top.setType(type);
                 }
             }, 60L);
-            plugin.log("Buried " + player.getName() + ".");
+            main.log("Buried " + player.getName() + ".");
         }
     }
 }

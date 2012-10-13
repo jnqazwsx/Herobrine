@@ -1,4 +1,4 @@
-package com.nkrecklow.herobrine.base;
+package com.nkrecklow.herobrine.events;
 
 import com.nkrecklow.herobrine.Main;
 import com.nkrecklow.herobrine.actions.AppearNear;
@@ -7,11 +7,7 @@ import com.nkrecklow.herobrine.actions.BuryPlayer;
 import com.nkrecklow.herobrine.actions.PlaceSign;
 import com.nkrecklow.herobrine.actions.PlaceTorch;
 import com.nkrecklow.herobrine.actions.PlaySound;
-import com.nkrecklow.herobrine.actions.SendMessage;
-import com.nkrecklow.herobrine.actions.SpawnZombies;
-import com.nkrecklow.herobrine.api.Action;
-import com.nkrecklow.herobrine.api.ActionType;
-import com.nkrecklow.herobrine.core.Generic;
+import com.nkrecklow.herobrine.base.Generic;
 import java.util.Random;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
@@ -19,36 +15,33 @@ import org.bukkit.entity.Player;
 public class Actions extends Generic {
 
     private Class<? extends Action> actions[];
-    private ActionType lastAction;
-    
+
     public Actions(Main plugin) {
         super(plugin);
-        this.actions = new Class[8];
+        this.actions = new Class[6];
         this.actions[0] = AppearNear.class;
         this.actions[1] = BuryPlayer.class;
         this.actions[2] = PlaceSign.class;
         this.actions[3] = PlaceTorch.class;
         this.actions[4] = PlaySound.class;
-        this.actions[5] = SendMessage.class;
-        this.actions[6] = SpawnZombies.class;
-        this.actions[7] = AttackPlayer.class;
+        this.actions[5] = AttackPlayer.class;
     }
     
     public void runAction(ActionType type, Player player) {
-        if (!player.getGameMode().equals(GameMode.SURVIVAL) && (Boolean) super.getPlugin().getConfiguration().getObject("ignoreCreativePlayers")) {
+        if ((Boolean) super.main.getConfiguration().getObject("ignoreCreativePlayers") && player.getGameMode().equals(GameMode.CREATIVE)) {
             return;
         }
-        if (!super.getPlugin().getController().canSpawn(player.getWorld())) {
+        if (!super.main.canSpawn(player.getWorld())) {
             return;
         }
         for (Class<? extends Action> action : this.actions) {
             try {
                 Action actionC = action.newInstance();
                 if (actionC.getActionType().equals(type)) {
-                    actionC.onAction(super.getPlugin(), player);
+                    actionC.onAction(super.main, player);
                 }
             } catch (Exception ex) {
-                super.getPlugin().log("Error: " + ex.getMessage());
+                super.main.log("Error: " + ex.getMessage());
             }
         }
     }
@@ -61,18 +54,10 @@ public class Actions extends Generic {
                     try {
                         Action actionI = action.newInstance();
                         if (actionI.isRandom()) {
-                            if (this.lastAction == null) {
-                                type = actionI.getActionType();
-                                this.lastAction = actionI.getActionType();
-                            } else {
-                                if (!this.lastAction.equals(actionI.getActionType())) {
-                                    type = actionI.getActionType();
-                                    this.lastAction = actionI.getActionType();
-                                }
-                            }
+                            type = actionI.getActionType();
                         }
                     } catch (Exception ex) {
-                        super.getPlugin().log("Error: " + ex.getMessage());
+                        super.main.log("Error: " + ex.getMessage());
                         continue;
                     }
                 }

@@ -1,6 +1,6 @@
 package com.nkrecklow.herobrine;
 
-import com.nkrecklow.herobrine.core.Generic;
+import com.nkrecklow.herobrine.base.Generic;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,34 +24,34 @@ public class Config extends Generic {
     
     public void loadConfig() {
         try {
-            File dir = super.getPlugin().getDataFolder();
+            File dir = super.main.getDataFolder();
             File file = new File(dir + "/config.yml");
             if (!dir.exists()) {
                 if (!dir.mkdir()) {
-                    super.getPlugin().log("Failed to create directory!");
-                    super.getPlugin().getServer().getPluginManager().disablePlugin(super.getPlugin());
+                    super.main.log("Failed to create directory!");
+                    super.main.getServer().getPluginManager().disablePlugin(super.main);
                 }
             }
             if (file.exists()) {
                 this.config = YamlConfiguration.loadConfiguration(file);
                 this.loadSettings();
             } else {
-                super.getPlugin().saveResource("config.yml", false);
+                super.main.saveResource("config.yml", false);
             }
             if (this.config == null) {
                 this.config = YamlConfiguration.loadConfiguration(file);
                 this.loadSettings();
             }
         } catch (Exception ex) {
-            super.getPlugin().log("Failed to load configuration file!");
-            super.getPlugin().log("Error: " + ex.getMessage());
-            super.getPlugin().getServer().getPluginManager().disablePlugin(super.getPlugin());
+            super.main.log("Failed to load configuration file!");
+            super.main.log("Error: " + ex.getMessage());
+            super.main.getServer().getPluginManager().disablePlugin(super.main);
         }
     }
     
     private void loadSettings() throws Exception {
-        if (!super.getPlugin().getDescription().getVersion().equals(this.config.getString("Herobrine.configBuild"))) {
-            super.getPlugin().log("Outdated configuration file! Please delete it and restart!");
+        if (!super.main.getDescription().getVersion().equals(this.config.getString("Herobrine.configBuild"))) {
+            super.main.log("Outdated configuration file! Please delete it and restart!");
         }
         this.actionChance = this.config.getInt("Herobrine.actionChance");
         this.messages = this.config.getStringList("Herobrine.messages");
@@ -61,16 +61,16 @@ public class Config extends Generic {
         if (dropString.contains(",")) {
             this.drop = new ItemStack(Integer.parseInt(dropString.split(",")[0]), Integer.parseInt(dropString.split(",")[1]));
         } else {
-            super.getPlugin().log("Invalid death item drop!");
-            super.getPlugin().getServer().getPluginManager().disablePlugin(super.getPlugin());
+            super.main.log("Invalid death item drop!");
+            super.main.getServer().getPluginManager().disablePlugin(super.main);
         }
         if (this.signMessages.isEmpty()) {
-            super.getPlugin().log("Must have atleast one sign message!");
-            super.getPlugin().getServer().getPluginManager().disablePlugin(super.getPlugin());
+            super.main.log("Must have atleast one sign message!");
+            super.main.getServer().getPluginManager().disablePlugin(super.main);
         }
         if (this.allowedWorlds.isEmpty()) {
-            super.getPlugin().log("Must be allowed in atleast one world!");
-            super.getPlugin().getServer().getPluginManager().disablePlugin(super.getPlugin());
+            super.main.log("Must be allowed in atleast one world!");
+            super.main.getServer().getPluginManager().disablePlugin(super.main);
         }
     }
     
@@ -102,7 +102,7 @@ public class Config extends Generic {
         }
     }
     
-    public ItemStack getDrop() {
+    public ItemStack getItemDrop() {
         return this.drop;
     }
     

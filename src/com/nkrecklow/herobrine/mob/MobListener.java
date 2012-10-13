@@ -7,6 +7,7 @@ import java.util.Random;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -60,14 +61,16 @@ public class MobListener extends Generic implements Listener {
             return;
         }
         if (super.main.getHerobrine().getTarget().equals(event.getPlayer().getName())) {
+            if (event.getTo().distance(super.main.getHerobrine().getNpc().getBukkitEntity().getLocation()) >= 25) {
+                super.main.despawnHerobrine();
+                return;
+            }
             if ((Boolean) super.main.getConfiguration().getObject("ignoreCreativePlayers") && event.getPlayer().getGameMode().equals(GameMode.CREATIVE)) {
                 event.getPlayer().setGameMode(GameMode.SURVIVAL);
             }
-            super.main.getHerobrine().getNpc().moveTo(event.getFrom());
-            if (super.main.getHerobrine().getNpc().getBukkitEntity().getLocation().distance(event.getTo()) <= 0.75) {
-                event.getPlayer().damage(1);
-                super.main.getHerobrine().getNpc().animateArmSwing();
-            }
+            super.main.getHerobrine().getNpc().moveTo(Util.getLocationBehindPlayer(event.getPlayer(), 1));
+            super.main.getHerobrine().getNpc().getBukkitEntity().getLocation().setPitch(event.getPlayer().getLocation().getPitch());
+            super.main.getHerobrine().getNpc().getBukkitEntity().getLocation().setYaw(event.getPlayer().getLocation().getYaw());
         }
     }
     
@@ -75,6 +78,11 @@ public class MobListener extends Generic implements Listener {
     public void onEntityDeath(EntityDeathEvent event) {
         if (!super.main.isHerobrineSpawned() || !super.main.canSpawn(event.getEntity().getWorld())) {
             return;
+        }
+        if (event.getEntityType().equals(EntityType.PLAYER)) {
+            if (((Player) event.getEntity()).getName().equals(super.main.getHerobrine().getTarget())) {
+                super.main.despawnHerobrine();
+            }
         }
         if (super.main.getHerobrine().getNpc().getBukkitEntity().equals(event.getEntity())) {
             super.main.killHerobrine();
@@ -94,7 +102,7 @@ public class MobListener extends Generic implements Listener {
                 event.getEntity().setFireTicks(0);
                 event.setCancelled(true);
             } else {
-                event.setDamage(2);
+                event.setDamage(1);
             }
         }
     }

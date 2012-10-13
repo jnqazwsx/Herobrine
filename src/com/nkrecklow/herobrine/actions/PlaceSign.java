@@ -22,12 +22,13 @@ public class PlaceSign extends Action {
         }
         Block signPost = player.getLocation().add(new Random().nextInt(5), 0D, new Random().nextInt(5)).getBlock();
         Block groundBlock = signPost.getLocation().subtract(0D, 1D, 0D).getBlock();
+        String msg = main.getConfiguration().getSignMessage();
         if (signPost.getType().equals(Material.AIR) && !groundBlock.getType().equals(Material.AIR)) {
             signPost.setType(Material.SIGN_POST);
             Sign signBlock = (Sign) signPost.getState();
-            signBlock.setLine(1, main.getConfiguration().getSignMessage());
+            signBlock.setLine(1, msg);
             signBlock.update();
-            main.log("Placed a sign by " + player.getName() + ".");
+            main.log("Placed a sign by " + player.getName() + " (\"" + msg + "\").");
         }
     }
 }

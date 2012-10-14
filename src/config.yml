@@ -15,6 +15,8 @@ Herobrine:
   allowAltar: true
   # What he drops on death and the amount.
   deathDrop: 264,1
+  # Should he be more often at night?
+  moreOftenAtNight: true
   # Possible messages he can send.
   messages:
     - I am your God!
@@ -38,6 +40,6 @@ Herobrine:
     - world_nether
     - world_the_end
   # Don't touch this, this is for me to use.
-  configBuild: 4.1
+  configBuild: 4.2
   # Allow me to collect server statistics (see BukktDev page).
   collectStats: true

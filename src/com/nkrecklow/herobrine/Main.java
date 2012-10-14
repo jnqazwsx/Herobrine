@@ -35,7 +35,8 @@ public class Main extends JavaPlugin {
         this.snooper = new Snooper(this);
         this.getCommand("hb").setExecutor(new Commands(this));
         this.getServer().getPluginManager().registerEvents(this.listener, this);
-        this.config.loadConfig();this.getServer().getScheduler().scheduleAsyncRepeatingTask(this, new Runnable() {
+        this.config.loadConfig();
+        this.getServer().getScheduler().scheduleAsyncRepeatingTask(this, new Runnable() {
 
             @Override
             public void run() {

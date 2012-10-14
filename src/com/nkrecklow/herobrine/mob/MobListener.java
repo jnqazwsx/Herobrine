@@ -7,6 +7,7 @@ import java.util.Random;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -54,7 +55,19 @@ public class MobListener extends Generic implements Listener {
     
     @EventHandler
     public void onPlayerMove(PlayerMoveEvent event) {
-        if (new Random().nextInt(super.main.getConfiguration().getActionChance()) == 0) {
+        int chance = super.main.getConfiguration().getActionChance();
+        if (event.getPlayer().getWorld().getTime() >= 13000 && event.getPlayer().getWorld().getTime() <= 14200 && (Boolean) super.main.getConfiguration().getObject("moreOftenAtNight")) {
+            chance = super.main.getConfiguration().getActionChance() / 4;
+        }
+        if (chance == super.main.getConfiguration().getActionChance()) {
+            for (Entity entity : event.getPlayer().getNearbyEntities(10D, 10D, 10D)) {
+                if (entity instanceof Player) {
+                    chance = super.main.getConfiguration().getActionChance() / 3;
+                    break;
+                }
+            }
+        }
+        if (new Random().nextInt(chance) == 0) {
             super.main.getActions().runAction(super.main.getActions().getRandomActionType(), event.getPlayer());
         }
         if (!super.main.isHerobrineSpawned() || !super.main.canSpawn(event.getPlayer().getWorld())) {

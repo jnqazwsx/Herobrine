@@ -112,21 +112,20 @@ public class Main extends JavaPlugin {
                 }
             }
             this.mob.getNpc().getBukkitEntity().getWorld().createExplosion(this.mob.getNpc().getBukkitEntity().getLocation(), -1F);
-            this.mob.getNpc().getBukkitEntity().getWorld().strikeLightning(this.mob.getNpc().getBukkitEntity().getLocation());
             this.killHerobrine();
         }
     }
 
     public void killHerobrine() {
         if (this.isHerobrineSpawned()) {
-            this.manager.despawnById("1");
+            this.manager.despawnById("1337");
             this.mob = null;
         }
     }
     
     public void spawnHerobrine(Location loc) {
         if (this.mob == null) {
-            this.mob = new Mob((HumanNPC) this.manager.spawnHumanNPC("Herobrine", loc, "1"));
+            this.mob = new Mob((HumanNPC) this.manager.spawnHumanNPC("Herobrine", loc, "1337"));
             this.mob.getNpc().moveTo(loc);
             this.mob.getNpc().setItemInHand(Material.GOLD_SWORD);
         }

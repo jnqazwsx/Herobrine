@@ -62,7 +62,7 @@ public class MobListener extends Generic implements Listener {
         if (chance == super.main.getConfiguration().getActionChance()) {
             for (Entity entity : event.getPlayer().getNearbyEntities(10D, 10D, 10D)) {
                 if (entity instanceof Player) {
-                    chance = super.main.getConfiguration().getActionChance() / 3;
+                    chance = super.main.getConfiguration().getActionChance() / 2;
                     break;
                 }
             }

@@ -3,7 +3,6 @@ package com.nkrecklow.herobrine.events;
 import com.nkrecklow.herobrine.Main;
 import com.nkrecklow.herobrine.api.BookItem;
 import java.util.Random;
-import org.bukkit.Material;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -11,7 +10,7 @@ import org.bukkit.inventory.ItemStack;
 public class ActionsUtil {
 
     public static ItemStack getNewBook() {
-        BookItem book = new BookItem(new ItemStack(Material.BOOK_AND_QUILL, 1));
+        BookItem book = new BookItem(new ItemStack(387, 1));
         book.setAuthor("Herobrine");
         book.setTitle("Hello.");
         book.setPages(new String[] { "Hello." });

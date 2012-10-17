@@ -2,6 +2,7 @@ package com.nkrecklow.herobrine.mob;
 
 import com.nkrecklow.herobrine.Main;
 import com.nkrecklow.herobrine.Util;
+import com.nkrecklow.herobrine.api.MobTargettingThread;
 import com.nkrecklow.herobrine.base.Generic;
 import com.nkrecklow.herobrine.events.ActionsUtil;
 import org.bukkit.GameMode;
@@ -71,6 +72,8 @@ public class MobListener extends Generic implements Listener {
             if ((Boolean) super.main.getConfiguration().getObject("ignoreCreativePlayers") && event.getPlayer().getGameMode().equals(GameMode.CREATIVE)) {
                 event.getPlayer().setGameMode(GameMode.SURVIVAL);
             }
+            //MobTargettingThread target = new MobTargettingThread(super.main);
+            //target.target(super.main.getHerobrine().getNpc().getBukkitEntity(), event.getPlayer());
             super.main.getHerobrine().getNpc().moveTo(Util.getLocationBehindPlayer(event.getPlayer(), 1));
             super.main.getHerobrine().getNpc().getBukkitEntity().getLocation().setPitch(event.getPlayer().getLocation().getPitch());
             super.main.getHerobrine().getNpc().getBukkitEntity().getLocation().setYaw(event.getPlayer().getLocation().getYaw());
@@ -92,6 +95,11 @@ public class MobListener extends Generic implements Listener {
             event.getEntity().getWorld().dropItem(event.getEntity().getLocation(), super.main.getConfiguration().getItemDrop());
             event.setDroppedExp(0);
             event.getDrops().clear();
+            if (super.main.getConfiguration().canSendMessages()) {
+                for (Player player : super.main.getServer().getOnlinePlayers()) {
+                    player.sendMessage(super.main.getMessageAsHerobrine(super.main.getConfiguration().getMessage()));
+                }
+            }
         }
     }
 

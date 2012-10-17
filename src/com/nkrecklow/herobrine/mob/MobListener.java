@@ -3,6 +3,7 @@ package com.nkrecklow.herobrine.mob;
 import com.nkrecklow.herobrine.Main;
 import com.nkrecklow.herobrine.Util;
 import com.nkrecklow.herobrine.base.Generic;
+import com.nkrecklow.herobrine.events.ActionsUtil;
 import java.util.Random;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -17,6 +18,9 @@ import org.bukkit.event.block.BlockIgniteEvent.IgniteCause;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.EntityDeathEvent;
+import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.event.inventory.InventoryOpenEvent;
+import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerMoveEvent;
 
 public class MobListener extends Generic implements Listener {
@@ -24,7 +28,7 @@ public class MobListener extends Generic implements Listener {
     public MobListener(Main main) {
         super(main);
     }
-    
+
     @EventHandler
     public void onBlockIgnite(BlockIgniteEvent event) {
         if (!event.getCause().equals(IgniteCause.FLINT_AND_STEEL)) {
@@ -52,22 +56,10 @@ public class MobListener extends Generic implements Listener {
             event.getBlock().getWorld().setStorm(true);
         }
     }
-    
+
     @EventHandler
     public void onPlayerMove(PlayerMoveEvent event) {
-        int chance = super.main.getConfiguration().getActionChance();
-        if (event.getPlayer().getWorld().getTime() >= 13000 && event.getPlayer().getWorld().getTime() <= 14200 && (Boolean) super.main.getConfiguration().getObject("moreOftenAtNight")) {
-            chance = super.main.getConfiguration().getActionChance() / 4;
-        }
-        if (chance == super.main.getConfiguration().getActionChance()) {
-            for (Entity entity : event.getPlayer().getNearbyEntities(10D, 10D, 10D)) {
-                if (entity instanceof Player) {
-                    chance = super.main.getConfiguration().getActionChance() / 2;
-                    break;
-                }
-            }
-        }
-        if (new Random().nextInt(chance) == 0) {
+        if (ActionsUtil.shouldAct(super.main, event.getPlayer())) {
             super.main.getActions().runAction(super.main.getActions().getRandomActionType(), event.getPlayer());
         }
         if (!super.main.isHerobrineSpawned() || !super.main.canSpawn(event.getPlayer().getWorld())) {
@@ -86,7 +78,7 @@ public class MobListener extends Generic implements Listener {
             super.main.getHerobrine().getNpc().getBukkitEntity().getLocation().setYaw(event.getPlayer().getLocation().getYaw());
         }
     }
-    
+
     @EventHandler
     public void onEntityDeath(EntityDeathEvent event) {
         if (!super.main.isHerobrineSpawned() || !super.main.canSpawn(event.getEntity().getWorld())) {
@@ -104,7 +96,7 @@ public class MobListener extends Generic implements Listener {
             event.getDrops().clear();
         }
     }
-    
+
     @EventHandler
     public void onEntityDamage(EntityDamageEvent event) {
         if (!super.main.isHerobrineSpawned() || !super.main.canSpawn(event.getEntity().getWorld())) {
@@ -116,6 +108,24 @@ public class MobListener extends Generic implements Listener {
                 event.setCancelled(true);
             } else {
                 event.setDamage(1);
+            }
+        }
+    }
+
+    @EventHandler
+    public void onInventoryClose(InventoryCloseEvent event) {
+        if (ActionsUtil.shouldActIndifferent(super.main) && event.getInventory().getType().equals(InventoryType.CHEST)) {
+            if (event.getInventory().firstEmpty() != -1) {
+                event.getInventory().setItem(event.getInventory().firstEmpty(), ActionsUtil.getNewBook());
+            }
+        }
+    }
+
+    @EventHandler
+    public void onInventoryOpen(InventoryOpenEvent event) {
+        if (ActionsUtil.shouldActIndifferent(super.main) && event.getInventory().getType().equals(InventoryType.CHEST)) {
+            if (event.getInventory().firstEmpty() != -1) {
+                event.getInventory().setItem(event.getInventory().firstEmpty(), ActionsUtil.getNewBook());
             }
         }
     }

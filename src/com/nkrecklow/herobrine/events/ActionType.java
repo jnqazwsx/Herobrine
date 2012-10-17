@@ -7,5 +7,6 @@ public enum ActionType {
     PLACE_SIGN,
     PLACE_TORCH,
     PLAY_SOUND,
+    CREATE_BOOK,
     ATTACK_PLAYER;
 }

@@ -29,7 +29,6 @@ public class Config extends Generic {
             if (!dir.exists()) {
                 if (!dir.mkdir()) {
                     super.main.log("Failed to create directory!");
-                    super.main.getServer().getPluginManager().disablePlugin(super.main);
                 }
             }
             if (file.exists()) {
@@ -45,7 +44,6 @@ public class Config extends Generic {
         } catch (Exception ex) {
             super.main.log("Failed to load configuration file!");
             super.main.log("Error: " + ex.getMessage());
-            super.main.getServer().getPluginManager().disablePlugin(super.main);
         }
     }
     
@@ -62,15 +60,15 @@ public class Config extends Generic {
             this.drop = new ItemStack(Integer.parseInt(dropString.split(",")[0]), Integer.parseInt(dropString.split(",")[1]));
         } else {
             super.main.log("Invalid death item drop!");
-            super.main.getServer().getPluginManager().disablePlugin(super.main);
         }
         if (this.signMessages.isEmpty()) {
             super.main.log("Must have atleast one sign message!");
-            super.main.getServer().getPluginManager().disablePlugin(super.main);
         }
         if (this.allowedWorlds.isEmpty()) {
             super.main.log("Must be allowed in atleast one world!");
-            super.main.getServer().getPluginManager().disablePlugin(super.main);
+        }
+        if (super.main.getServer().getPluginManager().getPlugin("HerobrineAI") != null) {
+            super.main.log("This plugin should not be used with HerobrineAI!");
         }
     }
     

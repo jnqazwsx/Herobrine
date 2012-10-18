@@ -16,6 +16,7 @@ package com.nkrecklow.herobrine.api;
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 import net.minecraft.server.NBTTagCompound;
 import net.minecraft.server.NBTTagList;
 import net.minecraft.server.NBTTagString;
@@ -24,8 +25,8 @@ import org.bukkit.inventory.ItemStack;
 
 public class BookItem {
 
-    private net.minecraft.server.ItemStack item = null;
-    private CraftItemStack stack = null;
+    private net.minecraft.server.ItemStack item;
+    private CraftItemStack stack;
 
     public BookItem(org.bukkit.inventory.ItemStack item) {
         if (item instanceof CraftItemStack) {
@@ -35,6 +36,37 @@ public class BookItem {
             stack = new CraftItemStack(item);
             this.item = stack.getHandle();
         }
+    }
+
+    public String[] getPages() {
+        NBTTagCompound tags = item.getTag();
+        if (tags == null) {
+            return null;
+        }
+        NBTTagList pages = tags.getList("pages");
+        String[] pagestrings = new String[pages.size()];
+        for (int i = 0; i < pages.size(); i++) {
+            pagestrings[i] = pages.get(i).toString();
+        }
+        return pagestrings;
+    }
+
+    public String getAuthor() {
+        NBTTagCompound tags = item.getTag();
+        if (tags == null) {
+            return null;
+        }
+        String author = tags.getString("author");
+        return author;
+    }
+
+    public String getTitle() {
+        NBTTagCompound tags = item.getTag();
+        if (tags == null) {
+            return null;
+        }
+        String title = tags.getString("title");
+        return title;
     }
 
     public void setPages(String[] newpages) {
@@ -48,6 +80,27 @@ public class BookItem {
         } else {
             for (int i = 0; i < newpages.length; i++) {
                 pages.add(new NBTTagString("" + i + "", newpages[i]));
+            }
+        }
+        tags.set("pages", pages);
+    }
+
+    public void addPages(String[] newpages) {
+        NBTTagCompound tags = item.tag;
+        if (tags == null) {
+            tags = item.tag = new NBTTagCompound();
+        }
+        NBTTagList pages;
+        if (getPages() == null) {
+            pages = new NBTTagList("pages");
+        } else {
+            pages = tags.getList("pages");
+        }
+        if (newpages.length == 0 && pages.size() == 0) {
+            pages.add(new NBTTagString("1", ""));
+        } else {
+            for (int i = 0; i < newpages.length; i++) {
+                pages.add(new NBTTagString("" + pages.size() + "", newpages[i]));
             }
         }
         tags.set("pages", pages);

@@ -134,6 +134,9 @@ public class Commands extends Generic implements CommandExecutor {
                     } else {
                         player.sendMessage("[" + ChatColor.RED + "Herobrine" + ChatColor.WHITE + "] " + ChatColor.RED + "Not a valid command! Type \"/hb attack username\"!");
                     }
+                } else if (args[0].equalsIgnoreCase("reload")) {
+                    super.main.getConfiguration().loadConfig();
+                    player.sendMessage("[" + ChatColor.RED + "Herobrine" + ChatColor.WHITE + "] " + ChatColor.GREEN + "Reload configuration file!");
                 } else if (args[0].equalsIgnoreCase("help")) {
                     player.sendMessage("[" + ChatColor.RED + "Herobrine" + ChatColor.WHITE + "] " + ChatColor.RED + "attack" + ChatColor.WHITE + " - Attack a certain player.");
                     player.sendMessage("[" + ChatColor.RED + "Herobrine" + ChatColor.WHITE + "] " + ChatColor.RED + "appear" + ChatColor.WHITE + " - Appear near a certain player.");
@@ -142,6 +145,7 @@ public class Commands extends Generic implements CommandExecutor {
                     player.sendMessage("[" + ChatColor.RED + "Herobrine" + ChatColor.WHITE + "] " + ChatColor.RED + "playsound" + ChatColor.WHITE + " - Play a random sound.");
                     player.sendMessage("[" + ChatColor.RED + "Herobrine" + ChatColor.WHITE + "] " + ChatColor.RED + "placetorch" + ChatColor.WHITE + " - Place a torch nearby.");
                     player.sendMessage("[" + ChatColor.RED + "Herobrine" + ChatColor.WHITE + "] " + ChatColor.RED + "kill" + ChatColor.WHITE + " - Remove him in case of error.");
+                    player.sendMessage("[" + ChatColor.RED + "Herobrine" + ChatColor.WHITE + "] " + ChatColor.RED + "reload" + ChatColor.WHITE + " - Reload the configuration file.");
                 } else {
                     player.sendMessage("[" + ChatColor.RED + "Herobrine" + ChatColor.WHITE + "] " + ChatColor.RED + "Not a valid command! Type \"/hb help\" for help!");
                 }

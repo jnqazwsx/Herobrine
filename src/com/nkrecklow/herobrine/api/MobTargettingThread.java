@@ -21,10 +21,6 @@ public class MobTargettingThread {
         this.plugin = plugin;
     }
 
-    protected void cancel() {
-        this.plugin.getServer().getScheduler().cancelTask(this.id);
-    }
-
     public void target(final Entity entity, final Player player) {
         this.entity = entity;
         this.player = player;
@@ -61,5 +57,9 @@ public class MobTargettingThread {
                 }
             }
         }, 1, 1);
+    }
+    
+    public void cancel() {
+        this.plugin.getServer().getScheduler().cancelTask(this.id);
     }
 }

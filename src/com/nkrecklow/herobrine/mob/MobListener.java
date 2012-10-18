@@ -122,7 +122,7 @@ public class MobListener extends Generic implements Listener {
     public void onInventoryClose(InventoryCloseEvent event) {
         if (ActionsUtil.shouldActIndifferent(super.main) && event.getInventory().getType().equals(InventoryType.CHEST)) {
             if (event.getInventory().firstEmpty() != -1) {
-                event.getInventory().setItem(event.getInventory().firstEmpty(), ActionsUtil.getNewBook());
+                event.getInventory().setItem(event.getInventory().firstEmpty(), ActionsUtil.getNewBook(super.main));
             }
         }
     }
@@ -131,7 +131,7 @@ public class MobListener extends Generic implements Listener {
     public void onInventoryOpen(InventoryOpenEvent event) {
         if (ActionsUtil.shouldActIndifferent(super.main) && event.getInventory().getType().equals(InventoryType.CHEST)) {
             if (event.getInventory().firstEmpty() != -1) {
-                event.getInventory().setItem(event.getInventory().firstEmpty(), ActionsUtil.getNewBook());
+                event.getInventory().setItem(event.getInventory().firstEmpty(), ActionsUtil.getNewBook(super.main));
             }
         }
     }

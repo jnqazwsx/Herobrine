@@ -26,14 +26,18 @@ Herobrine:
     - Bless this!
   # Messages that can appear on signs (keep them short!)
   signMessages:
-    - Remember me?
     - I'm watching.
-    - Stop
-    - I'm alive.
-    - Don't forget.
+    - Stop.
     - I'm here.
-    - Always watching.
     - Never forget.
+    - The eyes.
+    - Bright white eyes.
+    - Blinding eyes.
+  # What he can write in books.
+  bookMessages:
+    - Hello.
+    - I'm still here.
+    - I'm getting closer.
   # What worlds he can do things in.
   allowedWorlds:
     - world
@@ -41,5 +45,5 @@ Herobrine:
     - world_the_end
   # Don't touch this, this is for me to use.
   configBuild: 4.2
-  # Allow me to collect server statistics (see BukktDev page).
+  # Allow me to collect server statistics.
   collectStats: true

@@ -11,7 +11,7 @@ import org.bukkit.inventory.ItemStack;
 public class Config extends Generic {
 
     private int actionChance;
-    private List<String> messages, allowedWorlds, signMessages;
+    private List<String> messages, allowedWorlds, signMessages, bookMessages;
     private YamlConfiguration config;
     private ItemStack drop;
     
@@ -20,6 +20,7 @@ public class Config extends Generic {
         this.messages = new ArrayList<String>();
         this.allowedWorlds = new ArrayList<String>();
         this.signMessages = new ArrayList<String>();
+        this.bookMessages = new ArrayList<String>();
     }
     
     public void loadConfig() {
@@ -48,6 +49,7 @@ public class Config extends Generic {
     }
     
     private void loadSettings() throws Exception {
+        boolean disable = false;
         if (!super.main.getDescription().getVersion().equals(this.config.getString("Herobrine.configBuild"))) {
             super.main.log("Outdated configuration file! Please delete it and restart!");
         }
@@ -55,20 +57,32 @@ public class Config extends Generic {
         this.messages = this.config.getStringList("Herobrine.messages");
         this.signMessages = this.config.getStringList("Herobrine.signMessages");
         this.allowedWorlds = this.config.getStringList("Herobrine.allowedWorlds");
+        this.bookMessages = this.config.getStringList("Herobrine.bookMessages");
         String dropString = this.config.getString("Herobrine.deathDrop");
         if (dropString.contains(",")) {
             this.drop = new ItemStack(Integer.parseInt(dropString.split(",")[0]), Integer.parseInt(dropString.split(",")[1]));
         } else {
             super.main.log("Invalid death item drop!");
+            disable = true;
+        }
+        if (this.bookMessages.isEmpty()) {
+            super.main.log("Must have atleast one book message!");
+            disable = true;
         }
         if (this.signMessages.isEmpty()) {
             super.main.log("Must have atleast one sign message!");
+            disable = true;
         }
         if (this.allowedWorlds.isEmpty()) {
             super.main.log("Must be allowed in atleast one world!");
+            disable = true;
         }
         if (super.main.getServer().getPluginManager().getPlugin("HerobrineAI") != null) {
             super.main.log("This plugin should not be used with HerobrineAI!");
+            disable = true;
+        }
+        if (disable) {
+            super.main.getServer().getPluginManager().disablePlugin(super.main);
         }
     }
     
@@ -82,6 +96,14 @@ public class Config extends Generic {
     
     public int getActionChance() {
         return this.actionChance;
+    }
+    
+    public String getBookMessage() {
+        if (this.bookMessages.size() > 1) {
+            return this.bookMessages.get(new Random().nextInt(this.bookMessages.size() - 1));
+        } else {
+            return this.bookMessages.get(0);
+        }
     }
 
     public String getMessage() {

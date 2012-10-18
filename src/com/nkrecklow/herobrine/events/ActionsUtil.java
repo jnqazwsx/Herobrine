@@ -9,11 +9,11 @@ import org.bukkit.inventory.ItemStack;
 
 public class ActionsUtil {
 
-    public static ItemStack getNewBook() {
+    public static ItemStack getNewBook(Main main) {
         BookItem book = new BookItem(new ItemStack(387, 1));
         book.setAuthor("Herobrine");
         book.setTitle("Hello.");
-        book.setPages(new String[] { "Hello." });
+        book.setPages(new String[] { main.getConfiguration().getBookMessage() });
         return book.getItemStack();
     }
     

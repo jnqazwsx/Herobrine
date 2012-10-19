@@ -6,11 +6,23 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Random;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 
 public class Util {
 
+    public static boolean canPlace(Location loc) {
+        Material mat = loc.getBlock().getType();
+        if (mat.equals(Material.STONE) || mat.equals(Material.GRASS) || mat.equals(Material.DIRT) || mat.equals(Material.IRON_ORE) || mat.equals(Material.COAL_ORE)
+                || mat.equals(Material.GOLD_ORE) || mat.equals(Material.REDSTONE_ORE) || mat.equals(Material.DIAMOND_ORE) || mat.equals(Material.EMERALD_ORE)
+                || mat.equals(Material.GRAVEL) || mat.equals(Material.AIR)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
     public static int getRandomInteger(int max) {
         if (new Random().nextBoolean()) {
             return -new Random().nextInt(max) + 1;

@@ -1,7 +1,7 @@
 name: Herobrine
 main: com.nkrecklow.herobrine.Main
 author: steaks4uce
-version: 4.2
+version: 4.3
 description: He is watching... and waiting.
 commands:
   hb:

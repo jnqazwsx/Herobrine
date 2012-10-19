@@ -8,5 +8,6 @@ public enum ActionType {
     PLACE_TORCH,
     PLAY_SOUND,
     CREATE_BOOK,
+    RANDOM_CHEST,
     ATTACK_PLAYER;
 }

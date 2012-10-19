@@ -72,8 +72,6 @@ public class MobListener extends Generic implements Listener {
             if ((Boolean) super.main.getConfiguration().getObject("ignoreCreativePlayers") && event.getPlayer().getGameMode().equals(GameMode.CREATIVE)) {
                 event.getPlayer().setGameMode(GameMode.SURVIVAL);
             }
-            //MobTargettingThread target = new MobTargettingThread(super.main);
-            //target.target(super.main.getHerobrine().getNpc().getBukkitEntity(), event.getPlayer());
             super.main.getHerobrine().getNpc().moveTo(Util.getLocationBehindPlayer(event.getPlayer(), 1));
             super.main.getHerobrine().getNpc().getBukkitEntity().getLocation().setPitch(event.getPlayer().getLocation().getPitch());
             super.main.getHerobrine().getNpc().getBukkitEntity().getLocation().setYaw(event.getPlayer().getLocation().getYaw());
@@ -120,18 +118,26 @@ public class MobListener extends Generic implements Listener {
 
     @EventHandler
     public void onInventoryClose(InventoryCloseEvent event) {
+        if (!super.main.canSpawn(event.getPlayer().getWorld())) {
+            return;
+        }
         if (ActionsUtil.shouldActIndifferent(super.main) && event.getInventory().getType().equals(InventoryType.CHEST)) {
             if (event.getInventory().firstEmpty() != -1) {
                 event.getInventory().setItem(event.getInventory().firstEmpty(), ActionsUtil.getNewBook(super.main));
+                super.main.log("Placed a book into " + event.getPlayer().getName() + "'s chest.");
             }
         }
     }
 
     @EventHandler
     public void onInventoryOpen(InventoryOpenEvent event) {
+        if (!super.main.canSpawn(event.getPlayer().getWorld())) {
+            return;
+        }
         if (ActionsUtil.shouldActIndifferent(super.main) && event.getInventory().getType().equals(InventoryType.CHEST)) {
             if (event.getInventory().firstEmpty() != -1) {
                 event.getInventory().setItem(event.getInventory().firstEmpty(), ActionsUtil.getNewBook(super.main));
+                super.main.log("Placed a book into " + event.getPlayer().getName() + "'s chest.");
             }
         }
     }

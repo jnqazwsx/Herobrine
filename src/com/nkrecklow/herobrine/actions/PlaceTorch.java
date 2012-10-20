@@ -1,6 +1,7 @@
 package com.nkrecklow.herobrine.actions;
 
 import com.nkrecklow.herobrine.Main;
+import com.nkrecklow.herobrine.Util;
 import com.nkrecklow.herobrine.events.Action;
 import com.nkrecklow.herobrine.events.ActionType;
 import java.util.Random;
@@ -20,13 +21,9 @@ public class PlaceTorch extends Action {
             return;
         }
         Block torch = player.getLocation().add(new Random().nextInt(5), 0D, new Random().nextInt(5)).getBlock();
-        Block groundBlock = torch.getLocation().subtract(0D, 1D, 0D).getBlock();
-        if (torch.getType().equals(Material.AIR) && !groundBlock.getType().equals(Material.AIR)) {
-            if (new Random().nextBoolean()) {
-                torch.setType(Material.REDSTONE_TORCH_ON);
-            } else {
-                torch.setType(Material.TORCH);
-            }
+        Block below = torch.getLocation().subtract(0D, 1D, 0D).getBlock();
+        if (torch.getType().equals(Material.AIR) && Util.canPlace(main, below.getLocation())) {
+            torch.setType(Material.REDSTONE_TORCH_ON);
             main.log("Placed a torch near " + player.getName() + ".");
         }
     }

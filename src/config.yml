@@ -21,6 +21,12 @@ Herobrine:
   deathDrop: 264,1
   # Should he be more often at night?
   moreOftenAtNight: true
+  # There are blocks he can modify, you should not use man-made ones!
+  allowedBlocks:
+    - 1
+    - 2
+    - 3
+    - 12
   # Possible messages he can send.
   messages:
     - I am your God!

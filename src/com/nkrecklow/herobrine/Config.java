@@ -5,13 +5,14 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import org.bukkit.Material;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.inventory.ItemStack;
 
 public class Config extends Generic {
 
     private int actionChance;
-    private List<String> messages, allowedWorlds, signMessages, bookMessages;
+    private List<String> messages, allowedWorlds, signMessages, bookMessages, allowedBlocks;
     private YamlConfiguration config;
     private ItemStack drop;
     
@@ -21,6 +22,7 @@ public class Config extends Generic {
         this.allowedWorlds = new ArrayList<String>();
         this.signMessages = new ArrayList<String>();
         this.bookMessages = new ArrayList<String>();
+        this.allowedBlocks = new ArrayList<String>();
     }
     
     public void loadConfig() {
@@ -58,11 +60,16 @@ public class Config extends Generic {
         this.signMessages = this.config.getStringList("Herobrine.signMessages");
         this.allowedWorlds = this.config.getStringList("Herobrine.allowedWorlds");
         this.bookMessages = this.config.getStringList("Herobrine.bookMessages");
+        this.allowedBlocks = this.config.getStringList("Herobrine.allowedBlocks");
         String dropString = this.config.getString("Herobrine.deathDrop");
         if (dropString.contains(",")) {
             this.drop = new ItemStack(Integer.parseInt(dropString.split(",")[0]), Integer.parseInt(dropString.split(",")[1]));
         } else {
             super.main.log("Invalid death item drop!");
+            disable = true;
+        }
+        if (this.allowedBlocks.isEmpty()) {
+            super.main.log("Must have atleast one allowed block!");
             disable = true;
         }
         if (this.bookMessages.isEmpty()) {
@@ -82,6 +89,7 @@ public class Config extends Generic {
             disable = true;
         }
         if (disable) {
+            super.main.log("Because of a startup error, I am disabling.");
             super.main.getServer().getPluginManager().disablePlugin(super.main);
         }
     }
@@ -96,6 +104,14 @@ public class Config extends Generic {
     
     public int getActionChance() {
         return this.actionChance;
+    }
+    
+    public List<Material> getAllowedBlocks() {
+        List<Material> mats = new ArrayList<Material>();
+        for (String item : this.allowedBlocks) {
+            mats.add(Material.getMaterial(Integer.parseInt(item)));
+        }
+        return mats;
     }
     
     public String getBookMessage() {

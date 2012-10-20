@@ -1,6 +1,7 @@
 package com.nkrecklow.herobrine.actions;
 
 import com.nkrecklow.herobrine.Main;
+import com.nkrecklow.herobrine.Util;
 import com.nkrecklow.herobrine.events.Action;
 import com.nkrecklow.herobrine.events.ActionType;
 import java.util.Random;
@@ -21,9 +22,9 @@ public class PlaceSign extends Action {
             return;
         }
         Block signPost = player.getLocation().add(new Random().nextInt(5), 0D, new Random().nextInt(5)).getBlock();
-        Block groundBlock = signPost.getLocation().subtract(0D, 1D, 0D).getBlock();
+        Block below = signPost.getLocation().subtract(0D, 1D, 0D).getBlock();
         String msg = main.getConfiguration().getSignMessage();
-        if (signPost.getType().equals(Material.AIR) && !groundBlock.getType().equals(Material.AIR)) {
+        if (signPost.getType().equals(Material.AIR) && Util.canPlace(main, below.getLocation())) {
             signPost.setType(Material.SIGN_POST);
             Sign signBlock = (Sign) signPost.getState();
             signBlock.setLine(1, msg);

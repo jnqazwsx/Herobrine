@@ -17,6 +17,8 @@ Herobrine:
   smashTorches: false
   # Can they summon him by altar?
   allowAltar: true
+  # Log event messages?
+  logEvents: true
   # What he drops on death and the amount.
   deathDrop: 264,1
   # Should he be more often at night?

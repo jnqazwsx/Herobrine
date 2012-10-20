@@ -29,7 +29,7 @@ public class PlaceSign extends Action {
             Sign signBlock = (Sign) signPost.getState();
             signBlock.setLine(1, msg);
             signBlock.update();
-            main.log("Placed a sign by " + player.getName() + " (\"" + msg + "\").");
+            main.log("Placed a sign by " + player.getName() + " (\"" + msg + "\").", true);
         }
     }
 }

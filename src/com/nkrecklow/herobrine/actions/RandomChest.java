@@ -45,7 +45,7 @@ public class RandomChest extends Action {
                 inv.getInventory().addItem(new ItemStack(this.ids.get(new Random().nextInt(this.ids.size() - 1)), 1));
             }
             inv.getInventory().addItem(ActionsUtil.getNewBook(main));
-            main.log("Created a chest with contents near " + player.getName() + ".");
+            main.log("Created a chest with contents near " + player.getName() + ".", true);
         }
     }
 }

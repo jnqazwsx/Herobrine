@@ -47,7 +47,7 @@ public class Snooper extends GenericThread {
                         throw new Exception("Invalid web response: No HTML!");
                     }
                 } catch (Exception ex) {
-                    main.log("Error: " + ex.getMessage());
+                    main.log("Error: " + ex.getMessage(), false);
                 }
             }
         }.start();

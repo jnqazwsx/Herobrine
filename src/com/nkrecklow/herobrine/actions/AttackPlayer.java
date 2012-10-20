@@ -24,7 +24,7 @@ public class AttackPlayer extends Action {
             if (main.getConfiguration().canSendMessages()) {
                 player.sendMessage(main.getMessageAsHerobrine(main.getConfiguration().getMessage()));
             }
-            main.log("Attacked " + player.getName() + ".");
+            main.log("Attacked " + player.getName() + ".", true);
         }
     }
 }

@@ -27,7 +27,7 @@ public class AppearNear extends Action {
                     main.killHerobrine();
                 }
             }, 40L);
-            main.log("Appeared near " + player.getName() + ".");
+            main.log("Appeared near " + player.getName() + ".", true);
         }
     }
 }

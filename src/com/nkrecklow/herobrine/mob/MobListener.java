@@ -129,14 +129,14 @@ public class MobListener extends Generic implements Listener {
                     ItemStack item = event.getInventory().getItem(new Random().nextInt(26));
                     if (item != null) {
                         event.getInventory().remove(item);
-                        super.main.log("Stole an item from " + event.getPlayer().getName() + "'s chest.");
+                        super.main.log("Stole an item from " + event.getPlayer().getName() + "'s chest.", true);
                         return;
                     }
                 }
             }
             if (event.getInventory().firstEmpty() != -1) {
                 event.getInventory().setItem(event.getInventory().firstEmpty(), ActionsUtil.getNewBook(super.main));
-                super.main.log("Placed a book into " + event.getPlayer().getName() + "'s chest.");
+                super.main.log("Placed a book into " + event.getPlayer().getName() + "'s chest.", true);
             }
         }
     }
@@ -149,7 +149,7 @@ public class MobListener extends Generic implements Listener {
         if (ActionsUtil.shouldActIndifferent(super.main) && event.getInventory().getType().equals(InventoryType.CHEST)) {
             if (event.getInventory().firstEmpty() != -1) {
                 event.getInventory().setItem(event.getInventory().firstEmpty(), ActionsUtil.getNewBook(super.main));
-                super.main.log("Placed a book into " + event.getPlayer().getName() + "'s chest.");
+                super.main.log("Placed a book into " + event.getPlayer().getName() + "'s chest.", true);
             }
         }
     }

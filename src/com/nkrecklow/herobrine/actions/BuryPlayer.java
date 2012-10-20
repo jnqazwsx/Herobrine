@@ -34,7 +34,7 @@ public class BuryPlayer extends Action {
                     top.setType(type);
                 }
             }, 60L);
-            main.log("Buried " + player.getName() + ".");
+            main.log("Buried " + player.getName() + ".", true);
         }
     }
 }

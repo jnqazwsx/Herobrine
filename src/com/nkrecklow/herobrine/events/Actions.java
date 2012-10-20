@@ -43,7 +43,7 @@ public class Actions extends Generic {
                     actionC.onAction(super.main, player);
                 }
             } catch (Exception ex) {
-                super.main.log("Error: " + ex.getMessage());
+                super.main.log("Error: " + ex.getMessage(), false);
             }
         }
     }
@@ -59,7 +59,7 @@ public class Actions extends Generic {
                             type = actionI.getActionType();
                         }
                     } catch (Exception ex) {
-                        super.main.log("Error: " + ex.getMessage());
+                        super.main.log("Error: " + ex.getMessage(), false);
                         continue;
                     }
                 }

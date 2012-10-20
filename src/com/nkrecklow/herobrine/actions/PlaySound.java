@@ -25,6 +25,6 @@ public class PlaySound extends Action {
         }
         Packet62NamedSoundEffect packet = new Packet62NamedSoundEffect(sound, player.getLocation().getX(), player.getLocation().getY(), player.getLocation().getZ(), 1F, 1F);
         ((CraftPlayer)player).getHandle().netServerHandler.sendPacket(packet);
-        plugin.log("Played a sound near " + player.getName() + ".");
+        plugin.log("Played a sound near " + player.getName() + ".", true);
     }
 }

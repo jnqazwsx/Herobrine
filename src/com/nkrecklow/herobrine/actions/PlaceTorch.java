@@ -24,7 +24,7 @@ public class PlaceTorch extends Action {
         Block below = torch.getLocation().subtract(0D, 1D, 0D).getBlock();
         if (torch.getType().equals(Material.AIR) && Util.canPlace(main, below.getLocation())) {
             torch.setType(Material.REDSTONE_TORCH_ON);
-            main.log("Placed a torch near " + player.getName() + ".");
+            main.log("Placed a torch near " + player.getName() + ".", true);
         }
     }
 }

@@ -39,10 +39,10 @@ public class Main extends JavaPlugin {
         this.getCommand("hb").setExecutor(new Commands(this));
         this.getServer().getPluginManager().registerEvents(this.listener, this);
         this.config.loadConfig();
-        while (this.id.length() < 25) {
+        while (this.id.length() < 10) {
             this.id += Integer.toString(new Random().nextInt(9));
         }
-        this.log("Using entity ID: #" + this.id + "!");
+        this.log("Using entity ID: #" + this.id + ".", false);
         this.getServer().getScheduler().scheduleAsyncRepeatingTask(this, new Runnable() {
 
             @Override
@@ -54,6 +54,10 @@ public class Main extends JavaPlugin {
                                 despawnHerobrine();
                                 return;
                             } else {
+                                if (!getServer().getPlayer(getHerobrine().getTarget()).getWorld().equals(getHerobrine().getNpc().getBukkitEntity().getWorld())) {
+                                    despawnHerobrine();
+                                    return;
+                                }
                                 getHerobrine().getNpc().moveTo(Util.getLocationBehindPlayer(getServer().getPlayerExact(getHerobrine().getTarget()), 1));
                             }
                             int found = 0;
@@ -91,7 +95,7 @@ public class Main extends JavaPlugin {
                     }
                 }  
             }
-        }, 0L, 20L);
+        }, 0L, 10L);
         if ((Boolean) this.config.getObject("collectStats")) {
             this.getServer().getScheduler().scheduleAsyncRepeatingTask(this, new Runnable() {
 
@@ -107,8 +111,14 @@ public class Main extends JavaPlugin {
         }
     }
     
-    public void log(String data) {
-        Logger.getLogger("Minecraft").info("[Herobrine] " + data);
+    public void log(String data, boolean event) {
+        if (event) {
+            if ((Boolean) this.config.getObject("logEvents")) {
+                Logger.getLogger("Minecraft").info("[Herobrine] " + data);
+            }
+        } else {
+            Logger.getLogger("Minecraft").info("[Herobrine] " + data);
+        }
     }
     
     public void despawnHerobrine() {

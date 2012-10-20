@@ -31,7 +31,7 @@ public class Config extends Generic {
             File file = new File(dir + "/config.yml");
             if (!dir.exists()) {
                 if (!dir.mkdir()) {
-                    super.main.log("Failed to create directory!");
+                    super.main.log("Failed to create directory!", false);
                 }
             }
             if (file.exists()) {
@@ -45,15 +45,15 @@ public class Config extends Generic {
                 this.loadSettings();
             }
         } catch (Exception ex) {
-            super.main.log("Failed to load configuration file!");
-            super.main.log("Error: " + ex.getMessage());
+            super.main.log("Failed to load configuration file!", false);
+            super.main.log("Error: " + ex.getMessage(), false);
         }
     }
     
     private void loadSettings() throws Exception {
         boolean disable = false;
         if (!super.main.getDescription().getVersion().equals(this.config.getString("Herobrine.configBuild"))) {
-            super.main.log("Outdated configuration file! Please delete it and restart!");
+            super.main.log("Outdated configuration file! Please delete it and restart!", false);
         }
         this.actionChance = this.config.getInt("Herobrine.actionChance");
         this.messages = this.config.getStringList("Herobrine.messages");
@@ -65,31 +65,31 @@ public class Config extends Generic {
         if (dropString.contains(",")) {
             this.drop = new ItemStack(Integer.parseInt(dropString.split(",")[0]), Integer.parseInt(dropString.split(",")[1]));
         } else {
-            super.main.log("Invalid death item drop!");
+            super.main.log("Invalid death item drop!", false);
             disable = true;
         }
         if (this.allowedBlocks.isEmpty()) {
-            super.main.log("Must have atleast one allowed block!");
+            super.main.log("Must have atleast one allowed block!", false);
             disable = true;
         }
         if (this.bookMessages.isEmpty()) {
-            super.main.log("Must have atleast one book message!");
+            super.main.log("Must have atleast one book message!", false);
             disable = true;
         }
         if (this.signMessages.isEmpty()) {
-            super.main.log("Must have atleast one sign message!");
+            super.main.log("Must have atleast one sign message!", false);
             disable = true;
         }
         if (this.allowedWorlds.isEmpty()) {
-            super.main.log("Must be allowed in atleast one world!");
+            super.main.log("Must be allowed in atleast one world!", false);
             disable = true;
         }
         if (super.main.getServer().getPluginManager().getPlugin("HerobrineAI") != null) {
-            super.main.log("This plugin should not be used with HerobrineAI!");
+            super.main.log("This plugin should not be used with HerobrineAI!", false);
             disable = true;
         }
         if (disable) {
-            super.main.log("Because of a startup error, I am disabling.");
+            super.main.log("Because of a startup error, I am disabling.", false);
             super.main.getServer().getPluginManager().disablePlugin(super.main);
         }
     }

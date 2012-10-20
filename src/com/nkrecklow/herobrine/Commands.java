@@ -167,14 +167,14 @@ public class Commands extends Generic implements CommandExecutor {
                     player.sendMessage("[" + ChatColor.RED + "Herobrine" + ChatColor.WHITE + "] " + "Not a valid command! Type \"/hb help\" for help!");
                 }
             } else {
-                super.main.log("You must be a player to use this command!");
+                super.main.log("You must be a player to use this command!", false);
             }
         } else {
             if (sender instanceof Player) {
                 Player player = (Player) sender;
                 player.sendMessage("[" + ChatColor.RED + "Herobrine" + ChatColor.WHITE + "] " + "Not a valid command! Type \"/hb help\" for help!");
             } else {
-                super.main.log("You must be a player to use this command!");
+                super.main.log("You must be a player to use this command!", false);
             }
         }
         return true;

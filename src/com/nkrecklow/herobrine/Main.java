@@ -58,10 +58,10 @@ public class Main extends JavaPlugin {
                                     despawnHerobrine();
                                     return;
                                 }
-                                getHerobrine().getNpc().moveTo(Util.getLocationBehindPlayer(getServer().getPlayerExact(getHerobrine().getTarget()), 1));
+                                //getHerobrine().getNpc().moveTo(Util.getLocationBehindPlayer(getServer().getPlayerExact(getHerobrine().getTarget()), 1));
                             }
                             int found = 0;
-                            for (Entity entity : getHerobrine().getNpc().getBukkitEntity().getNearbyEntities(0.6D, 0.6D, 0.6D)) {
+                            for (Entity entity : getHerobrine().getNpc().getBukkitEntity().getNearbyEntities(0.4D, 0.4D, 0.4D)) {
                                 if (entity instanceof LivingEntity) {
                                     ((LivingEntity) entity).damage(1);
                                     found++;
@@ -128,6 +128,7 @@ public class Main extends JavaPlugin {
                     player.sendMessage(this.getMessageAsHerobrine(this.config.getMessage()));
                 }
             }
+            this.mob.getNpc().getBukkitEntity().getWorld().setStorm(false);
             this.mob.getNpc().getBukkitEntity().getWorld().createExplosion(this.mob.getNpc().getBukkitEntity().getLocation(), -1F);
             this.killHerobrine();
         }

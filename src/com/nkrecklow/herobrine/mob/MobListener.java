@@ -74,8 +74,6 @@ public class MobListener extends Generic implements Listener {
             if ((Boolean) super.main.getConfiguration().getObject("ignoreCreativePlayers") && event.getPlayer().getGameMode().equals(GameMode.CREATIVE)) {
                 event.getPlayer().setGameMode(GameMode.SURVIVAL);
             }
-            MobTargettingThread thread = new MobTargettingThread(super.main);
-            thread.target(super.main.getHerobrine().getNpc().getBukkitEntity(), event.getPlayer());
             super.main.getHerobrine().getNpc().getBukkitEntity().getLocation().setPitch(event.getPlayer().getLocation().getPitch());
             super.main.getHerobrine().getNpc().getBukkitEntity().getLocation().setYaw(event.getPlayer().getLocation().getYaw());
         }

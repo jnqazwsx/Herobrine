@@ -26,7 +26,13 @@ public class MobTargettingThread {
         this.player = player;
         this.ec = ((CraftEntity) this.entity).getHandle();
         this.id = Bukkit.getScheduler().scheduleSyncRepeatingTask(this.plugin, new Runnable() {
-            @Override public void run() {
+            
+            @Override 
+            public void run() {
+                if (player == null || entity == null) {
+                    cancel();
+                    return;
+                }
                 if (!entity.isDead() && !player.isDead()) {
                     Location playerL = player.getLocation();
                     Location entityL = entity.getLocation();
@@ -48,7 +54,7 @@ public class MobTargettingThread {
                     cancel();
                 }
             }
-        }, 1, 1);
+        }, 0L, 1L);
     }
     
     public void cancel() {

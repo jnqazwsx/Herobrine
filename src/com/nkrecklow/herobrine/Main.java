@@ -5,6 +5,7 @@ import com.nkrecklow.herobrine.mob.Mob;
 import com.nkrecklow.herobrine.mob.MobListener;
 import com.topcat.npclib.NPCManager;
 import com.topcat.npclib.entity.HumanNPC;
+import java.util.Random;
 import java.util.logging.Logger;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -25,9 +26,13 @@ public class Main extends JavaPlugin {
     private Config config;
     private Actions actions;
     private Snooper snooper;
+    private String id;
     
     @Override
     public void onEnable() {
+        while (this.id.length() < 25) {
+            this.id += Integer.toString(new Random().nextInt(9));
+        }
         this.manager = new NPCManager(this);
         this.listener = new MobListener(this);
         this.config = new Config(this);
@@ -36,6 +41,7 @@ public class Main extends JavaPlugin {
         this.getCommand("hb").setExecutor(new Commands(this));
         this.getServer().getPluginManager().registerEvents(this.listener, this);
         this.config.loadConfig();
+        this.log("Using entity ID: #" + this.id + "!");
         this.getServer().getScheduler().scheduleAsyncRepeatingTask(this, new Runnable() {
 
             @Override
@@ -118,21 +124,21 @@ public class Main extends JavaPlugin {
 
     public void killHerobrine() {
         if (this.isHerobrineSpawned()) {
-            this.manager.despawnById("1337");
+            this.manager.despawnById(this.id);
             this.mob = null;
         }
     }
     
     public void spawnHerobrine(Location loc) {
         if (this.mob == null) {
-            this.mob = new Mob((HumanNPC) this.manager.spawnHumanNPC("Herobrine", loc, "1337"));
+            this.mob = new Mob((HumanNPC) this.manager.spawnHumanNPC((String) this.config.getObject("entityName"), loc, this.id));
             this.mob.getNpc().moveTo(loc);
             this.mob.getNpc().setItemInHand(Material.GOLD_SWORD);
         }
     }
     
     public String getMessageAsHerobrine(String message) {
-        return "<" + ChatColor.RED + "Herobrine" + ChatColor.WHITE + "> " + message;
+        return "<" + ChatColor.RED + ((String) this.config.getObject("entityName")) + ChatColor.WHITE + "> " + message;
     }
     
     public boolean canSpawn(World world) {

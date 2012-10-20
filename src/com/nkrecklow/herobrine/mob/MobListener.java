@@ -5,6 +5,7 @@ import com.nkrecklow.herobrine.Util;
 import com.nkrecklow.herobrine.api.MobTargettingThread;
 import com.nkrecklow.herobrine.base.Generic;
 import com.nkrecklow.herobrine.events.ActionsUtil;
+import java.util.Random;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -21,6 +22,7 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.inventory.ItemStack;
 
 public class MobListener extends Generic implements Listener {
 
@@ -122,6 +124,16 @@ public class MobListener extends Generic implements Listener {
             return;
         }
         if (ActionsUtil.shouldActIndifferent(super.main) && event.getInventory().getType().equals(InventoryType.CHEST)) {
+            if ((Boolean) super.main.getConfiguration().getObject("stealFromChests")) {
+                if (new Random().nextBoolean()) {
+                    ItemStack item = event.getInventory().getItem(new Random().nextInt(26));
+                    if (item != null) {
+                        event.getInventory().remove(item);
+                        super.main.log("Stole an item from " + event.getPlayer().getName() + "'s chest.");
+                        return;
+                    }
+                }
+            }
             if (event.getInventory().firstEmpty() != -1) {
                 event.getInventory().setItem(event.getInventory().firstEmpty(), ActionsUtil.getNewBook(super.main));
                 super.main.log("Placed a book into " + event.getPlayer().getName() + "'s chest.");

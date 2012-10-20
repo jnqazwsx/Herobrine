@@ -7,6 +7,10 @@ Herobrine:
   modifyWorld: true
   # Place fire where he walks.
   fireTrails: false
+  # Can he steal from chests?
+  stealFromChests: true
+  # What is his name? (This will affect his skin!)
+  entityName: Herobrine
   # Don't attack creative players.
   ignoreCreativePlayers: true
   # Can he smash nearby torches?

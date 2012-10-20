@@ -58,10 +58,9 @@ public class Main extends JavaPlugin {
                                     despawnHerobrine();
                                     return;
                                 }
-                                //getHerobrine().getNpc().moveTo(Util.getLocationBehindPlayer(getServer().getPlayerExact(getHerobrine().getTarget()), 1));
                             }
                             int found = 0;
-                            for (Entity entity : getHerobrine().getNpc().getBukkitEntity().getNearbyEntities(0.4D, 0.4D, 0.4D)) {
+                            for (Entity entity : getHerobrine().getNpc().getBukkitEntity().getNearbyEntities(0.15D, 0.15D, 0.15D)) {
                                 if (entity instanceof LivingEntity) {
                                     ((LivingEntity) entity).damage(1);
                                     found++;
@@ -145,7 +144,8 @@ public class Main extends JavaPlugin {
         if (this.mob == null) {
             this.mob = new Mob((HumanNPC) this.manager.spawnHumanNPC((String) this.config.getObject("entityName"), loc, this.id));
             this.mob.getNpc().moveTo(loc);
-            this.mob.getNpc().setItemInHand(Material.GOLD_SWORD);
+            this.mob.getNpc().setItemInHand(Material.getMaterial((Integer) this.config.getObject("itemInHand")));
+            System.out.println("Spawned Herobrine at X: " + loc.getBlockX() + ", Y: " + loc.getBlockY() + ", Z: " + loc.getBlockZ() + ".");
         }
     }
     

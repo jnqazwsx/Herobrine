@@ -19,6 +19,8 @@ Herobrine:
   allowAltar: true
   # Log event messages?
   logEvents: true
+  # What should he be holding?
+  itemInHand: 259
   # What he drops on death and the amount.
   deathDrop: 264,1
   # Should he be more often at night?

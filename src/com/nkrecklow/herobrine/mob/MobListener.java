@@ -76,9 +76,8 @@ public class MobListener extends Generic implements Listener {
             }
             MobTargettingThread thread = new MobTargettingThread(super.main);
             thread.target(super.main.getHerobrine().getNpc().getBukkitEntity(), event.getPlayer());
-            //super.main.getHerobrine().getNpc().moveTo(Util.getLocationBehindPlayer(event.getPlayer(), 1));
-            //super.main.getHerobrine().getNpc().getBukkitEntity().getLocation().setPitch(event.getPlayer().getLocation().getPitch());
-            //super.main.getHerobrine().getNpc().getBukkitEntity().getLocation().setYaw(event.getPlayer().getLocation().getYaw());
+            super.main.getHerobrine().getNpc().getBukkitEntity().getLocation().setPitch(event.getPlayer().getLocation().getPitch());
+            super.main.getHerobrine().getNpc().getBukkitEntity().getLocation().setYaw(event.getPlayer().getLocation().getYaw());
         }
     }
 
@@ -90,6 +89,7 @@ public class MobListener extends Generic implements Listener {
         if (event.getEntityType().equals(EntityType.PLAYER)) {
             if (((Player) event.getEntity()).getName().equals(super.main.getHerobrine().getTarget())) {
                 super.main.despawnHerobrine();
+                return;
             }
         }
         if (super.main.getHerobrine().getNpc().getBukkitEntity().equals(event.getEntity())) {

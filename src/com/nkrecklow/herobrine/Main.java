@@ -61,7 +61,7 @@ public class Main extends JavaPlugin {
                                 }
                             }
                             int found = 0;
-                            for (Entity entity : getHerobrine().getNpc().getBukkitEntity().getNearbyEntities(0.01D, 0.01D, 0.01D)) {
+                            for (Entity entity : getHerobrine().getNpc().getBukkitEntity().getNearbyEntities(0.0005D, 0.0005D, 0.0005D)) {
                                 if (entity instanceof LivingEntity) {
                                     ((LivingEntity) entity).damage(1);
                                     found++;

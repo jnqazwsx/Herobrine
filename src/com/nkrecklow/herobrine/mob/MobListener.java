@@ -1,12 +1,11 @@
 package com.nkrecklow.herobrine.mob;
 
 import com.nkrecklow.herobrine.Main;
-import com.nkrecklow.herobrine.Util;
-import com.nkrecklow.herobrine.api.MobTargettingThread;
 import com.nkrecklow.herobrine.base.Generic;
 import com.nkrecklow.herobrine.events.ActionsUtil;
 import java.util.Random;
 import org.bukkit.GameMode;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.EntityType;
@@ -74,8 +73,20 @@ public class MobListener extends Generic implements Listener {
             if ((Boolean) super.main.getConfiguration().getObject("ignoreCreativePlayers") && event.getPlayer().getGameMode().equals(GameMode.CREATIVE)) {
                 event.getPlayer().setGameMode(GameMode.SURVIVAL);
             }
-            super.main.getHerobrine().getNpc().getBukkitEntity().getLocation().setPitch(event.getPlayer().getLocation().getPitch());
-            super.main.getHerobrine().getNpc().getBukkitEntity().getLocation().setYaw(event.getPlayer().getLocation().getYaw());
+            double pX = event.getFrom().getX();
+            double pZ = event.getFrom().getZ();
+            double eX = super.main.getHerobrine().getNpc().getBukkitEntity().getLocation().getX();
+            double eZ = super.main.getHerobrine().getNpc().getBukkitEntity().getLocation().getZ();
+            double movX = eX - 0.3;
+            double movZ = eZ - 0.3;
+            if ((eX - pX) < 0) {
+                movX = eX + 0.3;
+            }
+            if ((eZ - pZ) < 0) {
+                movZ = eZ + 0.3;
+            }
+            super.main.getHerobrine().getNpc().getEntity().setPosition(movX, event.getPlayer().getLocation().getBlockY(), movZ);
+            super.main.getHerobrine().getNpc().lookAtPoint(event.getFrom());
         }
     }
 

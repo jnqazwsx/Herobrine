@@ -1,6 +1,5 @@
 package com.nkrecklow.herobrine;
 
-import com.nkrecklow.herobrine.api.MobTargettingThread;
 import com.nkrecklow.herobrine.events.Actions;
 import com.nkrecklow.herobrine.mob.Mob;
 import com.nkrecklow.herobrine.mob.MobListener;
@@ -61,10 +60,12 @@ public class Main extends JavaPlugin {
                                 }
                             }
                             int found = 0;
-                            for (Entity entity : getHerobrine().getNpc().getBukkitEntity().getNearbyEntities(0.0005D, 0.0005D, 0.0005D)) {
+                            for (Entity entity : getHerobrine().getNpc().getBukkitEntity().getNearbyEntities(0.0000005D, 0.0000005D, 0.0000005D)) {
                                 if (entity instanceof LivingEntity) {
-                                    ((LivingEntity) entity).damage(1);
-                                    found++;
+                                    if (new Random().nextInt(4) == 0) {
+                                        ((LivingEntity) entity).damage(1);
+                                        found++;
+                                    }
                                 }
                             }
                             if (found > 0) {
@@ -144,7 +145,7 @@ public class Main extends JavaPlugin {
     
     public void spawnHerobrine(Location loc) {
         if (this.mob == null) {
-            this.mob = new Mob(this, (HumanNPC) this.manager.spawnHumanNPC((String) this.config.getObject("entityName"), loc, this.id));
+            this.mob = new Mob((HumanNPC) this.manager.spawnHumanNPC((String) this.config.getObject("entityName"), loc, this.id));
             this.mob.getNpc().moveTo(loc);
             this.mob.getNpc().setItemInHand(Material.getMaterial((Integer) this.config.getObject("itemInHand")));
             this.log("Spawned Herobrine at X: " + loc.getBlockX() + ", Y: " + loc.getBlockY() + ", Z: " + loc.getBlockZ() + ".", true);

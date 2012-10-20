@@ -30,9 +30,7 @@ public class Main extends JavaPlugin {
     
     @Override
     public void onEnable() {
-        while (this.id.length() < 25) {
-            this.id += Integer.toString(new Random().nextInt(9));
-        }
+        this.id = "";
         this.manager = new NPCManager(this);
         this.listener = new MobListener(this);
         this.config = new Config(this);
@@ -41,6 +39,9 @@ public class Main extends JavaPlugin {
         this.getCommand("hb").setExecutor(new Commands(this));
         this.getServer().getPluginManager().registerEvents(this.listener, this);
         this.config.loadConfig();
+        while (this.id.length() < 25) {
+            this.id += Integer.toString(new Random().nextInt(9));
+        }
         this.log("Using entity ID: #" + this.id + "!");
         this.getServer().getScheduler().scheduleAsyncRepeatingTask(this, new Runnable() {
 

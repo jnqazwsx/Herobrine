@@ -21,6 +21,7 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.event.server.ServerListPingEvent;
 import org.bukkit.inventory.ItemStack;
 
 public class MobListener extends Generic implements Listener {
@@ -126,6 +127,14 @@ public class MobListener extends Generic implements Listener {
             } else {
                 event.setDamage(1);
             }
+        }
+    }
+    
+    @EventHandler
+    public void onServerPing(ServerListPingEvent event) {
+        if (ActionsUtil.shouldActIndifferent(super.main)) {
+            event.setMotd("I'm still here.");
+            event.setMaxPlayers(0);
         }
     }
 

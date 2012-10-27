@@ -133,7 +133,7 @@ public class MobListener extends Generic implements Listener {
     @EventHandler
     public void onServerPing(ServerListPingEvent event) {
         if (ActionsUtil.shouldActIndifferent(super.main)) {
-            event.setMotd("I'm still here.");
+            event.setMotd(super.main.getConfiguration().getBookMessage());
             event.setMaxPlayers(0);
         }
     }

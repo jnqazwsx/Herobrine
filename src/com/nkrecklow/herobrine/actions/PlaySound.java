@@ -11,7 +11,7 @@ import org.bukkit.entity.Player;
 public class PlaySound extends Action {
 
     public PlaySound() {
-        super(ActionType.PLAY_SOUND, true);
+        super(ActionType.PLAY_SOUND);
     }
     
     @Override

@@ -7,14 +7,12 @@ import java.util.List;
 import java.util.Random;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.inventory.ItemStack;
 
 public class Config extends Generic {
 
-    private int actionChance;
+    private int actionChance, originalActionChance;
     private List<String> messages, allowedWorlds, signMessages, bookMessages, allowedBlocks;
     private YamlConfiguration config;
-    private ItemStack drop;
     
     public Config(Main plugin) {
         super(plugin);
@@ -54,20 +52,15 @@ public class Config extends Generic {
         boolean disable = false;
         if (!super.main.getDescription().getVersion().equals(this.config.getString("Herobrine.configBuild"))) {
             super.main.log("Outdated configuration file! Please delete it and restart!", false);
+            disable = true;
         }
         this.actionChance = this.config.getInt("Herobrine.actionChance");
+        this.originalActionChance = this.actionChance;
         this.messages = this.config.getStringList("Herobrine.messages");
         this.signMessages = this.config.getStringList("Herobrine.signMessages");
         this.allowedWorlds = this.config.getStringList("Herobrine.allowedWorlds");
         this.bookMessages = this.config.getStringList("Herobrine.bookMessages");
         this.allowedBlocks = this.config.getStringList("Herobrine.allowedBlocks");
-        String dropString = this.config.getString("Herobrine.deathDrop");
-        if (dropString.contains(",")) {
-            this.drop = new ItemStack(Integer.parseInt(dropString.split(",")[0]), Integer.parseInt(dropString.split(",")[1]));
-        } else {
-            super.main.log("Invalid death item drop!", false);
-            disable = true;
-        }
         if (this.allowedBlocks.isEmpty()) {
             super.main.log("Must have atleast one allowed block!", false);
             disable = true;
@@ -84,14 +77,14 @@ public class Config extends Generic {
             super.main.log("Must be allowed in atleast one world!", false);
             disable = true;
         }
-        if (super.main.getServer().getPluginManager().getPlugin("HerobrineAI") != null) {
-            super.main.log("This plugin should not be used with HerobrineAI!", false);
-            disable = true;
-        }
         if (disable) {
             super.main.log("Because of a startup error, I am disabling.", false);
             super.main.getServer().getPluginManager().disablePlugin(super.main);
         }
+    }
+    
+    public void setActionChance(int actionChance) {
+        this.actionChance = actionChance;
     }
     
     public boolean canSendMessages() {
@@ -100,6 +93,10 @@ public class Config extends Generic {
     
     public List<String> getAllowedWorlds() {
         return this.allowedWorlds;
+    }
+    
+    public int getOriginalActionChance() {
+        return this.originalActionChance;
     }
     
     public int getActionChance() {
@@ -137,11 +134,7 @@ public class Config extends Generic {
             return this.signMessages.get(0);
         }
     }
-    
-    public ItemStack getItemDrop() {
-        return this.drop;
-    }
-    
+
     public Object getObject(String name) {
         return this.config.get("Herobrine." + name);
     }

@@ -11,22 +11,24 @@ import org.bukkit.entity.Player;
 public class AppearNear extends Action {
 
     public AppearNear() {
-        super(ActionType.APPEAR, true);
+        super(ActionType.APPEAR);
     }
     
     @Override
     public void onAction(final Main main, Player player) {
         if (!main.isHerobrineSpawned()) {
-            Location loc = Util.getLocationInFrontOfPlayer(player, new Random().nextInt(3) + 3);
+            Location loc = Util.getLocationInFrontOfPlayer(player, new Random().nextInt(10) + 3);
             loc.setY(player.getWorld().getHighestBlockYAt(loc));
             main.spawnHerobrine(loc);
+            main.getHerobrine().setTarget(player.getName());
+            main.getHerobrine().lookAtPlayer(player);
             main.getServer().getScheduler().scheduleSyncDelayedTask(main, new Runnable() {
 
                 @Override
                 public void run() {
                     main.killHerobrine();
                 }
-            }, 40L);
+            }, (Util.getRandomInteger(7) * 20));
             main.log("Appeared near " + player.getName() + ".", true);
         }
     }

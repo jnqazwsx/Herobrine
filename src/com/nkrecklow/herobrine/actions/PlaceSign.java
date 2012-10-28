@@ -13,7 +13,7 @@ import org.bukkit.entity.Player;
 public class PlaceSign extends Action {
 
     public PlaceSign() {
-        super(ActionType.PLACE_SIGN, true);
+        super(ActionType.PLACE_SIGN);
     }
     
     @Override

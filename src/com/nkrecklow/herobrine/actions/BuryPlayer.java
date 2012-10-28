@@ -11,7 +11,7 @@ import org.bukkit.entity.Player;
 public class BuryPlayer extends Action {
 
     public BuryPlayer() {
-        super(ActionType.BURY_PLAYER, true);
+        super(ActionType.BURY_PLAYER);
     }
 
     @Override

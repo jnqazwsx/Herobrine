@@ -12,7 +12,7 @@ import org.bukkit.entity.Player;
 public class PlaceTorch extends Action {
 
     public PlaceTorch() {
-        super(ActionType.PLACE_TORCH, true);
+        super(ActionType.PLACE_TORCH);
     }
     
     @Override

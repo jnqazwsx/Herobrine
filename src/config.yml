@@ -5,24 +5,18 @@ Herobrine:
   sendMessages: true
   # Modify the world (bury players, add torches, etc.)
   modifyWorld: true
-  # Place fire where he walks.
-  fireTrails: false
   # Can he steal from chests?
   stealFromChests: true
   # What is his name? (This will affect his skin!)
   entityName: Herobrine
   # Don't attack creative players.
   ignoreCreativePlayers: true
-  # Can he smash nearby torches?
-  smashTorches: false
   # Can they summon him by altar?
   allowAltar: true
   # Log event messages?
   logEvents: true
   # What should he be holding?
   itemInHand: 259
-  # What he drops on death and the amount.
-  deathDrop: 264,1
   # Should he be more often at night?
   moreOftenAtNight: true
   # There are blocks he can modify, you should not use man-made ones!
@@ -58,6 +52,6 @@ Herobrine:
     - world_nether
     - world_the_end
   # Don't touch this, this is for me to use.
-  configBuild: 4.3
+  configBuild: 4.4
   # Allow me to collect server statistics.
   collectStats: true

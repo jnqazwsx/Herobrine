@@ -65,7 +65,7 @@ public class Main extends JavaPlugin {
         if (this.isHerobrineSpawned()) {
             this.manager.despawnById(this.id);
             this.mob = null;
-            this.log("Despawned Herobrine!", true);
+            this.log("Despawned Herobrine!", false);
         }
     }
 
@@ -75,7 +75,7 @@ public class Main extends JavaPlugin {
             this.mob.getNpc().moveTo(loc);
             this.mob.lookAtVirtualPlayer(loc);
             this.mob.getNpc().setItemInHand(Material.getMaterial((Integer) this.config.getObject("itemInHand")));
-            this.log("Spawned Herobrine at X: " + loc.getBlockX() + ", Y: " + loc.getBlockY() + ", Z: " + loc.getBlockZ() + ".", true);
+            this.log("Spawned Herobrine at X: " + loc.getBlockX() + ", Y: " + loc.getBlockY() + ", Z: " + loc.getBlockZ() + ".", false);
         }
     }
 

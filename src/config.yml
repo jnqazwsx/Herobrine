@@ -17,7 +17,7 @@ Herobrine:
   logEvents: true
   # What should he be holding?
   itemInHand: 259
-  # Should he be more often at night?
+  # Should he be more often at night and when players are online?
   moreOftenAtNight: true
   # There are blocks he can modify, you should not use man-made ones!
   allowedBlocks:

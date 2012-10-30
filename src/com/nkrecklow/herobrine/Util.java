@@ -1,6 +1,6 @@
 package com.nkrecklow.herobrine;
 
-import com.nkrecklow.herobrine.api.BookItem;
+import com.nkrecklow.herobrine.misc.BookItem;
 import java.io.BufferedInputStream;
 import java.io.DataInputStream;
 import java.net.URL;

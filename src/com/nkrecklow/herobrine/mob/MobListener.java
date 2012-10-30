@@ -77,7 +77,7 @@ public class MobListener extends Generic implements Listener {
         if (!super.main.isHerobrineSpawned() || !super.main.canSpawn(event.getEntity().getWorld())) {
             return;
         }
-        if (super.main.getHerobrine().getNpc().getBukkitEntity().equals(event.getEntity())) {
+        if (super.main.getHerobrine().getEntity().equals(event.getEntity())) {
             event.setCancelled(true);
         }
     }
@@ -88,7 +88,7 @@ public class MobListener extends Generic implements Listener {
             return;
         }
         if (super.main.getHerobrine().getTarget().equals(event.getPlayer().getName())) {
-            if (!event.getTo().getWorld().equals(super.main.getHerobrine().getNpc().getBukkitEntity().getWorld())) {
+            if (!event.getTo().getWorld().equals(super.main.getHerobrine().getEntity().getWorld())) {
                 super.main.killHerobrine();
             }
         }

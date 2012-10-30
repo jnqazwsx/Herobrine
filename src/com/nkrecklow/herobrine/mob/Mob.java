@@ -2,6 +2,7 @@ package com.nkrecklow.herobrine.mob;
 
 import com.topcat.npclib.entity.HumanNPC;
 import org.bukkit.Location;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 
@@ -17,7 +18,7 @@ public class Mob implements Listener {
     
     public void lookAtVirtualPlayer(Location loc) {
         loc.setY(loc.getY() + 1.5D);
-        this.getNpc().lookAtPoint(loc);
+        this.npc.lookAtPoint(loc);
     }
     
     public void lookAtPlayer(Player player) {
@@ -31,8 +32,12 @@ public class Mob implements Listener {
     public String getTarget() {
         return this.target;
     }
-    
+
     public HumanNPC getNpc() {
         return this.npc;
+    }
+    
+    public Entity getEntity() {
+        return this.npc.getBukkitEntity();
     }
 }

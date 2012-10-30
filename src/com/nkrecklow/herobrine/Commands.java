@@ -117,7 +117,7 @@ public class Commands extends Generic implements CommandExecutor {
                 } else if (args[0].equalsIgnoreCase("teleport")) {
                     if (args.length == 1) {
                         if (super.main.isHerobrineSpawned()) {
-                            player.teleport(super.main.getHerobrine().getNpc().getBukkitEntity().getLocation());
+                            player.teleport(super.main.getHerobrine().getEntity().getLocation());
                             player.sendMessage("[" + ChatColor.RED + "Herobrine" + ChatColor.WHITE + "] " + "Teleported to Herobrine!");
                             super.main.log("Teleported " + player.getName() + " to Herobrine.", true);
                         } else {

@@ -1,4 +1,4 @@
-package com.nkrecklow.herobrine.api;
+package com.nkrecklow.herobrine.misc;
 
 /*
  * Copyright (C) 2012  Joshua Reetz

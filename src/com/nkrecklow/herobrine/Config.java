@@ -136,6 +136,12 @@ public class Config extends Generic {
     }
 
     public Object getObject(String name) {
-        return this.config.get("Herobrine." + name);
+        try {
+            return this.config.get("Herobrine." + name);
+        } catch (Exception ex) {
+            super.main.log("You need to delete Herobrine's configuration file and restart/reload!", false);
+            super.main.getServer().getPluginManager().disablePlugin(super.main);
+            return null;
+        }
     }
 }

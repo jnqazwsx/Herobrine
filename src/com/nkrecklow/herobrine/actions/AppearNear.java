@@ -18,6 +18,8 @@ public class AppearNear extends Action {
     public void onAction(final Main main, Player player) {
         if (!main.isHerobrineSpawned()) {
             Location loc = Util.getLocationInFrontOfPlayer(player, new Random().nextInt(10) + 3);
+            int delay = 30;
+            delay += (new Random().nextInt(5) * 20);
             loc.setY(player.getWorld().getHighestBlockYAt(loc));
             main.spawnHerobrine(loc);
             main.getHerobrine().setTarget(player.getName());
@@ -28,7 +30,7 @@ public class AppearNear extends Action {
                 public void run() {
                     main.killHerobrine();
                 }
-            }, (Util.getRandomInteger(7) * 20));
+            }, delay);
             main.log("Appeared near " + player.getName() + ".", true);
         }
     }

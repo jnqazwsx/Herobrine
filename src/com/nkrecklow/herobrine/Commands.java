@@ -33,7 +33,7 @@ public class Commands extends Generic implements CommandExecutor {
                         if (super.main.canSpawn(target.getWorld())) {
                             if (!super.main.isHerobrineSpawned()) {
                                 super.main.getActions().runAction(ActionType.APPEAR, target);
-                                player.sendMessage("[" + ChatColor.RED + "Herobrine" + ChatColor.WHITE + "] " + "Herobrine attempted to appeared near " + target.getName() + "!");
+                                player.sendMessage("[" + ChatColor.RED + "Herobrine" + ChatColor.WHITE + "] " + "Herobrine attempted to appear by " + target.getName() + "!");
                             } else {
                                 player.sendMessage("[" + ChatColor.RED + "Herobrine" + ChatColor.WHITE + "] " + "Herobrine is currently doing something!");
                             }

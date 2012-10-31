@@ -69,16 +69,9 @@ public class MobListener extends Generic implements Listener {
                 return;
             }
             super.main.getHerobrine().lookAtPlayer(event.getPlayer());
-        }
-    }
-
-    @EventHandler
-    public void onEntityDamage(EntityDamageEvent event) {
-        if (!super.main.isHerobrineSpawned() || !super.main.canSpawn(event.getEntity().getWorld())) {
-            return;
-        }
-        if (super.main.getHerobrine().getEntity().equals(event.getEntity())) {
-            event.setCancelled(true);
+            if (event.getPlayer().getLocation().distance(super.main.getHerobrine().getEntity().getLocation()) <= 3D) {
+                super.main.killHerobrine();
+            }
         }
     }
     

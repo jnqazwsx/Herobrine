@@ -1,6 +1,7 @@
 package com.nkrecklow.herobrine;
 
 import com.nkrecklow.herobrine.misc.BookItem;
+import com.nkrecklow.herobrine.mob.MobPosition;
 import java.io.BufferedInputStream;
 import java.io.DataInputStream;
 import java.net.URL;
@@ -13,6 +14,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 public class Util {
+    
+    public static MobPosition getRandomPosition() {
+        return MobPosition.getPositions().get(new Random().nextInt(MobPosition.getPositions().size() - 1));
+    }
     
     public static ItemStack getNewBook(Main main) {
         BookItem book = new BookItem(new ItemStack(387, 1));

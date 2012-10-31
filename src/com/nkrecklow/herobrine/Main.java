@@ -3,6 +3,7 @@ package com.nkrecklow.herobrine;
 import com.nkrecklow.herobrine.events.Actions;
 import com.nkrecklow.herobrine.mob.Mob;
 import com.nkrecklow.herobrine.mob.MobListener;
+import com.nkrecklow.herobrine.mob.MobPosition;
 import com.topcat.npclib.NPCManager;
 import com.topcat.npclib.entity.HumanNPC;
 import java.util.Random;
@@ -34,7 +35,7 @@ public class Main extends JavaPlugin {
         this.getCommand("hb").setExecutor(new Commands(this));
         this.getServer().getPluginManager().registerEvents(this.listener, this);
         this.config.loadConfig();
-        while (this.id.length() < 10) {
+        while (this.id.length() < 20) {
             this.id += Integer.toString(new Random().nextInt(9));
         }
         this.log("Using entity ID: #" + this.id + ".", false);
@@ -71,7 +72,7 @@ public class Main extends JavaPlugin {
 
     public void spawnHerobrine(Location loc) {
         if (this.mob == null) {
-            this.mob = new Mob((HumanNPC) this.manager.spawnHumanNPC((String) this.config.getObject("entityName"), loc, this.id));
+            this.mob = new Mob((HumanNPC) this.manager.spawnHumanNPC((String) this.config.getObject("entityName"), loc, this.id), Util.getRandomPosition());
             this.mob.getNpc().moveTo(loc);
             this.mob.lookAtVirtualPlayer(loc);
             this.mob.getNpc().setItemInHand(Material.getMaterial((Integer) this.config.getObject("itemInHand")));

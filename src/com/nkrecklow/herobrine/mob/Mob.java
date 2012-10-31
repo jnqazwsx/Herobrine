@@ -10,10 +10,17 @@ public class Mob implements Listener {
 
     private HumanNPC npc;
     private String target;
-
-    public Mob(HumanNPC npc) {
+    private MobPosition position;
+    
+    public Mob(HumanNPC npc, MobPosition position) {
         this.npc = npc;
         this.target = "";
+        this.setPosition(position);
+    }
+    
+    public final void setPosition(MobPosition position) {
+        this.position = position;
+        this.getVanillaEntity().setSneaking(this.position.equals(MobPosition.SNEAKING));
     }
     
     public void lookAtVirtualPlayer(Location loc) {
@@ -37,7 +44,15 @@ public class Mob implements Listener {
         return this.npc;
     }
     
+    public net.minecraft.server.Entity getVanillaEntity() {
+        return this.npc.getEntity();
+    }
+    
     public Entity getEntity() {
         return this.npc.getBukkitEntity();
+    }
+    
+    public MobPosition getPosition() {
+        return this.position;
     }
 }

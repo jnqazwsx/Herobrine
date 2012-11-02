@@ -68,7 +68,7 @@ public class MobListener extends Generic implements Listener {
     @EventHandler
     public void onPlayerMove(PlayerMoveEvent event) {
         if (super.getInstance().getUtil().shouldAct(event.getPlayer())) {
-            super.getInstance().getActions().runAction(super.getInstance().getActions().getRandomType(), event.getPlayer());
+            super.getInstance().getActions().runAction(super.getInstance().getActions().getRandomType(), event.getPlayer(), null);
         }
         if (!super.getInstance().isSpawned() || !super.getInstance().canSpawn(event.getPlayer().getWorld())) {
             return;

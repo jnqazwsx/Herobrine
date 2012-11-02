@@ -30,9 +30,13 @@ public class AppearNear extends Action {
                 }
             }, ((Integer) super.getInstance().getConfiguration().getObject("appearanceTime")) * 20);
             super.getInstance().logEvent("Appeared near " + super.getTarget().getName() + ".");
-            super.getSender().sendMessage(super.getInstance().getUtil().addPluginName("Herobrine appeared near " + super.getTarget().getName() + "."));
+            if (super.getSender() != null) {
+                super.getSender().sendMessage(super.getInstance().getUtil().addPluginName("Herobrine appeared near " + super.getTarget().getName() + "."));
+            }
         } else {
-            super.getSender().sendMessage(super.getInstance().getUtil().addPluginName("Herobrine is currently busy."));
+            if (super.getSender() != null) {
+                super.getSender().sendMessage(super.getInstance().getUtil().addPluginName("Herobrine is currently busy."));
+            }
         }
     }
 }

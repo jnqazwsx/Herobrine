@@ -27,15 +27,16 @@ public class Actions extends Generic {
         this.actions[4] = PlaySound.class;
     }
 
-    public void runAction(ActionType type, Player player) {
-        if ((Boolean) super.main.getConfiguration().getObject("ignoreCreativePlayers") && player.getGameMode().equals(GameMode.CREATIVE)) {
+    public void runAction(ActionType type, Player target, Player sender) {
+        if ((Boolean) super.getInstance().getConfiguration().getObject("ignoreCreativePlayers") && target.getGameMode().equals(GameMode.CREATIVE)) {
+            sender.sendMessage(super.getInstance().getUtil().addPluginName(target.getName() + " is in creative mode."));
             return;
         }
-        if (!super.main.canSpawn(player.getWorld())) {
+        if (!super.getInstance().canSpawn(target.getWorld())) {
             return;
         }
         boolean stop = false;
-        for (ItemStack item : player.getInventory().getContents()) {
+        for (ItemStack item : target.getInventory().getContents()) {
             if (item != null) {
                 NamedItemStack namedItem = new NamedItemStack(item);
                 if (namedItem.getName().equals("Holy Cross")) {
@@ -45,17 +46,18 @@ public class Actions extends Generic {
             }
         }
         if (stop) {
-            super.main.log("Stopped Herobrine from running an event for " + player.getName() + ".", true);
+            sender.sendMessage(super.getInstance().getUtil().addPluginName(target.getName() + " has a \"Holy Cross\", event stopped."));
             return;
         }
         for (Class<? extends Action> action : this.actions) {
             try {
                 Action instance = action.newInstance();
                 if (instance.getType().equals(type)) {
-                    instance.onAction(super.main, player);
+                    instance.prepareAction(super.getInstance(), target, sender);
+                    instance.callAction();
                 }
             } catch (Exception ex) {
-                super.main.log("Error: " + ex.getMessage(), false);
+                super.getInstance().log("Error: " + ex.getMessage());
             }
          }
     }
@@ -68,7 +70,7 @@ public class Actions extends Generic {
                     try {
                         type = action.newInstance().getType();
                     } catch (Exception ex) {
-                        super.main.log("Error: " + ex.getMessage(), false);
+                        super.getInstance().log("Error: " + ex.getMessage());
                         type = null;
                         continue;
                     }

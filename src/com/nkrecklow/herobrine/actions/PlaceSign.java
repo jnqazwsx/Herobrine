@@ -11,11 +11,13 @@ public class PlaceSign extends Action {
     public PlaceSign() {
         super(ActionType.PLACE_SIGN);
     }
-    
+
     @Override
     public void callAction() {
         if (!(Boolean) super.getInstance().getConfiguration().getObject("modifyWorld")) {
-            super.getSender().sendMessage(super.getInstance().getUtil().addPluginName("Can't modify that world (\"" + super.getTarget().getWorld().getName() + "\")."));
+            if (super.getSender() != null) {
+                super.getSender().sendMessage(super.getInstance().getUtil().addPluginName("Can't modify that world (\"" + super.getTarget().getWorld().getName() + "\")."));
+            }
             return;
         }
         Block signPost = super.getInstance().getUtil().getNearbyLocation(super.getTarget().getLocation()).getBlock();
@@ -27,9 +29,13 @@ public class PlaceSign extends Action {
             signBlock.setLine(1, msg);
             signBlock.update();
             super.getInstance().logEvent("Placed a sign by " + super.getTarget().getName() + " (\"" + msg + "\").");
-            super.getSender().sendMessage(super.getInstance().getUtil().addPluginName("Placed a sign by " + super.getTarget().getName() + " (\"" + msg + "\")."));
+            if (super.getSender() != null) {
+                super.getSender().sendMessage(super.getInstance().getUtil().addPluginName("Placed a sign by " + super.getTarget().getName() + " (\"" + msg + "\")."));
+            }
         } else {
-            super.getSender().sendMessage(super.getInstance().getUtil().addPluginName("Failed to find a proper sign location."));
+            if (super.getSender() != null) {
+                super.getSender().sendMessage(super.getInstance().getUtil().addPluginName("Failed to find a proper sign location."));
+            }
         }
     }
 }

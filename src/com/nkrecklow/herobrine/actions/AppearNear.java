@@ -1,12 +1,10 @@
 package com.nkrecklow.herobrine.actions;
 
-import com.nkrecklow.herobrine.Main;
 import com.nkrecklow.herobrine.Util;
 import com.nkrecklow.herobrine.events.Action;
 import com.nkrecklow.herobrine.events.ActionType;
 import java.util.Random;
 import org.bukkit.Location;
-import org.bukkit.entity.Player;
 
 public class AppearNear extends Action {
 
@@ -16,22 +14,25 @@ public class AppearNear extends Action {
 
     @Override
     public void callAction() {
-        if (!main.isHerobrineSpawned()) {
-            Location loc = Util.getLocationInFrontOfPlayer(player, new Random().nextInt(10) + 3);
-            loc.setY(player.getWorld().getHighestBlockYAt(loc));
-            main.spawnHerobrine(loc);
-            main.getHerobrine().setTarget(player.getName());
-            main.getHerobrine().lookAtPlayer(player);
-            main.getServer().getScheduler().scheduleSyncDelayedTask(main, new Runnable() {
+        if (!super.getInstance().isSpawned()) {
+            Location loc = super.getInstance().getUtil().getLocationInFrontOfPlayer(super.getTarget(), new Random().nextInt(10) + 3);
+            loc.setY(super.getTarget().getWorld().getHighestBlockYAt(loc));
+            super.getInstance().spawnMob(loc);
+            super.getInstance().getMob().setTarget(super.getTarget().getName());
+            super.getInstance().getMob().lookAtPlayer(super.getTarget());
+            super.getInstance().getServer().getScheduler().scheduleSyncDelayedTask(super.getInstance(), new Runnable() {
 
                 @Override
                 public void run() {
-                    if (getInstance().isHerobrineSpawned()) {
-                        getInstance().killHerobrine();
+                    if (getInstance().isSpawned()) {
+                        getInstance().despawnMob();
                     }
                 }
             }, ((Integer) super.getInstance().getConfiguration().getObject("appearanceTime")) * 20);
-            main.log("Appeared near " + player.getName() + ".", true);
+            super.getInstance().logEvent("Appeared near " + super.getTarget().getName() + ".");
+            super.getSender().sendMessage(super.getInstance().getUtil().addPluginName("Herobrine appeared near " + super.getTarget().getName() + "."));
+        } else {
+            super.getSender().sendMessage(super.getInstance().getUtil().addPluginName("Herobrine is currently busy."));
         }
     }
 }

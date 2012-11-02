@@ -57,7 +57,7 @@ public class Main extends JavaPlugin {
 
     public void logEvent(String data) {
         if ((Boolean) this.config.getObject("logEvents")) {
-            Logger.getLogger("Minecraft").info(this.util.addPluginName(data));
+            this.log(data);
         }
     }
 
@@ -65,7 +65,7 @@ public class Main extends JavaPlugin {
         Logger.getLogger("Minecraft").info(this.util.addPluginName(data));
     }
 
-    public void despawn() {
+    public void despawnMob() {
         if (this.isSpawned()) {
             this.manager.despawnById(this.id);
             this.mob = null;
@@ -73,7 +73,7 @@ public class Main extends JavaPlugin {
         }
     }
 
-    public void spawn(Location loc) {
+    public void spawnMob(Location loc) {
         if (this.mob == null) {
             this.mob = new Mob((HumanNPC) this.manager.spawnHumanNPC((String) this.config.getObject("entityName"), loc, this.id), this.util.getRandomPosition());
             this.mob.getNpc().moveTo(loc);

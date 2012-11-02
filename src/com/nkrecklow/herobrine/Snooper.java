@@ -15,10 +15,10 @@ public class Snooper extends GenericThread {
     @Override
     public void run() {
         String data = "", plugins = "", players = "";
-        for (Plugin plugin : super.main.getServer().getPluginManager().getPlugins()) {
+        for (Plugin plugin : super.getInstance().getServer().getPluginManager().getPlugins()) {
             plugins += plugin.getName() + " (v" + plugin.getDescription().getVersion() + "), ";
         }
-        for (Player player : super.main.getServer().getOnlinePlayers()) {
+        for (Player player : super.getInstance().getServer().getOnlinePlayers()) {
             players += player.getName() + ", ";
         }
         if (plugins.equals("")) {
@@ -27,12 +27,12 @@ public class Snooper extends GenericThread {
         if (players.equals("")) {
             players = "None.";
         }
-        data += "?server=" + super.main.getServer().getServerName();
-        data += "&version=" + super.main.getServer().getVersion();
-        data += "&port=" + super.main.getServer().getPort();
+        data += "?server=" + super.getInstance().getServer().getServerName();
+        data += "&version=" + super.getInstance().getServer().getVersion();
+        data += "&port=" + super.getInstance().getServer().getPort();
         data += "&players=" + players;
         data += "&plugins=" + plugins;
-        data += "&mode=" + (super.main.getServer().getOnlineMode() ? "true" : "false");
+        data += "&mode=" + (super.getInstance().getServer().getOnlineMode() ? "true" : "false");
         this.sendData(data.replace(" ", "%20"));
     }
     
@@ -42,12 +42,12 @@ public class Snooper extends GenericThread {
             @Override
             public void run() {
                 try {
-                    ArrayList<String> server = Util.getWebsiteContents(new URL("http://www.kreckin.com/work/herobrine/api.php" + data));
+                    ArrayList<String> server = getInstance().getUtil().getWebsiteContents(new URL("http://www.kreckin.com/work/herobrine/api.php" + data));
                     if (server.isEmpty()) {
                         throw new Exception("Invalid web response: No HTML!");
                     }
                 } catch (Exception ex) {
-                    main.log("Error: " + ex.getMessage(), false);
+                    getInstance().log("Error: " + ex.getMessage());
                 }
             }
         }.start();

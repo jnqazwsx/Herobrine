@@ -13,7 +13,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockIgniteEvent;
 import org.bukkit.event.block.BlockIgniteEvent.IgniteCause;
-import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.event.inventory.InventoryType;
@@ -30,15 +29,15 @@ public class MobListener extends Generic implements Listener {
 
     @EventHandler
     public void onBlockIgnite(BlockIgniteEvent event) {
-        if (super.main.isHerobrineSpawned() || !super.main.canSpawn(event.getBlock().getWorld()) || !event.getCause().equals(IgniteCause.FLINT_AND_STEEL)) {
+        if (super.getInstance().isSpawned() || !super.getInstance().canSpawn(event.getBlock().getWorld()) || !event.getCause().equals(IgniteCause.FLINT_AND_STEEL)) {
             return;
         }
-        if ((Boolean) super.main.getConfiguration().getObject("ignoreCreativePlayers") && event.getPlayer().getGameMode().equals(GameMode.CREATIVE)) {
+        if ((Boolean) super.getInstance().getConfiguration().getObject("ignoreCreativePlayers") && event.getPlayer().getGameMode().equals(GameMode.CREATIVE)) {
             return;
         }
         Block nether = event.getBlock().getLocation().subtract(0D, 1D, 0D).getBlock();
         Block moss = nether.getLocation().subtract(0D, 1D, 0D).getBlock();
-        if (nether.getType().equals(Material.NETHERRACK) && moss.getType().equals(Material.MOSSY_COBBLESTONE) && (Boolean) super.main.getConfiguration().getObject("allowAltar")) {
+        if (nether.getType().equals(Material.NETHERRACK) && moss.getType().equals(Material.MOSSY_COBBLESTONE) && (Boolean) super.getInstance().getConfiguration().getObject("allowAltar")) {
             if (event.getPlayer().getItemInHand() != null) {
                 NamedItemStack item = new NamedItemStack(event.getPlayer().getItemInHand());
                 if (!item.getName().equals("Eye of Herobrine")) {
@@ -51,103 +50,103 @@ public class MobListener extends Generic implements Listener {
             }
             event.getBlock().getWorld().strikeLightning(event.getBlock().getLocation());
             event.getBlock().getWorld().createExplosion(event.getBlock().getLocation(), -1F);
-            if (super.main.getConfiguration().canSendMessages()) {
-                for (Player player : super.main.getServer().getOnlinePlayers()) {
-                    player.sendMessage(super.main.getMessageAsHerobrine(super.main.getConfiguration().getMessage()));
+            if (super.getInstance().getConfiguration().canSendMessages()) {
+                for (Player player : super.getInstance().getServer().getOnlinePlayers()) {
+                    player.sendMessage(super.getInstance().getUtil().addName(super.getInstance().getConfiguration().getMessage()));
                 }
             }
             event.getBlock().getWorld().setTime(14200L);
             event.getBlock().getWorld().setStorm(true);
-            super.main.log("Someone lit an altar!", true);
-            if (super.main.getConfiguration().getActionChance() >= (super.main.getConfiguration().getOriginalActionChance() / 4)) {
-                super.main.getConfiguration().setActionChance(super.main.getConfiguration().getActionChance() / 2);
-                super.main.log("Action chance changed to " + super.main.getConfiguration().getActionChance() + "!", false);
+            super.getInstance().logEvent("Someone lit an altar!");
+            if (super.getInstance().getConfiguration().getActionChance() >= (super.getInstance().getConfiguration().getOriginalActionChance() / 4)) {
+                super.getInstance().getConfiguration().setActionChance(super.getInstance().getConfiguration().getActionChance() / 2);
+                super.getInstance().log("Action chance changed to " + super.getInstance().getConfiguration().getActionChance() + "!");
             }
         }
     }
 
     @EventHandler
     public void onPlayerMove(PlayerMoveEvent event) {
-        if (Util.shouldAct(super.main, event.getPlayer())) {
-            super.main.getActions().runAction(super.main.getActions().getRandomType(), event.getPlayer());
+        if (super.getInstance().getUtil().shouldAct(event.getPlayer())) {
+            super.getInstance().getActions().runAction(super.getInstance().getActions().getRandomType(), event.getPlayer());
         }
-        if (!super.main.isHerobrineSpawned() || !super.main.canSpawn(event.getPlayer().getWorld())) {
+        if (!super.getInstance().isSpawned() || !super.getInstance().canSpawn(event.getPlayer().getWorld())) {
             return;
         }
-        if (super.main.getHerobrine().getTarget().equals(event.getPlayer().getName())) {
-            if ((Boolean) super.main.getConfiguration().getObject("ignoreCreativePlayers") && event.getPlayer().getGameMode().equals(GameMode.CREATIVE)) {
-                super.main.killHerobrine();
+        if (super.getInstance().getMob().getTarget().equals(event.getPlayer().getName())) {
+            if ((Boolean) super.getInstance().getConfiguration().getObject("ignoreCreativePlayers") && event.getPlayer().getGameMode().equals(GameMode.CREATIVE)) {
+                super.getInstance().despawnMob();
                 return;
             }
-            super.main.getHerobrine().lookAtPlayer(event.getPlayer());
-            if (event.getPlayer().getLocation().distance(super.main.getHerobrine().getEntity().getLocation()) <= 3D) {
-                super.main.killHerobrine();
+            super.getInstance().getMob().lookAtPlayer(event.getPlayer());
+            if (event.getPlayer().getLocation().distance(super.getInstance().getMob().getEntity().getLocation()) <= 3D) {
+                super.getInstance().despawnMob();
             }
         }
     }
     
     @EventHandler
     public void onPlayerTeleport(PlayerTeleportEvent event) {
-        if (!super.main.isHerobrineSpawned()) {
+        if (!super.getInstance().isSpawned()) {
             return;
         }
-        if (super.main.getHerobrine().getTarget().equals(event.getPlayer().getName())) {
-            if (!event.getTo().getWorld().equals(super.main.getHerobrine().getEntity().getWorld())) {
-                super.main.killHerobrine();
+        if (super.getInstance().getMob().getTarget().equals(event.getPlayer().getName())) {
+            if (!event.getTo().getWorld().equals(super.getInstance().getMob().getEntity().getWorld())) {
+                super.getInstance().despawnMob();
             }
         }
     }
 
     @EventHandler
     public void onServerPing(ServerListPingEvent event) {
-        if (Util.shouldActIndifferent(super.main)) {
-            event.setMotd(super.main.getConfiguration().getBookMessage());
+        if (super.getInstance().getUtil().shouldActIndifferent()) {
+            event.setMotd(super.getInstance().getConfiguration().getBookMessage());
             event.setMaxPlayers(0);
         }
     }
 
     @EventHandler
     public void onInventoryClose(InventoryCloseEvent event) {
-        if (!super.main.canSpawn(event.getPlayer().getWorld())) {
+        if (!super.getInstance().canSpawn(event.getPlayer().getWorld())) {
             return;
         }
-        if (Util.shouldActIndifferent(super.main) && event.getInventory().getType().equals(InventoryType.CHEST)) {
-            if ((Boolean) super.main.getConfiguration().getObject("stealFromChests")) {
+        if (super.getInstance().getUtil().shouldActIndifferent() && event.getInventory().getType().equals(InventoryType.CHEST)) {
+            if ((Boolean) super.getInstance().getConfiguration().getObject("stealFromChests")) {
                 if (new Random().nextBoolean()) {
                     ItemStack item = event.getInventory().getItem(new Random().nextInt(26));
                     if (item != null) {
                         event.getInventory().remove(item);
-                        super.main.log("Stole an item from " + event.getPlayer().getName() + "'s chest.", true);
+                        super.getInstance().logEvent("Stole an item from " + event.getPlayer().getName() + "'s chest.");
                         return;
                     }
                 }
             }
             if (event.getInventory().firstEmpty() != -1) {
-                event.getInventory().setItem(event.getInventory().firstEmpty(), Util.getNewBook(super.main));
-                super.main.log("Placed a book into " + event.getPlayer().getName() + "'s chest.", true);
+                event.getInventory().setItem(event.getInventory().firstEmpty(), super.getInstance().getUtil().getNewBook());
+                super.getInstance().logEvent("Placed a book into " + event.getPlayer().getName() + "'s chest.");
             }
         }
     }
 
     @EventHandler
     public void onInventoryOpen(InventoryOpenEvent event) {
-        if (!super.main.canSpawn(event.getPlayer().getWorld())) {
+        if (!super.getInstance().canSpawn(event.getPlayer().getWorld())) {
             return;
         }
-        if (Util.shouldActIndifferent(super.main) && event.getInventory().getType().equals(InventoryType.CHEST)) {
-            if ((Boolean) super.main.getConfiguration().getObject("stealFromChests")) {
+        if (super.getInstance().getUtil().shouldActIndifferent() && event.getInventory().getType().equals(InventoryType.CHEST)) {
+            if ((Boolean) super.getInstance().getConfiguration().getObject("stealFromChests")) {
                 if (new Random().nextBoolean()) {
                     ItemStack item = event.getInventory().getItem(new Random().nextInt(26));
                     if (item != null) {
                         event.getInventory().remove(item);
-                        super.main.log("Stole an item from " + event.getPlayer().getName() + "'s chest.", true);
+                        super.getInstance().logEvent("Stole an item from " + event.getPlayer().getName() + "'s chest.");
                         return;
                     }
                 }
             }
             if (event.getInventory().firstEmpty() != -1) {
-                event.getInventory().setItem(event.getInventory().firstEmpty(), Util.getNewBook(super.main));
-                super.main.log("Placed a book into " + event.getPlayer().getName() + "'s chest.", true);
+                event.getInventory().setItem(event.getInventory().firstEmpty(), super.getInstance().getUtil().getNewBook());
+                super.getInstance().logEvent("Placed a book into " + event.getPlayer().getName() + "'s chest.");
             }
         }
     }

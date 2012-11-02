@@ -22,8 +22,9 @@ public class PlaceTorch extends Action {
         if (torch.getType().equals(Material.AIR) && super.getInstance().getUtil().canPlace(below.getLocation())) {
             torch.setType(Material.REDSTONE_TORCH_ON);
             super.getInstance().logEvent("Placed a torch near " + super.getTarget().getName() + ".");
+            super.getSender().sendMessage(super.getInstance().getUtil().addPluginName("Placed a torch near " + super.getTarget().getName() + "."));
         } else {
-            
+            super.getSender().sendMessage(super.getInstance().getUtil().addPluginName("Failed to find a proper torch location."));
         }
     }
 }

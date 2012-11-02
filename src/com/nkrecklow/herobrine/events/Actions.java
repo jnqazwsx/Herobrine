@@ -7,9 +7,11 @@ import com.nkrecklow.herobrine.actions.PlaceSign;
 import com.nkrecklow.herobrine.actions.PlaceTorch;
 import com.nkrecklow.herobrine.actions.PlaySound;
 import com.nkrecklow.herobrine.base.Generic;
+import com.nkrecklow.herobrine.misc.NamedItemStack;
 import java.util.Random;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 public class Actions extends Generic {
 
@@ -32,11 +34,25 @@ public class Actions extends Generic {
         if (!super.main.canSpawn(player.getWorld())) {
             return;
         }
+        boolean stop = false;
+        for (ItemStack item : player.getInventory().getContents()) {
+            if (item != null) {
+                NamedItemStack namedItem = new NamedItemStack(item);
+                if (namedItem.getName().equals("Holy Cross")) {
+                    stop = true;
+                    break;
+                }
+            }
+        }
+        if (stop) {
+            super.main.log("Stopped Herobrine from running an event for " + player.getName() + ".", true);
+            return;
+        }
         for (Class<? extends Action> action : this.actions) {
             try {
-                Action actionC = action.newInstance();
-                if (actionC.getActionType().equals(type)) {
-                    actionC.onAction(super.main, player);
+                Action instance = action.newInstance();
+                if (instance.getType().equals(type)) {
+                    instance.onAction(super.main, player);
                 }
             } catch (Exception ex) {
                 super.main.log("Error: " + ex.getMessage(), false);
@@ -44,13 +60,13 @@ public class Actions extends Generic {
          }
     }
 
-    public ActionType getRandomActionType() {
+    public ActionType getRandomType() {
         ActionType type = null;
         while (type == null) {
             for (Class<? extends Action> action : this.actions) {
                 if (new Random().nextInt(10) == 0) {
                     try {
-                        type = action.newInstance().getActionType();
+                        type = action.newInstance().getType();
                     } catch (Exception ex) {
                         super.main.log("Error: " + ex.getMessage(), false);
                         type = null;

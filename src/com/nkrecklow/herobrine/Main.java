@@ -8,7 +8,6 @@ import com.topcat.npclib.NPCManager;
 import com.topcat.npclib.entity.HumanNPC;
 import java.util.Random;
 import java.util.logging.Logger;
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -24,6 +23,7 @@ public class Main extends JavaPlugin {
     private Config config;
     private Actions actions;
     private Snooper snooper;
+    private Util util;
     private String id;
 
     @Override
@@ -34,13 +34,14 @@ public class Main extends JavaPlugin {
         this.config = new Config(this);
         this.actions = new Actions(this);
         this.snooper = new Snooper(this);
+        this.util = new Util(this);
         this.getCommand("hb").setExecutor(new Commands(this));
         this.getServer().getPluginManager().registerEvents(this.listener, this);
         this.config.loadConfig();
         while (this.id.length() < 20) {
             this.id += Integer.toString(new Random().nextInt(9));
         }
-        this.log("Using entity ID: #" + this.id + ".", false);
+        this.log("Using entity ID: #" + this.id + ".");
         if ((Boolean) this.config.getObject("collectStats")) {
             this.getServer().getScheduler().scheduleAsyncRepeatingTask(this, new Runnable() {
                 @Override
@@ -54,55 +55,62 @@ public class Main extends JavaPlugin {
         }
     }
 
-    public void log(String data, boolean event) {
-        if (event) {
-            if ((Boolean) this.config.getObject("logEvents")) {
-                Logger.getLogger("Minecraft").info("[Herobrine] " + data);
-            }
-        } else {
-            Logger.getLogger("Minecraft").info("[Herobrine] " + data);
+    public void logEvent(String data) {
+        if ((Boolean) this.config.getObject("logEvents")) {
+            Logger.getLogger("Minecraft").info(this.util.addPluginName(data));
         }
     }
 
-    public void killHerobrine() {
-        if (this.isHerobrineSpawned()) {
+    public void log(String data) {
+        Logger.getLogger("Minecraft").info(this.util.addPluginName(data));
+    }
+
+    public void despawn() {
+        if (this.isSpawned()) {
             this.manager.despawnById(this.id);
             this.mob = null;
-            this.log("Despawned Herobrine!", false);
+            this.log("Despawned Herobrine!");
         }
     }
 
-    public void spawnHerobrine(Location loc) {
+    public void spawn(Location loc) {
         if (this.mob == null) {
-            this.mob = new Mob((HumanNPC) this.manager.spawnHumanNPC((String) this.config.getObject("entityName"), loc, this.id), Util.getRandomPosition());
+            this.mob = new Mob((HumanNPC) this.manager.spawnHumanNPC((String) this.config.getObject("entityName"), loc, this.id), this.util.getRandomPosition());
             this.mob.getNpc().moveTo(loc);
             this.mob.lookAtVirtualPlayer(loc);
             this.mob.getNpc().setItemInHand(Material.getMaterial((Integer) this.config.getObject("itemInHand")));
-            this.log("Spawned Herobrine at X: " + loc.getBlockX() + ", Y: " + loc.getBlockY() + ", Z: " + loc.getBlockZ() + ".", false);
-            if ((Boolean) this.config.getObject("customDrops") && new Random().nextBoolean()) {
-                NamedItemStack namedItem = new NamedItemStack(new ItemStack(Material.SPIDER_EYE, 1));
-                namedItem.setName("Eye of Herobrine");
-                namedItem.setDescription("Some say it's evil.", "Others say it's blessed.");
+            this.log("Spawned Herobrine at X: " + loc.getBlockX() + ", Y: " + loc.getBlockY() + ", Z: " + loc.getBlockZ() + ".");
+            if (new Random().nextInt(1000) > 0) {
+                boolean type = new Random().nextBoolean();
+                ItemStack item = new ItemStack((type ? Material.GOLD_NUGGET : Material.SPIDER_EYE), 1);
+                NamedItemStack namedItem = new NamedItemStack(item);
+                if (type) {
+                    namedItem.setName("Eye of Herobrine");
+                    namedItem.setDescription("Some say it's evil.", "Others say it's blessed.");
+                } else {
+                    namedItem.setName("Holy Cross");
+                    namedItem.setDescription("He doesn't dare come near", "when you carry this.");
+                }
                 Item droppedItem = this.mob.getEntity().getWorld().dropItem(loc, namedItem.getItemStack());
                 droppedItem.setItemStack(namedItem.getItemStack());
             }
         }
     }
 
-    public String getMessageAsHerobrine(String message) {
-        return "<" + ChatColor.RED + ((String) this.config.getObject("entityName")) + ChatColor.WHITE + "> " + message;
-    }
-
     public boolean canSpawn(World world) {
         return this.config.getAllowedWorlds().contains(world.getName());
     }
 
-    public boolean isHerobrineSpawned() {
+    public boolean isSpawned() {
         return this.mob != null;
     }
 
-    public Mob getHerobrine() {
+    public Mob getMob() {
         return this.mob;
+    }
+    
+    public Util getUtil() {
+        return this.util;
     }
 
     public Config getConfiguration() {

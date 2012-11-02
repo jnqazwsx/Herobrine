@@ -13,9 +13,9 @@ public class AppearNear extends Action {
     public AppearNear() {
         super(ActionType.APPEAR);
     }
-    
+
     @Override
-    public void onAction(final Main main, Player player) {
+    public void callAction() {
         if (!main.isHerobrineSpawned()) {
             Location loc = Util.getLocationInFrontOfPlayer(player, new Random().nextInt(10) + 3);
             loc.setY(player.getWorld().getHighestBlockYAt(loc));
@@ -26,11 +26,11 @@ public class AppearNear extends Action {
 
                 @Override
                 public void run() {
-                    if (main.isHerobrineSpawned()) {
-                        main.killHerobrine();
+                    if (getInstance().isHerobrineSpawned()) {
+                        getInstance().killHerobrine();
                     }
                 }
-            }, ((Integer) main.getConfiguration().getObject("appearanceTime")) * 20);
+            }, ((Integer) super.getInstance().getConfiguration().getObject("appearanceTime")) * 20);
             main.log("Appeared near " + player.getName() + ".", true);
         }
     }

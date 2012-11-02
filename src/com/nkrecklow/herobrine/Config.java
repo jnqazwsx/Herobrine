@@ -25,33 +25,32 @@ public class Config extends Generic {
     
     public void loadConfig() {
         try {
-            File dir = super.main.getDataFolder();
+            File dir = super.getInstance().getDataFolder();
             File file = new File(dir + "/config.yml");
             if (!dir.exists()) {
                 if (!dir.mkdir()) {
-                    super.main.log("Failed to create directory!", false);
+                    super.getInstance().log("Failed to create directory!");
                 }
             }
             if (file.exists()) {
                 this.config = YamlConfiguration.loadConfiguration(file);
                 this.loadSettings();
             } else {
-                super.main.saveResource("config.yml", false);
+                super.getInstance().saveResource("config.yml", false);
             }
             if (this.config == null) {
                 this.config = YamlConfiguration.loadConfiguration(file);
                 this.loadSettings();
             }
         } catch (Exception ex) {
-            super.main.log("Failed to load configuration file!", false);
-            super.main.log("Error: " + ex.getMessage(), false);
+            super.getInstance().log("Error: " + ex.getMessage());
         }
     }
     
     private void loadSettings() throws Exception {
         boolean disable = false;
-        if (!super.main.getDescription().getVersion().equals(this.config.getString("Herobrine.configBuild"))) {
-            super.main.log("Outdated configuration file! Please delete it and restart!", false);
+        if (!super.getInstance().getDescription().getVersion().equals(this.config.getString("Herobrine.configBuild"))) {
+            super.getInstance().log("Outdated configuration file! Please delete it and restart!");
             disable = true;
         }
         this.actionChance = this.config.getInt("Herobrine.actionChance");
@@ -62,24 +61,23 @@ public class Config extends Generic {
         this.bookMessages = this.config.getStringList("Herobrine.bookMessages");
         this.allowedBlocks = this.config.getStringList("Herobrine.allowedBlocks");
         if (this.allowedBlocks.isEmpty()) {
-            super.main.log("Must have atleast one allowed block!", false);
+            super.getInstance().log("Must have atleast one allowed block!");
             disable = true;
         }
         if (this.bookMessages.isEmpty()) {
-            super.main.log("Must have atleast one book message!", false);
+            super.getInstance().log("Must have atleast one book message!");
             disable = true;
         }
         if (this.signMessages.isEmpty()) {
-            super.main.log("Must have atleast one sign message!", false);
+            super.getInstance().log("Must have atleast one sign message!");
             disable = true;
         }
         if (this.allowedWorlds.isEmpty()) {
-            super.main.log("Must be allowed in atleast one world!", false);
+            super.getInstance().log("Must be allowed in atleast one world!");
             disable = true;
         }
         if (disable) {
-            super.main.log("Because of a startup error, I am disabling.", false);
-            super.main.getServer().getPluginManager().disablePlugin(super.main);
+            super.getInstance().getServer().getPluginManager().disablePlugin(super.getInstance());
         }
     }
     
@@ -139,8 +137,8 @@ public class Config extends Generic {
         try {
             return this.config.get("Herobrine." + name);
         } catch (Exception ex) {
-            super.main.log("You need to delete Herobrine's configuration file and restart/reload!", false);
-            super.main.getServer().getPluginManager().disablePlugin(super.main);
+            super.getInstance().log("You need to delete Herobrine's configuration file and restart/reload!");
+            super.getInstance().getServer().getPluginManager().disablePlugin(super.getInstance());
             return null;
         }
     }

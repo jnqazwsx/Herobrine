@@ -1,5 +1,6 @@
 package com.nkrecklow.herobrine;
 
+import com.nkrecklow.herobrine.base.Generic;
 import com.nkrecklow.herobrine.misc.BookItem;
 import com.nkrecklow.herobrine.mob.MobPosition;
 import java.io.BufferedInputStream;
@@ -7,32 +8,45 @@ import java.io.DataInputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Random;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-public class Util {
+public class Util extends Generic {
     
-    public static MobPosition getRandomPosition() {
+    public Util(Main main) {
+        super(main);
+    }
+    
+    public String addPluginName(String message) {
+        return "[" + ChatColor.RED + "Herobrine" + ChatColor.WHITE + "] " + message;
+    }
+    
+    public String addName(String message) {
+        return "<" + ChatColor.RED + ((String) super.getInstance().getConfiguration().getObject("entityName")) + ChatColor.WHITE + "> " + message;
+    }
+    
+    public MobPosition getRandomPosition() {
         return MobPosition.getPositions().get(new Random().nextInt(MobPosition.getPositions().size() - 1));
     }
     
-    public static ItemStack getNewBook(Main main) {
+    public ItemStack getNewBook() {
         BookItem book = new BookItem(new ItemStack(387, 1));
         book.setAuthor("Herobrine");
         book.setTitle("Hello.");
-        book.setPages(new String[] { main.getConfiguration().getBookMessage() });
+        book.setPages(new String[] { super.getInstance().getConfiguration().getBookMessage() });
         return book.getItemStack();
     }
     
-    public static boolean shouldAct(Main main, Player player) {
-        int chance = main.getConfiguration().getActionChance();
-        if (player.getWorld().getTime() >= 13000 && player.getWorld().getTime() <= 14200 && (Boolean) main.getConfiguration().getObject("moreOftenAtNight")) {
-            chance = main.getConfiguration().getActionChance() / 4;
+    public boolean shouldAct(Player player) {
+        int chance = super.getInstance().getConfiguration().getActionChance();
+        if (player.getWorld().getTime() >= 13000 && player.getWorld().getTime() <= 14200 && (Boolean) super.getInstance().getConfiguration().getObject("moreOftenAtNight")) {
+            chance = super.getInstance().getConfiguration().getActionChance() / 4;
         }
-        if (chance == main.getConfiguration().getActionChance()) {
+        if (chance == super.getInstance().getConfiguration().getActionChance()) {
             int found = 0;
             for (Entity entity : player.getNearbyEntities(10D, 10D, 10D)) {
                 if (entity instanceof Player) {
@@ -40,21 +54,21 @@ public class Util {
                 }
             }
             if (found <= 2) {
-                chance = main.getConfiguration().getActionChance() / 2;
+                chance = super.getInstance().getConfiguration().getActionChance() / 2;
             }
         }
         return new Random().nextInt(chance) == 0;
     }
     
-    public static boolean shouldActIndifferent(Main main) {
-        return new Random().nextInt(main.getConfiguration().getActionChance()) == 0;
+    public boolean shouldActIndifferent() {
+        return new Random().nextInt(super.getInstance().getConfiguration().getActionChance()) == 0;
     }
 
-    public static boolean canPlace(Main main, Location loc) {
-        return main.getConfiguration().getAllowedBlocks().contains(loc.getBlock().getType());
+    public boolean canPlace(Location loc) {
+        return super.getInstance().getConfiguration().getAllowedBlocks().contains(loc.getBlock().getType());
     }
 
-    public static int getRandomInteger(int max) {
+    public int getRandomInteger(int max) {
         if (new Random().nextBoolean()) {
             return -new Random().nextInt(max) + 1;
         } else {
@@ -62,7 +76,7 @@ public class Util {
         }
     }
 
-    public static Location getLocationInFrontOfPlayer(Player player, int blocks) {
+    public Location getLocationInFrontOfPlayer(Player player, int blocks) {
         double rot = (player.getLocation().getYaw() - 90) % 360;
         if (rot < 0) {
             rot += 360.0;
@@ -90,7 +104,7 @@ public class Util {
         }
     }
 
-    public static ArrayList<String> getWebsiteContents(URL url) throws Exception {
+    public ArrayList<String> getWebsiteContents(URL url) throws Exception {
         ArrayList<String> fileContents = new ArrayList<String>();
         if (url != null) {
             DataInputStream fileReader = new DataInputStream(new BufferedInputStream(url.openStream()));
@@ -107,7 +121,7 @@ public class Util {
         return fileContents;
     }
 
-    public static Location getNearbyLocation(Location loc) {
-        return loc.add(Util.getRandomInteger(3), 0, Util.getRandomInteger(3));
+    public Location getNearbyLocation(Location loc) {
+        return loc.add(this.getRandomInteger(3), 0, this.getRandomInteger(3));
     }
 }

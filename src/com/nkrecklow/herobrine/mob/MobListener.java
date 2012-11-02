@@ -3,6 +3,7 @@ package com.nkrecklow.herobrine.mob;
 import com.nkrecklow.herobrine.Main;
 import com.nkrecklow.herobrine.Util;
 import com.nkrecklow.herobrine.base.Generic;
+import com.nkrecklow.herobrine.misc.NamedItemStack;
 import java.util.Random;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -12,6 +13,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockIgniteEvent;
 import org.bukkit.event.block.BlockIgniteEvent.IgniteCause;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.event.inventory.InventoryType;
@@ -37,6 +39,16 @@ public class MobListener extends Generic implements Listener {
         Block nether = event.getBlock().getLocation().subtract(0D, 1D, 0D).getBlock();
         Block moss = nether.getLocation().subtract(0D, 1D, 0D).getBlock();
         if (nether.getType().equals(Material.NETHERRACK) && moss.getType().equals(Material.MOSSY_COBBLESTONE) && (Boolean) super.main.getConfiguration().getObject("allowAltar")) {
+            if (event.getPlayer().getItemInHand() != null) {
+                NamedItemStack item = new NamedItemStack(event.getPlayer().getItemInHand());
+                if (!item.getName().equals("Eye of Herobrine")) {
+                    return;
+                } else {
+                    event.getPlayer().setItemInHand(null);
+                }
+            } else {
+                return;
+            }
             event.getBlock().getWorld().strikeLightning(event.getBlock().getLocation());
             event.getBlock().getWorld().createExplosion(event.getBlock().getLocation(), -1F);
             if (super.main.getConfiguration().canSendMessages()) {
@@ -49,7 +61,7 @@ public class MobListener extends Generic implements Listener {
             super.main.log("Someone lit an altar!", true);
             if (super.main.getConfiguration().getActionChance() >= (super.main.getConfiguration().getOriginalActionChance() / 4)) {
                 super.main.getConfiguration().setActionChance(super.main.getConfiguration().getActionChance() / 2);
-                super.main.log("Action chance changed to " + super.main.getConfiguration().getActionChance() + "!", true);
+                super.main.log("Action chance changed to " + super.main.getConfiguration().getActionChance() + "!", false);
             }
         }
     }
@@ -57,7 +69,7 @@ public class MobListener extends Generic implements Listener {
     @EventHandler
     public void onPlayerMove(PlayerMoveEvent event) {
         if (Util.shouldAct(super.main, event.getPlayer())) {
-            super.main.getActions().runAction(super.main.getActions().getRandomActionType(), event.getPlayer());
+            super.main.getActions().runAction(super.main.getActions().getRandomType(), event.getPlayer());
         }
         if (!super.main.isHerobrineSpawned() || !super.main.canSpawn(event.getPlayer().getWorld())) {
             return;

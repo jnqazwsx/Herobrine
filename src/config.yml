@@ -20,9 +20,7 @@ Herobrine:
   # Should he be more often at night and when players are online?
   moreOftenAtNight: true
   # How long will he appear for (this is in seconds)?
-  appearanceTime: 5
-  # Can he drop custom items?
-  customDrops: true
+  appearanceTime: 3
   # There are blocks he can modify, you should not use man-made ones!
   allowedBlocks:
     - 1

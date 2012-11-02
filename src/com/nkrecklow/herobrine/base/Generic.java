@@ -4,9 +4,13 @@ import com.nkrecklow.herobrine.Main;
 
 public class Generic {
 
-    public Main main;
+    private Main main;
     
     public Generic(Main main) {
         this.main = main;
+    }
+    
+    public Main getInstance() {
+        return this.main;
     }
 }

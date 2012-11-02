@@ -14,7 +14,7 @@ public class BuryPlayer extends Action {
     @Override
     public void callAction() {
         if (!(Boolean) super.getInstance().getConfiguration().getObject("modifyWorld")) {
-            super.getSender().sendMessage(super.getInstance().getUtil().addPluginName("Can't modify the world!"));
+            super.getSender().sendMessage(super.getInstance().getUtil().addPluginName("Can't modify that world (\"" + super.getTarget().getWorld().getName() + "\")."));
             return;
         }
         final Block top = super.getTarget().getLocation().subtract(0D, 1D, 0D).getBlock();

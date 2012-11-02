@@ -2,7 +2,6 @@ package com.nkrecklow.herobrine.actions;
 
 import com.nkrecklow.herobrine.events.Action;
 import com.nkrecklow.herobrine.events.ActionType;
-import java.util.Random;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
@@ -16,10 +15,10 @@ public class PlaceSign extends Action {
     @Override
     public void callAction() {
         if (!(Boolean) super.getInstance().getConfiguration().getObject("modifyWorld")) {
-            super.getSender().sendMessage(super.getInstance().getUtil().addPluginName("Can't modify the world!"));
+            super.getSender().sendMessage(super.getInstance().getUtil().addPluginName("Can't modify that world (\"" + super.getTarget().getWorld().getName() + "\")."));
             return;
         }
-        Block signPost = super.getTarget().getLocation().add(new Random().nextInt(5), 0D, new Random().nextInt(5)).getBlock();
+        Block signPost = super.getInstance().getUtil().getNearbyLocation(super.getTarget().getLocation()).getBlock();
         Block below = signPost.getLocation().subtract(0D, 1D, 0D).getBlock();
         String msg = super.getInstance().getConfiguration().getSignMessage();
         if (signPost.getType().equals(Material.AIR) && super.getInstance().getUtil().canPlace(below.getLocation())) {

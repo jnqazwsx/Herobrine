@@ -29,10 +29,15 @@ public class Actions extends Generic {
 
     public void runAction(ActionType type, Player target, Player sender) {
         if ((Boolean) super.getInstance().getConfiguration().getObject("ignoreCreativePlayers") && target.getGameMode().equals(GameMode.CREATIVE)) {
-            sender.sendMessage(super.getInstance().getUtil().addPluginName(target.getName() + " is in creative mode."));
+            if (sender != null) {
+                sender.sendMessage(super.getInstance().getUtil().addPluginName(target.getName() + " is in creative mode."));
+            }
             return;
         }
         if (!super.getInstance().canSpawn(target.getWorld())) {
+            if (sender != null) {
+                sender.sendMessage(super.getInstance().getUtil().addPluginName(target.getName() + "'s world (\"" + target.getWorld().getName() + "\") doesn't allow Herobrine."));
+            }
             return;
         }
         boolean stop = false;
@@ -46,7 +51,9 @@ public class Actions extends Generic {
             }
         }
         if (stop) {
-            sender.sendMessage(super.getInstance().getUtil().addPluginName(target.getName() + " has a \"Holy Cross\", event stopped."));
+            if (sender != null) {
+                sender.sendMessage(super.getInstance().getUtil().addPluginName(target.getName() + " has a \"Holy Cross\", event stopped."));
+            }
             return;
         }
         for (Class<? extends Action> action : this.actions) {
@@ -59,7 +66,7 @@ public class Actions extends Generic {
             } catch (Exception ex) {
                 super.getInstance().log("Error: " + ex.getMessage());
             }
-         }
+        }
     }
 
     public ActionType getRandomType() {

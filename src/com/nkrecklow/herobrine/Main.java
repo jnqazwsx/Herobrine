@@ -83,7 +83,7 @@ public class Main extends JavaPlugin {
                 NamedItemStack namedItem = new NamedItemStack(new ItemStack(Material.SPIDER_EYE, 1));
                 namedItem.setName("Eye of Herobrine");
                 namedItem.setDescription("Some say it's evil.", "Others say it's blessed.");
-                Item droppedItem = this.mob.getEntity().getWorld().dropItemNaturally(loc, namedItem.getItemStack());
+                Item droppedItem = this.mob.getEntity().getWorld().dropItem(loc, namedItem.getItemStack());
                 droppedItem.setItemStack(namedItem.getItemStack());
             }
         }

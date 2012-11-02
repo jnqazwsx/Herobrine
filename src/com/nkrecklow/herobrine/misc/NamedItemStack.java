@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import net.minecraft.server.NBTTagCompound;
 import net.minecraft.server.NBTTagList;
 import net.minecraft.server.NBTTagString;
+import org.bukkit.ChatColor;
 import org.bukkit.craftbukkit.inventory.CraftItemStack;
 import org.bukkit.inventory.ItemStack;
 
@@ -30,18 +31,7 @@ public class NamedItemStack {
 
     public void setName(String name) {
         NBTTagCompound tag = itemStack.tag.getCompound("display");
-        tag.setString("Name", name);
-        itemStack.tag.setCompound("display", tag);
-    }
-
-    public void addDescriptionLine(String lore) {
-        NBTTagCompound tag = itemStack.tag.getCompound("display");
-        NBTTagList list = tag.getList("Lore");
-        if (list == null) {
-            list = new NBTTagList();
-        }
-        list.add(new NBTTagString(lore));
-        tag.set("Lore", list);
+        tag.setString("Name", ChatColor.RESET + name);
         itemStack.tag.setCompound("display", tag);
     }
 
@@ -49,7 +39,8 @@ public class NamedItemStack {
         NBTTagCompound tag = itemStack.tag.getCompound("display");
         NBTTagList list = new NBTTagList();
         for (String line: desc) {
-            list.add(new NBTTagString(line));
+            line = ChatColor.stripColor(line);
+            list.add(new NBTTagString("", ChatColor.RED + line));
         }
         tag.set("Lore", list);
         itemStack.tag.setCompound("display", tag);

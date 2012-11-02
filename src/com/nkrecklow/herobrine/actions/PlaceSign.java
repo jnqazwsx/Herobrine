@@ -1,14 +1,11 @@
 package com.nkrecklow.herobrine.actions;
 
-import com.nkrecklow.herobrine.Main;
-import com.nkrecklow.herobrine.Util;
 import com.nkrecklow.herobrine.events.Action;
 import com.nkrecklow.herobrine.events.ActionType;
 import java.util.Random;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
-import org.bukkit.entity.Player;
 
 public class PlaceSign extends Action {
 
@@ -17,19 +14,23 @@ public class PlaceSign extends Action {
     }
     
     @Override
-    public void onAction(Main main, Player player) {
-        if (!(Boolean) main.getConfiguration().getObject("modifyWorld")) {
+    public void callAction() {
+        if (!(Boolean) super.getInstance().getConfiguration().getObject("modifyWorld")) {
+            super.getSender().sendMessage(super.getInstance().getUtil().addPluginName("Can't modify the world!"));
             return;
         }
-        Block signPost = player.getLocation().add(new Random().nextInt(5), 0D, new Random().nextInt(5)).getBlock();
+        Block signPost = super.getTarget().getLocation().add(new Random().nextInt(5), 0D, new Random().nextInt(5)).getBlock();
         Block below = signPost.getLocation().subtract(0D, 1D, 0D).getBlock();
-        String msg = main.getConfiguration().getSignMessage();
-        if (signPost.getType().equals(Material.AIR) && Util.canPlace(main, below.getLocation())) {
+        String msg = super.getInstance().getConfiguration().getSignMessage();
+        if (signPost.getType().equals(Material.AIR) && super.getInstance().getUtil().canPlace(below.getLocation())) {
             signPost.setType(Material.SIGN_POST);
             Sign signBlock = (Sign) signPost.getState();
             signBlock.setLine(1, msg);
             signBlock.update();
-            main.log("Placed a sign by " + player.getName() + " (\"" + msg + "\").", true);
+            super.getInstance().logEvent("Placed a sign by " + super.getTarget().getName() + " (\"" + msg + "\").");
+            super.getSender().sendMessage(super.getInstance().getUtil().addPluginName("Placed a sign by " + super.getTarget().getName() + " (\"" + msg + "\")."));
+        } else {
+            super.getSender().sendMessage(super.getInstance().getUtil().addPluginName("Failed to find a proper sign location."));
         }
     }
 }

@@ -1,9 +1,9 @@
 package com.nkrecklow.herobrine;
 
 import com.nkrecklow.herobrine.events.Actions;
+import com.nkrecklow.herobrine.misc.NamedItemStack;
 import com.nkrecklow.herobrine.mob.Mob;
 import com.nkrecklow.herobrine.mob.MobListener;
-import com.nkrecklow.herobrine.mob.MobPosition;
 import com.topcat.npclib.NPCManager;
 import com.topcat.npclib.entity.HumanNPC;
 import java.util.Random;
@@ -12,6 +12,8 @@ import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.entity.Item;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class Main extends JavaPlugin {
@@ -77,6 +79,13 @@ public class Main extends JavaPlugin {
             this.mob.lookAtVirtualPlayer(loc);
             this.mob.getNpc().setItemInHand(Material.getMaterial((Integer) this.config.getObject("itemInHand")));
             this.log("Spawned Herobrine at X: " + loc.getBlockX() + ", Y: " + loc.getBlockY() + ", Z: " + loc.getBlockZ() + ".", false);
+            if ((Boolean) this.config.getObject("customDrops") && new Random().nextBoolean()) {
+                NamedItemStack namedItem = new NamedItemStack(new ItemStack(Material.SPIDER_EYE, 1));
+                namedItem.setName("Eye of Herobrine");
+                namedItem.setDescription("Some say it's evil.", "Others say it's blessed.");
+                Item droppedItem = this.mob.getEntity().getWorld().dropItemNaturally(loc, namedItem.getItemStack());
+                droppedItem.setItemStack(namedItem.getItemStack());
+            }
         }
     }
 

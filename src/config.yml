@@ -19,6 +19,10 @@ Herobrine:
   itemInHand: 259
   # Should he be more often at night and when players are online?
   moreOftenAtNight: true
+  # How long will he appear for (this is in seconds)?
+  appearanceTime: 5
+  # Can he drop custom items?
+  customDrops: true
   # There are blocks he can modify, you should not use man-made ones!
   allowedBlocks:
     - 1
@@ -52,6 +56,6 @@ Herobrine:
     - world_nether
     - world_the_end
   # Don't touch this, this is for me to use.
-  configBuild: 4.5
+  configBuild: 4.6
   # Allow me to collect server statistics.
   collectStats: true

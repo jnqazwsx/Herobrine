@@ -8,6 +8,7 @@ import com.topcat.npclib.NPCManager;
 import com.topcat.npclib.entity.HumanNPC;
 import java.util.Random;
 import java.util.logging.Logger;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -62,7 +63,7 @@ public class Main extends JavaPlugin {
     }
 
     public void log(String data) {
-        Logger.getLogger("Minecraft").info(this.util.addPluginName(data));
+        Logger.getLogger("Minecraft").info(ChatColor.stripColor(this.util.addPluginName(data)));
     }
 
     public void despawnMob() {
@@ -80,20 +81,6 @@ public class Main extends JavaPlugin {
             this.mob.lookAtVirtualPlayer(loc);
             this.mob.getNpc().setItemInHand(Material.getMaterial((Integer) this.config.getObject("itemInHand")));
             this.log("Spawned Herobrine at X: " + loc.getBlockX() + ", Y: " + loc.getBlockY() + ", Z: " + loc.getBlockZ() + ".");
-            if (new Random().nextInt(1000) > 0) {
-                boolean type = new Random().nextBoolean();
-                ItemStack item = new ItemStack((type ? Material.GOLD_NUGGET : Material.SPIDER_EYE), 1);
-                NamedItemStack namedItem = new NamedItemStack(item);
-                if (type) {
-                    namedItem.setName("Eye of Herobrine");
-                    namedItem.setDescription("Some say it's evil.", "Others say it's blessed.");
-                } else {
-                    namedItem.setName("Holy Cross");
-                    namedItem.setDescription("He doesn't dare come near", "when you carry this.");
-                }
-                Item droppedItem = this.mob.getEntity().getWorld().dropItem(loc, namedItem.getItemStack());
-                droppedItem.setItemStack(namedItem.getItemStack());
-            }
         }
     }
 

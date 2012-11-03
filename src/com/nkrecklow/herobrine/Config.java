@@ -10,7 +10,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 
 public class Config extends Generic {
 
-    private int actionChance, originalActionChance;
+    private int actionChance;
     private List<String> messages, allowedWorlds, signMessages, bookMessages, allowedBlocks;
     private YamlConfiguration config;
     
@@ -54,7 +54,6 @@ public class Config extends Generic {
             disable = true;
         }
         this.actionChance = this.config.getInt("Herobrine.actionChance");
-        this.originalActionChance = this.actionChance;
         this.messages = this.config.getStringList("Herobrine.messages");
         this.signMessages = this.config.getStringList("Herobrine.signMessages");
         this.allowedWorlds = this.config.getStringList("Herobrine.allowedWorlds");
@@ -81,10 +80,6 @@ public class Config extends Generic {
         }
     }
     
-    public void setActionChance(int actionChance) {
-        this.actionChance = actionChance;
-    }
-    
     public boolean canSendMessages() {
         return (Boolean) this.getObject("sendMessages") && this.messages.size() > 0;
     }
@@ -92,11 +87,7 @@ public class Config extends Generic {
     public List<String> getAllowedWorlds() {
         return this.allowedWorlds;
     }
-    
-    public int getOriginalActionChance() {
-        return this.originalActionChance;
-    }
-    
+
     public int getActionChance() {
         return this.actionChance;
     }

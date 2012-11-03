@@ -4,6 +4,7 @@ import com.nkrecklow.herobrine.events.Action;
 import com.nkrecklow.herobrine.events.ActionType;
 import java.util.Random;
 import org.bukkit.Location;
+import org.bukkit.entity.Item;
 
 public class AppearNear extends Action {
 
@@ -20,10 +21,14 @@ public class AppearNear extends Action {
             super.getInstance().getMob().setTarget(super.getTarget().getName());
             super.getInstance().getMob().lookAtPlayer(super.getTarget());
             super.getInstance().getServer().getScheduler().scheduleSyncDelayedTask(super.getInstance(), new Runnable() {
-
+                
                 @Override
                 public void run() {
                     if (getInstance().isSpawned()) {
+                        if (new Random().nextInt(100) == 0) {
+                            Item droppedItem = getInstance().getMob().getEntity().getWorld().dropItem(getInstance().getMob().getEntity().getLocation(), getInstance().getUtil().getHolySwordItem());
+                            droppedItem.setItemStack(getInstance().getUtil().getHolySwordItem());
+                        }
                         getInstance().despawnMob();
                     }
                 }

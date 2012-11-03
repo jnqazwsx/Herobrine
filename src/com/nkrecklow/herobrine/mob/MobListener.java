@@ -1,9 +1,8 @@
 package com.nkrecklow.herobrine.mob;
 
 import com.nkrecklow.herobrine.Main;
-import com.nkrecklow.herobrine.Util;
 import com.nkrecklow.herobrine.base.Generic;
-import com.nkrecklow.herobrine.misc.NamedItemStack;
+import java.io.File;
 import java.util.Random;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -23,13 +22,19 @@ import org.bukkit.inventory.ItemStack;
 
 public class MobListener extends Generic implements Listener {
 
+    private int altarUses;
+    
     public MobListener(Main main) {
         super(main);
+        this.altarUses = 0;
     }
 
     @EventHandler
     public void onBlockIgnite(BlockIgniteEvent event) {
-        if (super.getInstance().isSpawned() || !super.getInstance().canSpawn(event.getBlock().getWorld()) || !event.getCause().equals(IgniteCause.FLINT_AND_STEEL)) {
+        if (!super.getInstance().canSpawn(event.getBlock().getWorld()) || !event.getCause().equals(IgniteCause.FLINT_AND_STEEL)) {
+            return;
+        }
+        if (new File(super.getInstance().getDataFolder() + "/living.yml").exists()) {
             return;
         }
         if ((Boolean) super.getInstance().getConfiguration().getObject("ignoreCreativePlayers") && event.getPlayer().getGameMode().equals(GameMode.CREATIVE)) {
@@ -38,29 +43,23 @@ public class MobListener extends Generic implements Listener {
         Block nether = event.getBlock().getLocation().subtract(0D, 1D, 0D).getBlock();
         Block moss = nether.getLocation().subtract(0D, 1D, 0D).getBlock();
         if (nether.getType().equals(Material.NETHERRACK) && moss.getType().equals(Material.MOSSY_COBBLESTONE) && (Boolean) super.getInstance().getConfiguration().getObject("allowAltar")) {
-            if (event.getPlayer().getItemInHand() != null) {
-                NamedItemStack item = new NamedItemStack(event.getPlayer().getItemInHand());
-                if (!item.getName().equals("Eye of Herobrine")) {
-                    return;
-                } else {
-                    event.getPlayer().setItemInHand(null);
-                }
+            super.getInstance().logEvent("Someone lit an altar.");
+            if (this.altarUses < 2) {
+                this.altarUses++;
             } else {
-                return;
-            }
-            event.getBlock().getWorld().strikeLightning(event.getBlock().getLocation());
-            event.getBlock().getWorld().createExplosion(event.getBlock().getLocation(), -1F);
-            if (super.getInstance().getConfiguration().canSendMessages()) {
+                nether.getWorld().createExplosion(nether.getLocation(), 4F);
+                event.getPlayer().getWorld().setStorm(true);
+                event.getPlayer().getWorld().setTime(14200L);
                 for (Player player : super.getInstance().getServer().getOnlinePlayers()) {
-                    player.sendMessage(super.getInstance().getUtil().addName(super.getInstance().getConfiguration().getMessage()));
+                    player.sendMessage(super.getInstance().getUtil().addName("I have been unleashed at last..."));
                 }
-            }
-            event.getBlock().getWorld().setTime(14200L);
-            event.getBlock().getWorld().setStorm(true);
-            super.getInstance().logEvent("Someone lit an altar!");
-            if (super.getInstance().getConfiguration().getActionChance() >= (super.getInstance().getConfiguration().getOriginalActionChance() / 4)) {
-                super.getInstance().getConfiguration().setActionChance(super.getInstance().getConfiguration().getActionChance() / 2);
-                super.getInstance().log("Action chance changed to " + super.getInstance().getConfiguration().getActionChance() + "!");
+                try {
+                    new File(super.getInstance().getDataFolder() + "/living.yml").createNewFile();
+                    super.getInstance().log("Herobrine has been unleashed!");
+                } catch (Exception ex) {
+                    super.getInstance().log("Error: " + ex.getMessage());
+                }
+                this.altarUses = 0;
             }
         }
     }
@@ -84,7 +83,7 @@ public class MobListener extends Generic implements Listener {
             }
         }
     }
-    
+
     @EventHandler
     public void onPlayerTeleport(PlayerTeleportEvent event) {
         if (!super.getInstance().isSpawned()) {

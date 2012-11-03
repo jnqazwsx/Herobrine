@@ -2,6 +2,7 @@ package com.nkrecklow.herobrine;
 
 import com.nkrecklow.herobrine.base.Generic;
 import com.nkrecklow.herobrine.misc.BookItem;
+import com.nkrecklow.herobrine.misc.NamedItemStack;
 import com.nkrecklow.herobrine.mob.MobPosition;
 import java.io.BufferedInputStream;
 import java.io.DataInputStream;
@@ -10,37 +11,50 @@ import java.util.ArrayList;
 import java.util.Random;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 public class Util extends Generic {
-    
+
     public Util(Main main) {
         super(main);
     }
-    
+
+    public boolean isHolySwordItem(ItemStack item) {
+        NamedItemStack namedItem = new NamedItemStack(item);
+        return namedItem.getName().equals("Holy Sword");
+    }
+
+    public ItemStack getHolySwordItem() {
+        NamedItemStack namedItem = new NamedItemStack(new ItemStack(Material.GOLD_SWORD, 1));
+        namedItem.setName("Holy Sword");
+        namedItem.setDescription("He doesn't dare come near", "when you carry this.");
+        return namedItem.getItemStack();
+    }
+
     public String addPluginName(String message) {
         return "[" + ChatColor.RED + "Herobrine" + ChatColor.WHITE + "] " + message;
     }
-    
+
     public String addName(String message) {
         return "<" + ChatColor.RED + ((String) super.getInstance().getConfiguration().getObject("entityName")) + ChatColor.WHITE + "> " + message;
     }
-    
+
     public MobPosition getRandomPosition() {
         return MobPosition.getPositions().get(new Random().nextInt(MobPosition.getPositions().size() - 1));
     }
-    
+
     public ItemStack getNewBook() {
         BookItem book = new BookItem(new ItemStack(387, 1));
         book.setAuthor("Herobrine");
         book.setTitle("Hello.");
-        book.setPages(new String[] { super.getInstance().getConfiguration().getBookMessage() });
+        book.setPages(new String[]{super.getInstance().getConfiguration().getBookMessage()});
         return book.getItemStack();
     }
-    
+
     public boolean shouldAct(Player player) {
         int chance = super.getInstance().getConfiguration().getActionChance();
         if (player.getWorld().getTime() >= 13000 && player.getWorld().getTime() <= 14200 && (Boolean) super.getInstance().getConfiguration().getObject("moreOftenAtNight")) {
@@ -59,7 +73,7 @@ public class Util extends Generic {
         }
         return new Random().nextInt(chance) == 0;
     }
-    
+
     public boolean shouldActIndifferent() {
         return new Random().nextInt(super.getInstance().getConfiguration().getActionChance()) == 0;
     }

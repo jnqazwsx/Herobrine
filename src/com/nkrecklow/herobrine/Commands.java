@@ -20,7 +20,7 @@ public class Commands extends Generic implements CommandExecutor {
             if (sender instanceof Player) {
                 Player player = (Player) sender;
                 if (!player.isOp()) {
-                    player.sendMessage(super.getInstance().getUtil().addPluginName("You do not have permission for this!"));
+                    player.sendMessage(super.getInstance().getUtil().addPluginName("You do not have permission for this."));
                     return true;
                 }
                 if (args[0].equalsIgnoreCase("appear")) {
@@ -97,6 +97,9 @@ public class Commands extends Generic implements CommandExecutor {
                     } else {
                         player.sendMessage(super.getInstance().getUtil().addPluginName("Not a valid command! Type \"/hb createchest username\"."));
                     }
+                } else if (args[0].equalsIgnoreCase("holysword")) {
+                    player.getInventory().addItem(super.getInstance().getUtil().getHolySwordItem());
+                    player.sendMessage(super.getInstance().getUtil().addPluginName("Enjoy your \"Holy Sword\"."));
                 } else if (args[0].equalsIgnoreCase("reload")) {
                     super.getInstance().getConfiguration().loadConfig();
                     player.sendMessage(super.getInstance().getUtil().addPluginName("Reloaded configuration file!"));
@@ -110,18 +113,19 @@ public class Commands extends Generic implements CommandExecutor {
                     player.sendMessage(super.getInstance().getUtil().addPluginName("kill" + ChatColor.WHITE + " - Remove him in case of error."));
                     player.sendMessage(super.getInstance().getUtil().addPluginName("reload" + ChatColor.WHITE + " - Reload the configuration file."));
                     player.sendMessage(super.getInstance().getUtil().addPluginName("teleport" + ChatColor.WHITE + " - Teleport to Herobrine's location."));
+                    player.sendMessage(super.getInstance().getUtil().addPluginName("holysword" + ChatColor.WHITE + " - Gift yourself a \"Holy Sword\"."));
                 } else {
-                    player.sendMessage(super.getInstance().getUtil().addPluginName("Not a valid command! Type \"/hb help\" for help!"));
+                    player.sendMessage(super.getInstance().getUtil().addPluginName("Not a valid command! Type \"/hb help\" for help."));
                 }
             } else {
-                super.getInstance().log("You must be a player to use this command!");
+                super.getInstance().log("You must be a player to use this command.");
             }
         } else {
             if (sender instanceof Player) {
                 Player player = (Player) sender;
-                player.sendMessage(super.getInstance().getUtil().addPluginName("Not a valid command! Type \"/hb help\" for help!"));
+                player.sendMessage(super.getInstance().getUtil().addPluginName("Not a valid command! Type \"/hb help\" for help."));
             } else {
-                super.getInstance().log("You must be a player to use this command!");
+                super.getInstance().log("You must be a player to use this command.");
             }
         }
         return true;

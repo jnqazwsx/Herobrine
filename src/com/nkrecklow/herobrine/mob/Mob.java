@@ -10,19 +10,12 @@ public class Mob implements Listener {
 
     private HumanNPC npc;
     private String target;
-    private MobPosition position;
-    
-    public Mob(HumanNPC npc, MobPosition position) {
+
+    public Mob(HumanNPC npc) {
         this.npc = npc;
         this.target = "";
-        this.setPosition(position);
     }
-    
-    public final void setPosition(MobPosition position) {
-        this.position = position;
-        this.getVanillaEntity().setSneaking(this.position.equals(MobPosition.SNEAKING));
-    }
-    
+
     public void lookAtVirtualPlayer(Location loc) {
         loc.setY(loc.getY() + 1.5D);
         this.npc.lookAtPoint(loc);
@@ -50,9 +43,5 @@ public class Mob implements Listener {
     
     public Entity getEntity() {
         return this.npc.getBukkitEntity();
-    }
-    
-    public MobPosition getPosition() {
-        return this.position;
     }
 }

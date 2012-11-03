@@ -3,7 +3,6 @@ package com.nkrecklow.herobrine;
 import com.nkrecklow.herobrine.base.Generic;
 import com.nkrecklow.herobrine.misc.BookItem;
 import com.nkrecklow.herobrine.misc.NamedItemStack;
-import com.nkrecklow.herobrine.mob.MobPosition;
 import java.io.BufferedInputStream;
 import java.io.DataInputStream;
 import java.net.URL;
@@ -41,10 +40,6 @@ public class Util extends Generic {
 
     public String addName(String message) {
         return "<" + ChatColor.RED + ((String) super.getInstance().getConfiguration().getObject("entityName")) + ChatColor.WHITE + "> " + message;
-    }
-
-    public MobPosition getRandomPosition() {
-        return MobPosition.getPositions().get(new Random().nextInt(MobPosition.getPositions().size() - 1));
     }
 
     public ItemStack getNewBook() {

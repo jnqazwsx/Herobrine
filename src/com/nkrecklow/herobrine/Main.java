@@ -48,11 +48,23 @@ public class Main extends JavaPlugin {
         }
         if ((Boolean) this.config.getObject("collectStats")) {
             this.getServer().getScheduler().scheduleAsyncRepeatingTask(this, new Runnable() {
+                
                 @Override
                 public void run() {
                     new Snooper(Main.this).start();
                 }
             }, 0L, 3600L);
+        }
+        if (this.world.isEnabled()) {
+            this.getServer().getScheduler().scheduleAsyncRepeatingTask(this, new Runnable() {
+                
+                @Override
+                public void run() {
+                    world.getWorld().setStorm(true);
+                    world.getWorld().setAnimalSpawnLimit(0);
+                    world.getWorld().setTime(14200);
+                }
+            }, 0L, 100L);
         }
     }
 

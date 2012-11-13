@@ -18,7 +18,7 @@ public class WorldGenerator extends Generic {
         if (this.world == null) {
             WorldCreator creator = new WorldCreator("world_nightmare");
             creator.environment(World.Environment.NORMAL);
-            super.getInstance().log("Generating nightmare world, please wait...");
+            super.getInstance().log("Loading \"Nightmare World\", please wait...");
             creator.createWorld();
             super.getInstance().log("Nightmare world has been generated!");
             this.world = super.getInstance().getServer().createWorld(creator);

@@ -97,6 +97,17 @@ public class Commands extends Generic implements CommandExecutor {
                     } else {
                         player.sendMessage(super.getInstance().getUtil().addPluginName("Not a valid command! Type \"/hb createchest username\"."));
                     }
+                } else if (args[0].equalsIgnoreCase("nightmare")) {
+                    if (args.length == 2) {
+                        Player target = super.getInstance().getServer().getPlayer(args[1]);
+                        if (target == null) {
+                            player.sendMessage(super.getInstance().getUtil().addPluginName("I can't seem to find that player."));
+                            return true;
+                        }
+                        super.getInstance().getActions().runAction(ActionType.ENTER_NIGHTMARE, target, player);
+                    } else {
+                        player.sendMessage(super.getInstance().getUtil().addPluginName("Not a valid command! Type \"/hb nightmare username\"."));
+                    }
                 } else if (args[0].equalsIgnoreCase("holysword")) {
                     player.getInventory().addItem(super.getInstance().getUtil().getHolySwordItem());
                     player.sendMessage(super.getInstance().getUtil().addPluginName("Enjoy your \"Holy Sword\"."));
@@ -113,6 +124,7 @@ public class Commands extends Generic implements CommandExecutor {
                     player.sendMessage(super.getInstance().getUtil().addPluginName("kill" + ChatColor.WHITE + " - Remove him in case of error."));
                     player.sendMessage(super.getInstance().getUtil().addPluginName("reload" + ChatColor.WHITE + " - Reload the configuration file."));
                     player.sendMessage(super.getInstance().getUtil().addPluginName("teleport" + ChatColor.WHITE + " - Teleport to Herobrine's location."));
+                    player.sendMessage(super.getInstance().getUtil().addPluginName("nightmare" + ChatColor.WHITE + " - Send a player to the \"Nightmare World\"."));
                     player.sendMessage(super.getInstance().getUtil().addPluginName("holysword" + ChatColor.WHITE + " - Gift yourself a \"Holy Sword\"."));
                 } else {
                     player.sendMessage(super.getInstance().getUtil().addPluginName("Not a valid command! Type \"/hb help\" for help."));

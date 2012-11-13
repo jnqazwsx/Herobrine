@@ -55,16 +55,17 @@ public class Util extends Generic {
         if (player.getWorld().getTime() >= 13000 && player.getWorld().getTime() <= 14200 && (Boolean) super.getInstance().getConfiguration().getObject("moreOftenAtNight")) {
             chance = super.getInstance().getConfiguration().getActionChance() / 4;
         }
-        if (chance == super.getInstance().getConfiguration().getActionChance()) {
-            int found = 0;
-            for (Entity entity : player.getNearbyEntities(10D, 10D, 10D)) {
-                if (entity instanceof Player) {
-                    found++;
-                }
+        int found = 0;
+        for (Entity entity : player.getNearbyEntities(10D, 10D, 10D)) {
+            if (entity instanceof Player) {
+                found++;
             }
-            if (found <= 2) {
-                chance = super.getInstance().getConfiguration().getActionChance() / 2;
-            }
+        }
+        if (found <= 2) {
+            chance = super.getInstance().getConfiguration().getActionChance() / 2;
+        }
+        if (player.getWorld().getName().equals("world_nightmare")) {
+            chance = chance / 2;
         }
         return new Random().nextInt(chance) == 0;
     }

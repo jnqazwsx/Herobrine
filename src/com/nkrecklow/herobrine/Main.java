@@ -1,7 +1,7 @@
 package com.nkrecklow.herobrine;
 
 import com.nkrecklow.herobrine.api.Actions;
-import com.nkrecklow.herobrine.misc.NamedItemStack;
+import com.nkrecklow.herobrine.misc.WorldGenerator;
 import com.nkrecklow.herobrine.mob.Mob;
 import com.nkrecklow.herobrine.mob.MobListener;
 import com.topcat.npclib.NPCManager;
@@ -12,8 +12,6 @@ import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
-import org.bukkit.entity.Item;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class Main extends JavaPlugin {
@@ -23,9 +21,9 @@ public class Main extends JavaPlugin {
     private MobListener listener;
     private Config config;
     private Actions actions;
-    private Snooper snooper;
     private Util util;
     private String id;
+    private WorldGenerator world;
 
     @Override
     public void onEnable() {
@@ -34,8 +32,8 @@ public class Main extends JavaPlugin {
         this.listener = new MobListener(this);
         this.config = new Config(this);
         this.actions = new Actions(this);
-        this.snooper = new Snooper(this);
         this.util = new Util(this);
+        this.world = new WorldGenerator(this);
         this.getCommand("hb").setExecutor(new Commands(this));
         this.getServer().getPluginManager().registerEvents(this.listener, this);
         this.config.loadConfig();
@@ -43,14 +41,16 @@ public class Main extends JavaPlugin {
             this.id += Integer.toString(new Random().nextInt(9));
         }
         this.log("Using entity ID: #" + this.id + ".");
+        if (this.world.isEnabled()) {
+            if (!this.world.exists()) {
+                this.world.generateWorld();
+            }
+        }
         if ((Boolean) this.config.getObject("collectStats")) {
             this.getServer().getScheduler().scheduleAsyncRepeatingTask(this, new Runnable() {
                 @Override
                 public void run() {
-                    try {
-                        snooper.start();
-                    } catch (Exception ex) {
-                    }
+                    new Snooper(Main.this).start();
                 }
             }, 0L, 3600L);
         }
@@ -106,5 +106,9 @@ public class Main extends JavaPlugin {
 
     public Actions getActions() {
         return this.actions;
+    }
+    
+    public WorldGenerator getWorldGenerator() {
+        return this.world;
     }
 }

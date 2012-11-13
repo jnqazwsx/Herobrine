@@ -1,7 +1,7 @@
 package com.nkrecklow.herobrine;
 
-import com.nkrecklow.herobrine.api.basic.Generic;
 import com.nkrecklow.herobrine.api.ActionType;
+import com.nkrecklow.herobrine.api.basic.Generic;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;

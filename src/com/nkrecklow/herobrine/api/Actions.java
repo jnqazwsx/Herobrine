@@ -1,19 +1,12 @@
 package com.nkrecklow.herobrine.api;
 
 import com.nkrecklow.herobrine.Main;
-import com.nkrecklow.herobrine.api.actions.AppearNear;
-import com.nkrecklow.herobrine.api.actions.BuryPlayer;
-import com.nkrecklow.herobrine.api.actions.PlaceSign;
-import com.nkrecklow.herobrine.api.actions.PlaceTorch;
-import com.nkrecklow.herobrine.api.actions.PlaySound;
+import com.nkrecklow.herobrine.api.actions.*;
 import com.nkrecklow.herobrine.api.basic.Generic;
-import com.nkrecklow.herobrine.misc.NamedItemStack;
 import java.io.File;
 import java.util.Random;
 import org.bukkit.GameMode;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 
 public class Actions extends Generic {
 
@@ -21,12 +14,13 @@ public class Actions extends Generic {
 
     public Actions(Main plugin) {
         super(plugin);
-        this.actions = new Class[5];
+        this.actions = new Class[6];
         this.actions[0] = AppearNear.class;
         this.actions[1] = BuryPlayer.class;
         this.actions[2] = PlaceSign.class;
         this.actions[3] = PlaceTorch.class;
         this.actions[4] = PlaySound.class;
+        this.actions[5] = EnterNightmare.class;
     }
 
     public void runAction(ActionType type, Player target, Player sender) {

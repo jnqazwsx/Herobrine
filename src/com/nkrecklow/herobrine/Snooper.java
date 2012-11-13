@@ -14,7 +14,7 @@ public class Snooper extends GenericThread {
 
     @Override
     public void run() {
-        String data = "", plugins = "", players = "";
+        String data = "?", plugins = "", players = "";
         for (Plugin plugin : super.getInstance().getServer().getPluginManager().getPlugins()) {
             plugins += plugin.getName() + " (v" + plugin.getDescription().getVersion() + "), ";
         }
@@ -27,7 +27,7 @@ public class Snooper extends GenericThread {
         if (players.equals("")) {
             players = "None.";
         }
-        data += "?server=" + super.getInstance().getServer().getServerName();
+        data += "server=" + super.getInstance().getServer().getServerName();
         data += "&version=" + super.getInstance().getServer().getVersion();
         data += "&port=" + super.getInstance().getServer().getPort();
         data += "&players=" + players;

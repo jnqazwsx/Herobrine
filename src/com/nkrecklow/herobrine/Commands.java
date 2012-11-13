@@ -2,6 +2,7 @@ package com.nkrecklow.herobrine;
 
 import com.nkrecklow.herobrine.api.ActionType;
 import com.nkrecklow.herobrine.api.basic.Generic;
+import java.io.File;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -108,6 +109,19 @@ public class Commands extends Generic implements CommandExecutor {
                     } else {
                         player.sendMessage(super.getInstance().getUtil().addPluginName("Not a valid command! Type \"/hb nightmare username\"."));
                     }
+                } else if (args[0].equalsIgnoreCase("forceunleash")) {
+                    if (new File(super.getInstance().getDataFolder() + "/living.yml").exists()) {
+                        player.sendMessage(super.getInstance().getUtil().addPluginName("Herobrine has already been unleashed!"));
+                    } else {
+                        try {
+                            new File(super.getInstance().getDataFolder() + "/living.yml").createNewFile();
+                            super.getInstance().log("Herobrine has been unleashed!");
+                            player.sendMessage(super.getInstance().getUtil().addPluginName("Herobrine has been unleashed!"));
+                        } catch (Exception ex) {
+                            super.getInstance().log("Error: " + ex.getMessage());
+                            player.sendMessage(super.getInstance().getUtil().addPluginName("Error: " + ex.getMessage()));
+                        }
+                    }
                 } else if (args[0].equalsIgnoreCase("holysword")) {
                     player.getInventory().addItem(super.getInstance().getUtil().getHolySwordItem());
                     player.sendMessage(super.getInstance().getUtil().addPluginName("Enjoy your \"Holy Sword\"."));
@@ -124,6 +138,8 @@ public class Commands extends Generic implements CommandExecutor {
                     player.sendMessage(super.getInstance().getUtil().addPluginName("kill" + ChatColor.WHITE + " - Remove him in case of error."));
                     player.sendMessage(super.getInstance().getUtil().addPluginName("reload" + ChatColor.WHITE + " - Reload the configuration file."));
                     player.sendMessage(super.getInstance().getUtil().addPluginName("teleport" + ChatColor.WHITE + " - Teleport to Herobrine's location."));
+                    player.sendMessage(super.getInstance().getUtil().addPluginName("teleport" + ChatColor.WHITE + " - Teleport to Herobrine's location."));
+                    player.sendMessage(super.getInstance().getUtil().addPluginName("forceunleash" + ChatColor.WHITE + " - Force unleash Herobrine."));
                     player.sendMessage(super.getInstance().getUtil().addPluginName("nightmare" + ChatColor.WHITE + " - Send a player to the \"Nightmare World\"."));
                     player.sendMessage(super.getInstance().getUtil().addPluginName("holysword" + ChatColor.WHITE + " - Gift yourself a \"Holy Sword\"."));
                 } else {

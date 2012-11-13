@@ -27,7 +27,7 @@ public class Actions extends Generic {
          if (!new File(super.getInstance().getDataFolder() + "/living.yml").exists()) {
             if (sender != null) {
                 sender.sendMessage(super.getInstance().getUtil().addPluginName("Herobrine has not yet been unleashed."));
-                sender.sendMessage("You can manually unleash him by creating a file named \"living.yml\" inside the Herobrine folder.");
+                sender.sendMessage("You can force unleash him using: /hb forceunleash");
             }
             return;
         }

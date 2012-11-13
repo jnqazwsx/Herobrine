@@ -20,7 +20,7 @@ public class WorldGenerator extends Generic {
             creator.environment(World.Environment.NORMAL);
             super.getInstance().log("Loading \"Nightmare World\", please wait...");
             creator.createWorld();
-            super.getInstance().log("Nightmare world has been generated!");
+            super.getInstance().log("The \"Nightmare World\" has been loaded!");
             this.world = super.getInstance().getServer().createWorld(creator);
         }
     }

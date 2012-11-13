@@ -1,6 +1,6 @@
 package com.nkrecklow.herobrine;
 
-import com.nkrecklow.herobrine.events.Actions;
+import com.nkrecklow.herobrine.api.Actions;
 import com.nkrecklow.herobrine.misc.NamedItemStack;
 import com.nkrecklow.herobrine.mob.Mob;
 import com.nkrecklow.herobrine.mob.MobListener;

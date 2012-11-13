@@ -1,4 +1,4 @@
-package com.nkrecklow.herobrine.events;
+package com.nkrecklow.herobrine.api;
 
 import com.nkrecklow.herobrine.Main;
 import org.bukkit.entity.Player;

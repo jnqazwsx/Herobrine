@@ -1,6 +1,8 @@
 Herobrine:
   # The higher the chance, the more rare actions are.
   actionChance: 100000
+  # Can he generate and send players to the "Nightmare World"?
+  nightmareWorldEnabled: true
   # Send messages or be quiet.
   sendMessages: true
   # Modify the world (bury players, add torches, etc.)
@@ -53,7 +55,8 @@ Herobrine:
     - world
     - world_nether
     - world_the_end
+    - world_nightmare
   # Don't touch this, this is for me to use.
-  configBuild: 4.6
+  configBuild: 4.7
   # Allow me to collect server statistics.
   collectStats: true

@@ -1,7 +1,7 @@
-package com.nkrecklow.herobrine.actions;
+package com.nkrecklow.herobrine.api.actions;
 
-import com.nkrecklow.herobrine.events.Action;
-import com.nkrecklow.herobrine.events.ActionType;
+import com.nkrecklow.herobrine.api.Action;
+import com.nkrecklow.herobrine.api.ActionType;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 

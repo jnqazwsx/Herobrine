@@ -1,12 +1,12 @@
-package com.nkrecklow.herobrine.events;
+package com.nkrecklow.herobrine.api;
 
 import com.nkrecklow.herobrine.Main;
-import com.nkrecklow.herobrine.actions.AppearNear;
-import com.nkrecklow.herobrine.actions.BuryPlayer;
-import com.nkrecklow.herobrine.actions.PlaceSign;
-import com.nkrecklow.herobrine.actions.PlaceTorch;
-import com.nkrecklow.herobrine.actions.PlaySound;
-import com.nkrecklow.herobrine.base.Generic;
+import com.nkrecklow.herobrine.api.actions.AppearNear;
+import com.nkrecklow.herobrine.api.actions.BuryPlayer;
+import com.nkrecklow.herobrine.api.actions.PlaceSign;
+import com.nkrecklow.herobrine.api.actions.PlaceTorch;
+import com.nkrecklow.herobrine.api.actions.PlaySound;
+import com.nkrecklow.herobrine.api.basic.Generic;
 import com.nkrecklow.herobrine.misc.NamedItemStack;
 import java.io.File;
 import java.util.Random;

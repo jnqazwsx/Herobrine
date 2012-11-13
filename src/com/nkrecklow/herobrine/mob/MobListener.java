@@ -1,7 +1,7 @@
 package com.nkrecklow.herobrine.mob;
 
 import com.nkrecklow.herobrine.Main;
-import com.nkrecklow.herobrine.base.Generic;
+import com.nkrecklow.herobrine.api.basic.Generic;
 import java.io.File;
 import java.util.Random;
 import org.bukkit.GameMode;

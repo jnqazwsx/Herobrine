@@ -1,6 +1,6 @@
 package com.nkrecklow.herobrine;
 
-import com.nkrecklow.herobrine.base.Generic;
+import com.nkrecklow.herobrine.api.basic.Generic;
 import com.nkrecklow.herobrine.misc.BookItem;
 import com.nkrecklow.herobrine.misc.NamedItemStack;
 import java.io.BufferedInputStream;

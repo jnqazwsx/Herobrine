@@ -18,8 +18,12 @@ import org.bukkit.inventory.ItemStack;
 
 public class Util extends Generic {
 
-    public Util(Main main) {
-        super(main);
+    public Util(Main instance) {
+        super(instance);
+    }
+    
+    public static String formatString(String message) {
+        return ("[" + ChatColor.RED + "Herobrine" + ChatColor.WHITE + "] ");
     }
 
     public boolean isHolySwordItem(ItemStack item) {
@@ -32,14 +36,6 @@ public class Util extends Generic {
         namedItem.setName("Holy Sword");
         namedItem.setDescription("He doesn't dare come near", "when you carry this.");
         return namedItem.getItemStack();
-    }
-
-    public String addPluginName(String message) {
-        return "[" + ChatColor.RED + "Herobrine" + ChatColor.WHITE + "] " + message;
-    }
-
-    public String addName(String message) {
-        return "<" + ChatColor.RED + ((String) super.getInstance().getConfiguration().getObject("entityName")) + ChatColor.WHITE + "> " + message;
     }
 
     public ItemStack getNewBook() {

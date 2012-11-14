@@ -13,8 +13,8 @@ public class WorldGenerator extends Generic {
     private World world;
     private ArrayList<EntityType> allowedTypes;
 
-    public WorldGenerator(Main main) {
-        super(main);
+    public WorldGenerator(Main instance) {
+        super(instance);
         this.world = super.getInstance().getServer().getWorld("world_nightmare");
         this.allowedTypes = new ArrayList<EntityType>();
         this.allowedTypes.add(EntityType.BAT);

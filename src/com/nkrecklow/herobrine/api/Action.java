@@ -7,14 +7,14 @@ public abstract class Action {
 
     private ActionType type;
     private Player target, sender;
-    private Main main;
+    private Main instance;
 
     public Action(ActionType type) {
         this.type = type;
     }
 
-    public void prepareAction(Main main, Player target, Player sender) {
-        this.main = main;
+    public void prepareAction(Main instance, Player target, Player sender) {
+        this.instance = instance;
         this.target = target;
         this.sender = sender;
     }
@@ -30,7 +30,7 @@ public abstract class Action {
     }
 
     public Main getInstance() {
-        return this.main;
+        return this.instance;
     }
 
     public ActionType getType() {

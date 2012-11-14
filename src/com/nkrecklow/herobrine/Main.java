@@ -79,7 +79,7 @@ public class Main extends JavaPlugin {
     }
 
     public void log(String data) {
-        Logger.getLogger("Minecraft").info(ChatColor.stripColor(this.util.addPluginName(data)));
+        Logger.getLogger("Minecraft").info(ChatColor.stripColor(Util.formatString(data)));
     }
 
     public void despawnMob() {

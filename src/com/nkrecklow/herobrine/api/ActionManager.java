@@ -1,6 +1,7 @@
 package com.nkrecklow.herobrine.api;
 
 import com.nkrecklow.herobrine.Main;
+import com.nkrecklow.herobrine.Util;
 import com.nkrecklow.herobrine.api.actions.*;
 import com.nkrecklow.herobrine.api.basic.Generic;
 import java.io.File;
@@ -12,8 +13,8 @@ public class ActionManager extends Generic {
 
     private Class<? extends Action> actions[];
 
-    public ActionManager(Main plugin) {
-        super(plugin);
+    public ActionManager(Main instance) {
+        super(instance);
         this.actions = new Class[6];
         this.actions[0] = AppearNear.class;
         this.actions[1] = BuryPlayer.class;
@@ -26,26 +27,26 @@ public class ActionManager extends Generic {
     public void runAction(Action.ActionType type, Player target, Player sender) {
          if (!new File(super.getInstance().getDataFolder() + "/living.yml").exists()) {
             if (sender != null) {
-                sender.sendMessage(super.getInstance().getUtil().addPluginName("Herobrine has not yet been unleashed."));
+                sender.sendMessage(Util.formatString("Herobrine has not yet been unleashed."));
                 sender.sendMessage("You can force unleash him using: /hb forceunleash");
             }
             return;
         }
         if ((Boolean) super.getInstance().getConfiguration().getObject("ignoreCreativePlayers") && target.getGameMode().equals(GameMode.CREATIVE)) {
             if (sender != null) {
-                sender.sendMessage(super.getInstance().getUtil().addPluginName(target.getName() + " is in creative mode."));
+                sender.sendMessage(Util.formatString(target.getName() + " is in creative mode."));
             }
             return;
         }
         if (!super.getInstance().canSpawn(target.getWorld())) {
             if (sender != null) {
-                sender.sendMessage(super.getInstance().getUtil().addPluginName(target.getName() + "'s world (\"" + target.getWorld().getName() + "\") doesn't allow Herobrine."));
+                sender.sendMessage(Util.formatString(target.getName() + "'s world (\"" + target.getWorld().getName() + "\") doesn't allow Herobrine."));
             }
             return;
         }
         if (target.getInventory().contains(super.getInstance().getUtil().getHolySwordItem())) {
             if (sender != null) {
-                sender.sendMessage(super.getInstance().getUtil().addPluginName(target.getName() + " has a \"Holy Sword\", event stopped."));
+                sender.sendMessage(Util.formatString(target.getName() + " has a \"Holy Sword\", event stopped."));
             }
             return;
         }

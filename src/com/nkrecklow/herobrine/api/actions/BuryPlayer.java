@@ -1,5 +1,6 @@
 package com.nkrecklow.herobrine.api.actions;
 
+import com.nkrecklow.herobrine.Util;
 import com.nkrecklow.herobrine.api.Action;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -14,7 +15,7 @@ public class BuryPlayer extends Action {
     public void callAction() {
         if (!(Boolean) super.getInstance().getConfiguration().getObject("modifyWorld")) {
             if (super.getSender() != null) {
-                super.getSender().sendMessage(super.getInstance().getUtil().addPluginName("Can't modify that world (\"" + super.getTarget().getWorld().getName() + "\")."));
+                super.getSender().sendMessage(Util.formatString("Can't modify that world (\"" + super.getTarget().getWorld().getName() + "\")."));
             }
             return;
         }
@@ -34,11 +35,11 @@ public class BuryPlayer extends Action {
             }, 60L);
             super.getInstance().logEvent("Buried " + super.getTarget().getName() + ".");
             if (super.getSender() != null) {
-                super.getSender().sendMessage(super.getInstance().getUtil().addPluginName("Buried " + super.getTarget().getName() + "."));
+                super.getSender().sendMessage(Util.formatString("Buried " + super.getTarget().getName() + "."));
             }
         } else {
             if (super.getSender() != null) {
-                super.getSender().sendMessage(super.getInstance().getUtil().addPluginName("Failed to find a proper bury location."));
+                super.getSender().sendMessage(Util.formatString("Failed to find a proper bury location."));
             }
         }
     }

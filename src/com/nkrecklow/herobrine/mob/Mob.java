@@ -15,6 +15,10 @@ public class Mob implements Listener {
         this.npc = npc;
         this.target = "";
     }
+    
+    public void sendMessage(String message, Player player) {
+        player.sendMessage("<Herobrine> " + message);
+    }
 
     public void lookAtVirtualPlayer(Location loc) {
         loc.setY(loc.getY() + 1.5D);

@@ -14,8 +14,8 @@ public class Config extends Generic {
     private List<String> messages, allowedWorlds, signMessages, bookMessages, allowedBlocks;
     private YamlConfiguration config;
     
-    public Config(Main plugin) {
-        super(plugin);
+    public Config(Main instance) {
+        super(instance);
         this.messages = new ArrayList<String>();
         this.allowedWorlds = new ArrayList<String>();
         this.signMessages = new ArrayList<String>();

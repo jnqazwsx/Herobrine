@@ -4,13 +4,13 @@ import com.nkrecklow.herobrine.Main;
 
 public class GenericThread extends Thread {
     
-    private Main main;
+    private Main instance;
     
-    public GenericThread(Main main) {
-        this.main = main;
+    public GenericThread(Main instance) {
+        this.instance = instance;
     }
     
     public Main getInstance() {
-        return this.main;
+        return this.instance;
     }
 }

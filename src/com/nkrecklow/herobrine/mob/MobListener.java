@@ -25,8 +25,8 @@ public class MobListener extends Generic implements Listener {
 
     private int altarUses;
     
-    public MobListener(Main main) {
-        super(main);
+    public MobListener(Main instance) {
+        super(instance);
         this.altarUses = 0;
     }
 
@@ -52,7 +52,7 @@ public class MobListener extends Generic implements Listener {
                 event.getPlayer().getWorld().setStorm(true);
                 event.getPlayer().getWorld().setTime(14200L);
                 for (Player player : super.getInstance().getServer().getOnlinePlayers()) {
-                    player.sendMessage(super.getInstance().getUtil().addName("I have been unleashed at last..."));
+                    super.getInstance().getMob().sendMessage("I have been unleashed at last...", player);
                 }
                 try {
                     new File(super.getInstance().getDataFolder() + "/living.yml").createNewFile();

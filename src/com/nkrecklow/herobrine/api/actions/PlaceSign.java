@@ -1,5 +1,6 @@
 package com.nkrecklow.herobrine.api.actions;
 
+import com.nkrecklow.herobrine.Util;
 import com.nkrecklow.herobrine.api.Action;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -15,7 +16,7 @@ public class PlaceSign extends Action {
     public void callAction() {
         if (!(Boolean) super.getInstance().getConfiguration().getObject("modifyWorld")) {
             if (super.getSender() != null) {
-                super.getSender().sendMessage(super.getInstance().getUtil().addPluginName("Can't modify that world (\"" + super.getTarget().getWorld().getName() + "\")."));
+                super.getSender().sendMessage(Util.formatString("Can't modify that world (\"" + super.getTarget().getWorld().getName() + "\")."));
             }
             return;
         }
@@ -29,11 +30,11 @@ public class PlaceSign extends Action {
             signBlock.update();
             super.getInstance().logEvent("Placed a sign by " + super.getTarget().getName() + " (\"" + msg + "\").");
             if (super.getSender() != null) {
-                super.getSender().sendMessage(super.getInstance().getUtil().addPluginName("Placed a sign by " + super.getTarget().getName() + " (\"" + msg + "\")."));
+                super.getSender().sendMessage(Util.formatString("Placed a sign by " + super.getTarget().getName() + " (\"" + msg + "\")."));
             }
         } else {
             if (super.getSender() != null) {
-                super.getSender().sendMessage(super.getInstance().getUtil().addPluginName("Failed to find a proper sign location."));
+                super.getSender().sendMessage(Util.formatString("Failed to find a proper sign location."));
             }
         }
     }

@@ -1,5 +1,6 @@
 package com.nkrecklow.herobrine.api.actions;
 
+import com.nkrecklow.herobrine.Util;
 import com.nkrecklow.herobrine.api.Action;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -14,7 +15,7 @@ public class PlaceTorch extends Action {
     public void callAction() {
         if (!(Boolean) super.getInstance().getConfiguration().getObject("modifyWorld")) {
             if (super.getSender() != null) {
-                super.getSender().sendMessage(super.getInstance().getUtil().addPluginName("Can't modify that world (\"" + super.getTarget().getWorld().getName() + "\")."));
+                super.getSender().sendMessage(Util.formatString("Can't modify that world (\"" + super.getTarget().getWorld().getName() + "\")."));
             }
             return;
         }
@@ -24,11 +25,11 @@ public class PlaceTorch extends Action {
             torch.setType(Material.REDSTONE_TORCH_ON);
             super.getInstance().logEvent("Placed a torch near " + super.getTarget().getName() + ".");
             if (super.getSender() != null) {
-                super.getSender().sendMessage(super.getInstance().getUtil().addPluginName("Placed a torch near " + super.getTarget().getName() + "."));
+                super.getSender().sendMessage(Util.formatString("Placed a torch near " + super.getTarget().getName() + "."));
             }
         } else {
             if (super.getSender() != null) {
-                super.getSender().sendMessage(super.getInstance().getUtil().addPluginName("Failed to find a proper torch location."));
+                super.getSender().sendMessage(Util.formatString("Failed to find a proper torch location."));
             }
         }
     }

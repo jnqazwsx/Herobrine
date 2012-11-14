@@ -7,8 +7,8 @@ import org.bukkit.plugin.Plugin;
 
 public class Snooper extends GenericThread {
 
-    public Snooper(Main plugin) {
-        super(plugin);
+    public Snooper(Main instance) {
+        super(instance);
     }
 
     @Override

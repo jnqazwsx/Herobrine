@@ -1,6 +1,7 @@
 package com.nkrecklow.herobrine.mob;
 
 import com.nkrecklow.herobrine.Main;
+import com.nkrecklow.herobrine.api.Action;
 import com.nkrecklow.herobrine.api.basic.Generic;
 import java.io.File;
 import java.util.Random;
@@ -13,8 +14,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockIgniteEvent;
 import org.bukkit.event.block.BlockIgniteEvent.IgniteCause;
 import org.bukkit.event.inventory.InventoryCloseEvent;
-import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.event.inventory.InventoryType;
+import org.bukkit.event.player.PlayerBedEnterEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.event.server.ServerListPingEvent;
@@ -128,25 +129,9 @@ public class MobListener extends Generic implements Listener {
     }
 
     @EventHandler
-    public void onInventoryOpen(InventoryOpenEvent event) {
-        if (!super.getInstance().canSpawn(event.getPlayer().getWorld())) {
-            return;
-        }
-        if (super.getInstance().getUtil().shouldActIndifferent() && event.getInventory().getType().equals(InventoryType.CHEST)) {
-            if ((Boolean) super.getInstance().getConfiguration().getObject("stealFromChests")) {
-                if (new Random().nextBoolean()) {
-                    ItemStack item = event.getInventory().getItem(new Random().nextInt(26));
-                    if (item != null) {
-                        event.getInventory().remove(item);
-                        super.getInstance().logEvent("Stole an item from " + event.getPlayer().getName() + "'s chest.");
-                        return;
-                    }
-                }
-            }
-            if (event.getInventory().firstEmpty() != -1) {
-                event.getInventory().setItem(event.getInventory().firstEmpty(), super.getInstance().getUtil().getNewBook());
-                super.getInstance().logEvent("Placed a book into " + event.getPlayer().getName() + "'s chest.");
-            }
+    public void onPlayerEnterBed(PlayerBedEnterEvent event) {
+        if (super.getInstance().getUtil().shouldAct(event.getPlayer())) {
+            super.getInstance().getActions().runAction(Action.ActionType.ENTER_NIGHTMARE, event.getPlayer(), null);
         }
     }
 }

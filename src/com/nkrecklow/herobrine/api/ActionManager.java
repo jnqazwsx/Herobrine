@@ -54,7 +54,7 @@ public class ActionManager extends Generic {
         }
         if (target.hasPermission("herobrine.ignore")) {
             if (sender != null) {
-                sender.sendMessage(Util.formatString(target.getName() + " has the permission \"herobrine.ignore\", stopped."));
+                sender.sendMessage(Util.formatString(target.getName() + " has the permission \"herobrine.ignore\", event stopped."));
             }
             return;
         }

@@ -63,14 +63,10 @@ public class Main extends JavaPlugin {
                 
                 @Override
                 public void run() {
-                    ArrayList<EntityType> allowedTypes = new ArrayList<EntityType>();
-                    allowedTypes.add(EntityType.BAT);
-                    allowedTypes.add(EntityType.CAVE_SPIDER);
-                    allowedTypes.add(EntityType.GHAST);
                     for (LivingEntity entity : world.getWorld().getLivingEntities()) {
-                        if (!allowedTypes.contains(entity.getType())) {
+                        if (!world.getAllowedEntities().contains(entity.getType())) {
                             entity.remove();
-                            world.getWorld().spawnEntity(entity.getLocation(), allowedTypes.get(new Random().nextInt(allowedTypes.size() - 1)));
+                            world.getWorld().spawnEntity(entity.getLocation(), world.getRandomEntity());
                         }
                     }
                 }

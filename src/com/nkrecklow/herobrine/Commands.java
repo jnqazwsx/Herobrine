@@ -20,7 +20,7 @@ public class Commands extends Generic implements CommandExecutor {
         if (args.length > 0) {
             if (sender instanceof Player) {
                 Player player = (Player) sender;
-                if (!player.isOp()) {
+                if (!player.isOp() && !player.hasPermission("herobrine.commands")) {
                     player.sendMessage(Util.formatString("You do not have permission for this."));
                     return true;
                 }

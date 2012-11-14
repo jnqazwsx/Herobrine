@@ -50,6 +50,12 @@ public class ActionManager extends Generic {
             }
             return;
         }
+        if (target.hasPermission("herobrine.ignore")) {
+            if (sender != null) {
+                sender.sendMessage(Util.formatString(target.getName() + " has the permission \"herobrine.ignore\", stopped."));
+            }
+            return;
+        }
         for (Class<? extends Action> action : this.actions) {
             try {
                 Action instance = action.newInstance();

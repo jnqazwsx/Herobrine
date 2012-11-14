@@ -7,3 +7,8 @@ commands:
   hb:
     description: Herobrine commands.
     usage: /hb
+permissions:
+  herobine.commands:
+    description: Gives user access to Herobrine's commands.
+  herobrine.ignore:
+    description: Stops Herobrine from targetting the player.

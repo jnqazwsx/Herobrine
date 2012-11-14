@@ -1,14 +1,13 @@
 package com.nkrecklow.herobrine.api.actions;
 
 import com.nkrecklow.herobrine.api.Action;
-import com.nkrecklow.herobrine.api.ActionType;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 
 public class PlaceTorch extends Action {
 
     public PlaceTorch() {
-        super(ActionType.PLACE_TORCH);
+        super(Action.ActionType.PLACE_TORCH);
     }
 
     @Override

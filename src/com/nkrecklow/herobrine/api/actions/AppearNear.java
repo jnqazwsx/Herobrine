@@ -1,7 +1,6 @@
 package com.nkrecklow.herobrine.api.actions;
 
 import com.nkrecklow.herobrine.api.Action;
-import com.nkrecklow.herobrine.api.ActionType;
 import java.util.Random;
 import org.bukkit.Location;
 import org.bukkit.entity.Item;
@@ -9,7 +8,7 @@ import org.bukkit.entity.Item;
 public class AppearNear extends Action {
 
     public AppearNear() {
-        super(ActionType.APPEAR);
+        super(Action.ActionType.APPEAR);
     }
 
     @Override

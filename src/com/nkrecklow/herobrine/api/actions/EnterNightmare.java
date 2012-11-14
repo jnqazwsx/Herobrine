@@ -1,12 +1,11 @@
 package com.nkrecklow.herobrine.api.actions;
 
 import com.nkrecklow.herobrine.api.Action;
-import com.nkrecklow.herobrine.api.ActionType;
 
 public class EnterNightmare extends Action {
 
     public EnterNightmare() {
-        super(ActionType.ENTER_NIGHTMARE);
+        super(Action.ActionType.ENTER_NIGHTMARE);
     }
 
     @Override

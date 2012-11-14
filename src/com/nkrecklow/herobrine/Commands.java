@@ -1,6 +1,6 @@
 package com.nkrecklow.herobrine;
 
-import com.nkrecklow.herobrine.api.ActionType;
+import com.nkrecklow.herobrine.api.Action;
 import com.nkrecklow.herobrine.api.basic.Generic;
 import java.io.File;
 import org.bukkit.ChatColor;
@@ -31,7 +31,7 @@ public class Commands extends Generic implements CommandExecutor {
                             player.sendMessage(super.getInstance().getUtil().addPluginName("I can't seem to find that player."));
                             return true;
                         }
-                        super.getInstance().getActions().runAction(ActionType.APPEAR, target, player);
+                        super.getInstance().getActions().runAction(Action.ActionType.APPEAR, target, player);
                     } else {
                         player.sendMessage(super.getInstance().getUtil().addPluginName("Not a valid command! Type \"/hb appear username\"."));
                     }
@@ -42,7 +42,7 @@ public class Commands extends Generic implements CommandExecutor {
                             player.sendMessage(super.getInstance().getUtil().addPluginName("I can't seem to find that player."));
                             return true;
                         }
-                        super.getInstance().getActions().runAction(ActionType.BURY_PLAYER, target, player);
+                        super.getInstance().getActions().runAction(Action.ActionType.BURY_PLAYER, target, player);
                     } else {
                         player.sendMessage(super.getInstance().getUtil().addPluginName("Not a valid command! Type \"/hb bury username\"."));
                     }
@@ -60,7 +60,7 @@ public class Commands extends Generic implements CommandExecutor {
                             player.sendMessage(super.getInstance().getUtil().addPluginName("I can't seem to find that player."));
                             return true;
                         }
-                        super.getInstance().getActions().runAction(ActionType.PLACE_SIGN, target, player);
+                        super.getInstance().getActions().runAction(Action.ActionType.PLACE_SIGN, target, player);
                     } else {
                         player.sendMessage(super.getInstance().getUtil().addPluginName("Not a valid command! Type \"/hb placesign username\"."));
                     }
@@ -71,7 +71,7 @@ public class Commands extends Generic implements CommandExecutor {
                             player.sendMessage(super.getInstance().getUtil().addPluginName("I can't seem to find that player."));
                             return true;
                         }
-                        super.getInstance().getActions().runAction(ActionType.PLAY_SOUND, target, player);
+                        super.getInstance().getActions().runAction(Action.ActionType.PLAY_SOUND, target, player);
                     } else {
                         player.sendMessage(super.getInstance().getUtil().addPluginName("Not a valid command! Type \"/hb playsound username\"."));
                     }
@@ -82,7 +82,7 @@ public class Commands extends Generic implements CommandExecutor {
                             player.sendMessage(super.getInstance().getUtil().addPluginName("I can't seem to find that player."));
                             return true;
                         }
-                        super.getInstance().getActions().runAction(ActionType.PLACE_TORCH, target, player);
+                        super.getInstance().getActions().runAction(Action.ActionType.PLACE_TORCH, target, player);
                     } else {
                         player.sendMessage(super.getInstance().getUtil().addPluginName("Not a valid command! Type \"/hb placetorch username\"."));
                     }
@@ -105,7 +105,7 @@ public class Commands extends Generic implements CommandExecutor {
                             player.sendMessage(super.getInstance().getUtil().addPluginName("I can't seem to find that player."));
                             return true;
                         }
-                        super.getInstance().getActions().runAction(ActionType.ENTER_NIGHTMARE, target, player);
+                        super.getInstance().getActions().runAction(Action.ActionType.ENTER_NIGHTMARE, target, player);
                     } else {
                         player.sendMessage(super.getInstance().getUtil().addPluginName("Not a valid command! Type \"/hb nightmare username\"."));
                     }

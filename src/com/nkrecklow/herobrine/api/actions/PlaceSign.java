@@ -1,7 +1,6 @@
 package com.nkrecklow.herobrine.api.actions;
 
 import com.nkrecklow.herobrine.api.Action;
-import com.nkrecklow.herobrine.api.ActionType;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
@@ -9,7 +8,7 @@ import org.bukkit.block.Sign;
 public class PlaceSign extends Action {
 
     public PlaceSign() {
-        super(ActionType.PLACE_SIGN);
+        super(Action.ActionType.PLACE_SIGN);
     }
 
     @Override

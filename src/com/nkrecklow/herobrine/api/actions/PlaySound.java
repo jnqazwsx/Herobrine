@@ -1,7 +1,6 @@
 package com.nkrecklow.herobrine.api.actions;
 
 import com.nkrecklow.herobrine.api.Action;
-import com.nkrecklow.herobrine.api.ActionType;
 import java.util.Random;
 import net.minecraft.server.Packet62NamedSoundEffect;
 import org.bukkit.craftbukkit.entity.CraftPlayer;
@@ -9,7 +8,7 @@ import org.bukkit.craftbukkit.entity.CraftPlayer;
 public class PlaySound extends Action {
 
     public PlaySound() {
-        super(ActionType.PLAY_SOUND);
+        super(Action.ActionType.PLAY_SOUND);
     }
 
     @Override

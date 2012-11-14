@@ -23,7 +23,7 @@ public class Actions extends Generic {
         this.actions[5] = EnterNightmare.class;
     }
 
-    public void runAction(ActionType type, Player target, Player sender) {
+    public void runAction(Action.ActionType type, Player target, Player sender) {
          if (!new File(super.getInstance().getDataFolder() + "/living.yml").exists()) {
             if (sender != null) {
                 sender.sendMessage(super.getInstance().getUtil().addPluginName("Herobrine has not yet been unleashed."));
@@ -62,8 +62,8 @@ public class Actions extends Generic {
         }
     }
 
-    public ActionType getRandomType() {
-        ActionType type = null;
+    public Action.ActionType getRandomType() {
+        Action.ActionType type = null;
         while (type == null) {
             for (Class<? extends Action> action : this.actions) {
                 if (new Random().nextInt(10) == 0) {

@@ -20,6 +20,7 @@ public class WorldGenerator extends Generic {
         this.allowedTypes.add(EntityType.BAT);
         this.allowedTypes.add(EntityType.CAVE_SPIDER);
         this.allowedTypes.add(EntityType.GHAST);
+        this.allowedTypes.add(EntityType.PLAYER);
     }
 
     public void generateWorld() {
@@ -27,6 +28,7 @@ public class WorldGenerator extends Generic {
             WorldCreator creator = new WorldCreator("world_nightmare");
             creator.environment(World.Environment.THE_END);
             creator.generateStructures(false);
+            creator.seed();
             super.getInstance().log("Loading \"Nightmare World\", please wait...");
             creator.createWorld();
             super.getInstance().log("The \"Nightmare World\" has been loaded!");

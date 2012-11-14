@@ -70,7 +70,7 @@ public class Main extends JavaPlugin {
                         }
                     }
                 }
-            }, 0L, 60L);
+            }, 0L, 100L);
         }
     }
 

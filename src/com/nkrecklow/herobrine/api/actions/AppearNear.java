@@ -2,9 +2,12 @@ package com.nkrecklow.herobrine.api.actions;
 
 import com.nkrecklow.herobrine.Util;
 import com.nkrecklow.herobrine.api.Action;
+import com.nkrecklow.herobrine.misc.CustomItems;
 import java.util.Random;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.entity.Item;
+import org.bukkit.inventory.ItemStack;
 
 public class AppearNear extends Action {
 
@@ -31,8 +34,8 @@ public class AppearNear extends Action {
             public void run() {
                 if (getInstance().getMobController().isSpawned()) {
                     if (new Random().nextInt(100) == 0) {
-                        Item droppedItem = getInstance().getMobController().getMob().getEntity().getWorld().dropItem(getInstance().getMobController().getMob().getEntity().getLocation(), getInstance().getUtil().getHolySwordItem());
-                        droppedItem.setItemStack(getInstance().getUtil().getHolySwordItem());
+                        Item droppedItem = getInstance().getMobController().getMob().getEntity().getWorld().dropItem(getInstance().getMobController().getMob().getEntity().getLocation(), new ItemStack(Material.STONE, 1));
+                        droppedItem.setItemStack(CustomItems.createItem(Material.GOLD_SWORD, "Holy Sword", "He doesn't dare come near", "when you carry this."));
                     }
                     getInstance().getMobController().despawnMob();
                 }

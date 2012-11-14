@@ -4,9 +4,11 @@ import com.nkrecklow.herobrine.Main;
 import com.nkrecklow.herobrine.Util;
 import com.nkrecklow.herobrine.api.actions.*;
 import com.nkrecklow.herobrine.api.basic.Generic;
+import com.nkrecklow.herobrine.misc.CustomItems;
 import java.io.File;
 import java.util.Random;
 import org.bukkit.GameMode;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
 public class ActionManager extends Generic {
@@ -44,7 +46,7 @@ public class ActionManager extends Generic {
             }
             return;
         }
-        if (target.getInventory().contains(super.getInstance().getUtil().getHolySwordItem())) {
+        if (target.getInventory().contains(CustomItems.createItem(Material.GOLD_SWORD, "Holy Sword", "He doesn't dare come near", "when you carry this."))) {
             if (sender != null) {
                 sender.sendMessage(Util.formatString(target.getName() + " has a \"Holy Sword\", event stopped."));
             }

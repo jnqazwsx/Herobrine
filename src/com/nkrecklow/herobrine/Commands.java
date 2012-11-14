@@ -2,8 +2,10 @@ package com.nkrecklow.herobrine;
 
 import com.nkrecklow.herobrine.api.Action;
 import com.nkrecklow.herobrine.api.basic.Generic;
+import com.nkrecklow.herobrine.misc.CustomItems;
 import java.io.File;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -122,9 +124,11 @@ public class Commands extends Generic implements CommandExecutor {
                             player.sendMessage(Util.formatString("Error: " + ex.getMessage()));
                         }
                     }
-                } else if (args[0].equalsIgnoreCase("holysword")) {
-                    player.getInventory().addItem(super.getInstance().getUtil().getHolySwordItem());
+                } else if (args[0].equalsIgnoreCase("createholysword")) {
+                    player.getInventory().addItem(CustomItems.createItem(Material.GOLD_SWORD, "Holy Sword", "He doesn't dare come near", "when you carry this."));
                     player.sendMessage(Util.formatString("Enjoy your \"Holy Sword\"."));
+                } else if (args[0].equalsIgnoreCase("createbook")) {
+                    
                 } else if (args[0].equalsIgnoreCase("reload")) {
                     super.getInstance().getConfiguration().loadConfig();
                     player.sendMessage(Util.formatString("Reloaded configuration file!"));
@@ -141,7 +145,7 @@ public class Commands extends Generic implements CommandExecutor {
                     player.sendMessage(Util.formatString("teleport" + ChatColor.WHITE + " - Teleport to Herobrine's location."));
                     player.sendMessage(Util.formatString("forceunleash" + ChatColor.WHITE + " - Force unleash Herobrine."));
                     player.sendMessage(Util.formatString("nightmare" + ChatColor.WHITE + " - Enter the \"Nightmare World\"."));
-                    player.sendMessage(Util.formatString("holysword" + ChatColor.WHITE + " - Gift yourself a \"Holy Sword\"."));
+                    player.sendMessage(Util.formatString("createholysword" + ChatColor.WHITE + " - Gift yourself a \"Holy Sword\"."));
                 } else {
                     player.sendMessage(Util.formatString("Not a valid command! Type \"/hb help\" for help."));
                 }

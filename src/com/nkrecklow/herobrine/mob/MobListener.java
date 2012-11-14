@@ -3,6 +3,7 @@ package com.nkrecklow.herobrine.mob;
 import com.nkrecklow.herobrine.Main;
 import com.nkrecklow.herobrine.api.Action;
 import com.nkrecklow.herobrine.api.basic.Generic;
+import com.nkrecklow.herobrine.misc.CustomItems;
 import java.io.File;
 import java.util.Random;
 import org.bukkit.GameMode;
@@ -122,7 +123,7 @@ public class MobListener extends Generic implements Listener {
                 }
             }
             if (event.getInventory().firstEmpty() != -1) {
-                event.getInventory().setItem(event.getInventory().firstEmpty(), super.getInstance().getUtil().getNewBook());
+                event.getInventory().setItem(event.getInventory().firstEmpty(), CustomItems.createBook("Hello.", "Herobrine", super.getInstance().getConfiguration().getBookMessage()));
                 super.getInstance().logEvent("Placed a book into " + event.getPlayer().getName() + "'s chest.");
             }
         }

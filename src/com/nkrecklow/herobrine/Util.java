@@ -1,8 +1,6 @@
 package com.nkrecklow.herobrine;
 
 import com.nkrecklow.herobrine.api.basic.Generic;
-import com.nkrecklow.herobrine.misc.BookItem;
-import com.nkrecklow.herobrine.misc.NamedItemStack;
 import java.io.BufferedInputStream;
 import java.io.DataInputStream;
 import java.net.URL;
@@ -10,11 +8,9 @@ import java.util.ArrayList;
 import java.util.Random;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 
 public class Util extends Generic {
 
@@ -24,26 +20,6 @@ public class Util extends Generic {
     
     public static String formatString(String message) {
         return ("[" + ChatColor.RED + "Herobrine" + ChatColor.WHITE + "] ");
-    }
-
-    public boolean isHolySwordItem(ItemStack item) {
-        NamedItemStack namedItem = new NamedItemStack(item);
-        return namedItem.getName().equals("Holy Sword");
-    }
-
-    public ItemStack getHolySwordItem() {
-        NamedItemStack namedItem = new NamedItemStack(new ItemStack(Material.GOLD_SWORD, 1));
-        namedItem.setName("Holy Sword");
-        namedItem.setDescription("He doesn't dare come near", "when you carry this.");
-        return namedItem.getItemStack();
-    }
-
-    public ItemStack getNewBook() {
-        BookItem book = new BookItem(new ItemStack(387, 1));
-        book.setAuthor("Herobrine");
-        book.setTitle("Hello.");
-        book.setPages(new String[]{super.getInstance().getConfiguration().getBookMessage()});
-        return book.getItemStack();
     }
 
     public boolean shouldAct(Player player) {

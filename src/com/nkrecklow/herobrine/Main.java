@@ -6,12 +6,15 @@ import com.nkrecklow.herobrine.mob.Mob;
 import com.nkrecklow.herobrine.mob.MobListener;
 import com.topcat.npclib.NPCManager;
 import com.topcat.npclib.entity.HumanNPC;
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.logging.Logger;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class Main extends JavaPlugin {
@@ -55,16 +58,22 @@ public class Main extends JavaPlugin {
                 }
             }, 0L, 3600L);
         }
-        if (this.world.isEnabled()) {
+        if (this.world.isEnabled() && this.world.exists()) {
             this.getServer().getScheduler().scheduleAsyncRepeatingTask(this, new Runnable() {
                 
                 @Override
                 public void run() {
-                    world.getWorld().setStorm(true);
-                    world.getWorld().setAnimalSpawnLimit(0);
-                    world.getWorld().setTime(14200);
+                    ArrayList<EntityType> allowedTypes = new ArrayList<EntityType>();
+                    allowedTypes.add(EntityType.WITCH);
+                    allowedTypes.add(EntityType.BAT);
+                    for (LivingEntity entity : world.getWorld().getLivingEntities()) {
+                        if (!allowedTypes.contains(entity.getType())) {
+                            entity.remove();
+                            world.getWorld().spawnEntity(entity.getLocation(), allowedTypes.get(new Random().nextInt(allowedTypes.size() - 1)));
+                        }
+                    }
                 }
-            }, 0L, 100L);
+            }, 0L, 60L);
         }
     }
 

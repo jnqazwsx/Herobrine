@@ -140,7 +140,7 @@ public class Commands extends Generic implements CommandExecutor {
                     player.sendMessage(super.getInstance().getUtil().addPluginName("teleport" + ChatColor.WHITE + " - Teleport to Herobrine's location."));
                     player.sendMessage(super.getInstance().getUtil().addPluginName("teleport" + ChatColor.WHITE + " - Teleport to Herobrine's location."));
                     player.sendMessage(super.getInstance().getUtil().addPluginName("forceunleash" + ChatColor.WHITE + " - Force unleash Herobrine."));
-                    player.sendMessage(super.getInstance().getUtil().addPluginName("nightmare" + ChatColor.WHITE + " - Send a player to the \"Nightmare World\"."));
+                    player.sendMessage(super.getInstance().getUtil().addPluginName("nightmare" + ChatColor.WHITE + " - Enter the \"Nightmare World\"."));
                     player.sendMessage(super.getInstance().getUtil().addPluginName("holysword" + ChatColor.WHITE + " - Gift yourself a \"Holy Sword\"."));
                 } else {
                     player.sendMessage(super.getInstance().getUtil().addPluginName("Not a valid command! Type \"/hb help\" for help."));

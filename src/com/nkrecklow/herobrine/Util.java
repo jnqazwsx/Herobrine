@@ -65,7 +65,7 @@ public class Util extends Generic {
             chance = super.getInstance().getConfiguration().getActionChance() / 2;
         }
         if (player.getWorld().getName().equals("world_nightmare")) {
-            chance = chance / 2;
+            chance = chance / 4;
         }
         return new Random().nextInt(chance) == 0;
     }

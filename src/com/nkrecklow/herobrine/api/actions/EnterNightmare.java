@@ -25,6 +25,7 @@ public class EnterNightmare extends Action {
         }
         super.getTarget().teleport(super.getInstance().getWorldGenerator().getWorld().getSpawnLocation());
         super.getInstance().logEvent("Teleported \"" + super.getTarget().getName() + "\" to the \"Nightmare World\"!");
+        super.getTarget().sendMessage(super.getInstance().getUtil().addPluginName("Welcome, " + super.getTarget().getName() + " to the \"Nightmare World\"!"));
         if (super.getSender() != null) {
             super.getSender().sendMessage(super.getInstance().getUtil().addPluginName("Teleported \"" + super.getTarget().getName() + "\" to the \"Nightmare World\"!"));
         }

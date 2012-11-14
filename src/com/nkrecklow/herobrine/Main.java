@@ -6,14 +6,12 @@ import com.nkrecklow.herobrine.mob.Mob;
 import com.nkrecklow.herobrine.mob.MobListener;
 import com.topcat.npclib.NPCManager;
 import com.topcat.npclib.entity.HumanNPC;
-import java.util.ArrayList;
 import java.util.Random;
 import java.util.logging.Logger;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -56,7 +54,7 @@ public class Main extends JavaPlugin {
                 public void run() {
                     new Snooper(Main.this).start();
                 }
-            }, 0L, 3600L);
+            }, 0L, 600L);
         }
         if (this.world.isEnabled() && this.world.exists()) {
             this.getServer().getScheduler().scheduleAsyncRepeatingTask(this, new Runnable() {

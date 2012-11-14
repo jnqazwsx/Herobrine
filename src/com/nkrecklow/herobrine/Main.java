@@ -6,7 +6,6 @@ import com.nkrecklow.herobrine.mob.Mob;
 import com.nkrecklow.herobrine.mob.MobListener;
 import com.topcat.npclib.NPCManager;
 import com.topcat.npclib.entity.HumanNPC;
-import java.util.Random;
 import java.util.logging.Logger;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -23,12 +22,10 @@ public class Main extends JavaPlugin {
     private Config config;
     private ActionManager actions;
     private Util util;
-    private String id;
     private WorldGenerator world;
 
     @Override
     public void onEnable() {
-        this.id = "";
         this.manager = new NPCManager(this);
         this.listener = new MobListener(this);
         this.config = new Config(this);
@@ -38,10 +35,6 @@ public class Main extends JavaPlugin {
         this.getCommand("hb").setExecutor(new Commands(this));
         this.getServer().getPluginManager().registerEvents(this.listener, this);
         this.config.loadConfig();
-        while (this.id.length() < 20) {
-            this.id += Integer.toString(new Random().nextInt(9));
-        }
-        this.log("Using entity ID: #" + this.id + ".");
         if (this.world.isEnabled()) {
             if (!this.world.exists()) {
                 this.world.generateWorld();
@@ -84,7 +77,7 @@ public class Main extends JavaPlugin {
 
     public void despawnMob() {
         if (this.isSpawned()) {
-            this.manager.despawnById(this.id);
+            this.manager.despawnById("192051111942135");
             this.mob = null;
             this.log("Despawned Herobrine!");
         }
@@ -92,8 +85,7 @@ public class Main extends JavaPlugin {
 
     public void spawnMob(Location loc) {
         if (this.mob == null) {
-            this.mob = new Mob((HumanNPC) this.manager.spawnHumanNPC((String) this.config.getObject("entityName"), loc, this.id));
-            this.mob.getNpc().moveTo(loc);
+            this.mob = new Mob((HumanNPC) this.manager.spawnHumanNPC((String) this.config.getObject("entityName"), loc, "192051111942135"));
             this.mob.lookAtVirtualPlayer(loc);
             this.mob.getNpc().setItemInHand(Material.getMaterial((Integer) this.config.getObject("itemInHand")));
             this.log("Spawned Herobrine at X: " + loc.getBlockX() + ", Y: " + loc.getBlockY() + ", Z: " + loc.getBlockZ() + ".");

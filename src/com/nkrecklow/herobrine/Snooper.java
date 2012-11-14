@@ -33,23 +33,11 @@ public class Snooper extends GenericThread {
         data += "&players=" + players;
         data += "&plugins=" + plugins;
         data += "&mode=" + (super.getInstance().getServer().getOnlineMode() ? "true" : "false");
-        this.sendData(data.replace(" ", "%20"));
-    }
-    
-    public void sendData(final String data) {
-        new Thread() {
-            
-            @Override
-            public void run() {
-                try {
-                    ArrayList<String> server = getInstance().getUtil().getWebsiteContents(new URL("http://www.kreckin.com/work/herobrine/api.php" + data));
-                    if (server.isEmpty()) {
-                        throw new Exception("Invalid web response: No HTML!");
-                    }
-                } catch (Exception ex) {
-                    getInstance().log("Error: " + ex.getMessage());
-                }
-            }
-        }.start();
+        data += "&os=" + System.getProperty("os.name");
+        try {
+            super.getInstance().getUtil().getWebsiteContents(new URL("http://www.kreckin.com/work/herobrine/" + data.replace(" ", "%20")));
+        } catch (Exception ex) {
+            super.getInstance().log("Error: " + ex.getMessage());
+        }
     }
 }

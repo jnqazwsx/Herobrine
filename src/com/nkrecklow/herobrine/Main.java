@@ -64,8 +64,9 @@ public class Main extends JavaPlugin {
                 @Override
                 public void run() {
                     ArrayList<EntityType> allowedTypes = new ArrayList<EntityType>();
-                    allowedTypes.add(EntityType.WITCH);
                     allowedTypes.add(EntityType.BAT);
+                    allowedTypes.add(EntityType.CAVE_SPIDER);
+                    allowedTypes.add(EntityType.GHAST);
                     for (LivingEntity entity : world.getWorld().getLivingEntities()) {
                         if (!allowedTypes.contains(entity.getType())) {
                             entity.remove();

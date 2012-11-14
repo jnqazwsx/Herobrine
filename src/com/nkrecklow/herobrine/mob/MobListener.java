@@ -32,7 +32,7 @@ public class MobListener extends Generic implements Listener {
 
     @EventHandler
     public void onBlockIgnite(BlockIgniteEvent event) {
-        if (!super.getInstance().canSpawn(event.getBlock().getWorld()) || !event.getCause().equals(IgniteCause.FLINT_AND_STEEL)) {
+        if (!super.getInstance().getMobController().canSpawn(event.getBlock().getWorld()) || !event.getCause().equals(IgniteCause.FLINT_AND_STEEL)) {
             return;
         }
         if (new File(super.getInstance().getDataFolder() + "/living.yml").exists()) {
@@ -52,7 +52,7 @@ public class MobListener extends Generic implements Listener {
                 event.getPlayer().getWorld().setStorm(true);
                 event.getPlayer().getWorld().setTime(14200L);
                 for (Player player : super.getInstance().getServer().getOnlinePlayers()) {
-                    super.getInstance().getMob().sendMessage("I have been unleashed at last...", player);
+                    super.getInstance().getMobController().getMob().sendMessage("I have been unleashed at last...", player);
                 }
                 try {
                     new File(super.getInstance().getDataFolder() + "/living.yml").createNewFile();
@@ -70,29 +70,29 @@ public class MobListener extends Generic implements Listener {
         if (super.getInstance().getUtil().shouldAct(event.getPlayer())) {
             super.getInstance().getActionManager().runAction(super.getInstance().getActionManager().getRandomType(), event.getPlayer(), null);
         }
-        if (!super.getInstance().isSpawned() || !super.getInstance().canSpawn(event.getPlayer().getWorld())) {
+        if (!super.getInstance().getMobController().isSpawned() || !super.getInstance().getMobController().canSpawn(event.getPlayer().getWorld())) {
             return;
         }
-        if (super.getInstance().getMob().getTarget().equals(event.getPlayer().getName())) {
+        if (super.getInstance().getMobController().getMob().getTarget().equals(event.getPlayer().getName())) {
             if ((Boolean) super.getInstance().getConfiguration().getObject("ignoreCreativePlayers") && event.getPlayer().getGameMode().equals(GameMode.CREATIVE)) {
-                super.getInstance().despawnMob();
+                super.getInstance().getMobController().despawnMob();
                 return;
             }
-            super.getInstance().getMob().lookAtPlayer(event.getPlayer());
-            if (event.getPlayer().getLocation().distance(super.getInstance().getMob().getEntity().getLocation()) <= 3D) {
-                super.getInstance().despawnMob();
+            super.getInstance().getMobController().getMob().lookAtPlayer(event.getPlayer());
+            if (event.getPlayer().getLocation().distance(super.getInstance().getMobController().getMob().getEntity().getLocation()) <= 3D) {
+                super.getInstance().getMobController().despawnMob();
             }
         }
     }
 
     @EventHandler
     public void onPlayerTeleport(PlayerTeleportEvent event) {
-        if (!super.getInstance().isSpawned()) {
+        if (!super.getInstance().getMobController().isSpawned()) {
             return;
         }
-        if (super.getInstance().getMob().getTarget().equals(event.getPlayer().getName())) {
-            if (!event.getTo().getWorld().equals(super.getInstance().getMob().getEntity().getWorld())) {
-                super.getInstance().despawnMob();
+        if (super.getInstance().getMobController().getMob().getTarget().equals(event.getPlayer().getName())) {
+            if (!event.getTo().getWorld().equals(super.getInstance().getMobController().getMob().getEntity().getWorld())) {
+                super.getInstance().getMobController().despawnMob();
             }
         }
     }
@@ -107,7 +107,7 @@ public class MobListener extends Generic implements Listener {
 
     @EventHandler
     public void onInventoryClose(InventoryCloseEvent event) {
-        if (!super.getInstance().canSpawn(event.getPlayer().getWorld())) {
+        if (!super.getInstance().getMobController().canSpawn(event.getPlayer().getWorld())) {
             return;
         }
         if (super.getInstance().getUtil().shouldActIndifferent() && event.getInventory().getType().equals(InventoryType.CHEST)) {

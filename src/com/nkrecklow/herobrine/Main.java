@@ -2,32 +2,26 @@ package com.nkrecklow.herobrine;
 
 import com.nkrecklow.herobrine.api.ActionManager;
 import com.nkrecklow.herobrine.misc.WorldGenerator;
-import com.nkrecklow.herobrine.mob.Mob;
+import com.nkrecklow.herobrine.mob.MobController;
 import com.nkrecklow.herobrine.mob.MobListener;
-import com.topcat.npclib.NPCManager;
-import com.topcat.npclib.entity.HumanNPC;
 import java.util.logging.Logger;
 import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.World;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class Main extends JavaPlugin {
 
-    private NPCManager manager;
-    private Mob mob;
     private MobListener listener;
     private Config config;
     private ActionManager actions;
     private Util util;
     private WorldGenerator world;
+    private MobController controller;
 
     @Override
     public void onEnable() {
-        this.manager = new NPCManager(this);
         this.listener = new MobListener(this);
+        this.controller = new MobController(this);
         this.config = new Config(this);
         this.actions = new ActionManager(this);
         this.util = new Util(this);
@@ -74,34 +68,9 @@ public class Main extends JavaPlugin {
     public void log(String data) {
         Logger.getLogger("Minecraft").info(ChatColor.stripColor(Util.formatString(data)));
     }
-
-    public void despawnMob() {
-        if (this.isSpawned()) {
-            this.manager.despawnById("192051111942135");
-            this.mob = null;
-            this.log("Despawned Herobrine!");
-        }
-    }
-
-    public void spawnMob(Location loc) {
-        if (this.mob == null) {
-            this.mob = new Mob((HumanNPC) this.manager.spawnHumanNPC((String) this.config.getObject("entityName"), loc, "192051111942135"));
-            this.mob.lookAtVirtualPlayer(loc);
-            this.mob.getNpc().setItemInHand(Material.getMaterial((Integer) this.config.getObject("itemInHand")));
-            this.log("Spawned Herobrine at X: " + loc.getBlockX() + ", Y: " + loc.getBlockY() + ", Z: " + loc.getBlockZ() + ".");
-        }
-    }
-
-    public boolean canSpawn(World world) {
-        return this.config.getAllowedWorlds().contains(world.getName());
-    }
-
-    public boolean isSpawned() {
-        return this.mob != null;
-    }
-
-    public Mob getMob() {
-        return this.mob;
+    
+    public MobController getMobController() {
+        return this.controller;
     }
     
     public Util getUtil() {

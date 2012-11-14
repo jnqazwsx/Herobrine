@@ -47,8 +47,8 @@ public class Commands extends Generic implements CommandExecutor {
                         player.sendMessage(Util.formatString("Not a valid command! Type \"/hb bury username\"."));
                     }
                 } else if (args[0].equalsIgnoreCase("kill")) {
-                    if (super.getInstance().isSpawned()) {
-                        super.getInstance().despawnMob();
+                    if (super.getInstance().getMobController().isSpawned()) {
+                        super.getInstance().getMobController().despawnMob();
                         player.sendMessage(Util.formatString("Herobrine has been killed."));
                     } else {
                         player.sendMessage(Util.formatString("Herobrine currently isn't alive."));
@@ -88,8 +88,8 @@ public class Commands extends Generic implements CommandExecutor {
                     }
                 } else if (args[0].equalsIgnoreCase("teleport")) {
                     if (args.length == 1) {
-                        if (super.getInstance().isSpawned()) {
-                            player.teleport(super.getInstance().getMob().getEntity().getLocation());
+                        if (super.getInstance().getMobController().isSpawned()) {
+                            player.teleport(super.getInstance().getMobController().getMob().getEntity().getLocation());
                             player.sendMessage(Util.formatString("Teleported to Herobrine."));
                             super.getInstance().logEvent("Teleported " + player.getName() + " to Herobrine.");
                         } else {

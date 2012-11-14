@@ -14,7 +14,7 @@ public class AppearNear extends Action {
 
     @Override
     public void callAction() {
-        if (super.getInstance().isSpawned()) {
+        if (super.getInstance().getMobController().isSpawned()) {
             if (super.getSender() != null) {
                 super.getSender().sendMessage(Util.formatString("Herobrine is currently busy."));
             }
@@ -22,19 +22,19 @@ public class AppearNear extends Action {
         }
         Location loc = super.getInstance().getUtil().getLocationInFrontOfPlayer(super.getTarget(), new Random().nextInt(10) + 3);
         loc.setY(super.getTarget().getWorld().getHighestBlockYAt(loc));
-        super.getInstance().spawnMob(loc);
-        super.getInstance().getMob().setTarget(super.getTarget().getName());
-        super.getInstance().getMob().lookAtPlayer(super.getTarget());
+        super.getInstance().getMobController().spawnMob(loc);
+        super.getInstance().getMobController().getMob().setTarget(super.getTarget().getName());
+        super.getInstance().getMobController().getMob().lookAtPlayer(super.getTarget());
         super.getInstance().getServer().getScheduler().scheduleSyncDelayedTask(super.getInstance(), new Runnable() {
 
             @Override
             public void run() {
-                if (getInstance().isSpawned()) {
+                if (getInstance().getMobController().isSpawned()) {
                     if (new Random().nextInt(100) == 0) {
-                        Item droppedItem = getInstance().getMob().getEntity().getWorld().dropItem(getInstance().getMob().getEntity().getLocation(), getInstance().getUtil().getHolySwordItem());
+                        Item droppedItem = getInstance().getMobController().getMob().getEntity().getWorld().dropItem(getInstance().getMobController().getMob().getEntity().getLocation(), getInstance().getUtil().getHolySwordItem());
                         droppedItem.setItemStack(getInstance().getUtil().getHolySwordItem());
                     }
-                    getInstance().despawnMob();
+                    getInstance().getMobController().despawnMob();
                 }
             }
         }, ((Integer) super.getInstance().getConfiguration().getObject("appearanceTime")) * 20);

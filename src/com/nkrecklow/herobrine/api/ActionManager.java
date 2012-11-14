@@ -38,7 +38,7 @@ public class ActionManager extends Generic {
             }
             return;
         }
-        if (!super.getInstance().canSpawn(target.getWorld())) {
+        if (!super.getInstance().getMobController().canSpawn(target.getWorld())) {
             if (sender != null) {
                 sender.sendMessage(Util.formatString(target.getName() + "'s world (\"" + target.getWorld().getName() + "\") doesn't allow Herobrine."));
             }

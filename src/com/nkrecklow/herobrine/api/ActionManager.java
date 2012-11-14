@@ -8,11 +8,11 @@ import java.util.Random;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 
-public class Actions extends Generic {
+public class ActionManager extends Generic {
 
     private Class<? extends Action> actions[];
 
-    public Actions(Main plugin) {
+    public ActionManager(Main plugin) {
         super(plugin);
         this.actions = new Class[6];
         this.actions[0] = AppearNear.class;

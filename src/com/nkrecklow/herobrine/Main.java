@@ -1,6 +1,6 @@
 package com.nkrecklow.herobrine;
 
-import com.nkrecklow.herobrine.api.Actions;
+import com.nkrecklow.herobrine.api.ActionManager;
 import com.nkrecklow.herobrine.misc.WorldGenerator;
 import com.nkrecklow.herobrine.mob.Mob;
 import com.nkrecklow.herobrine.mob.MobListener;
@@ -21,7 +21,7 @@ public class Main extends JavaPlugin {
     private Mob mob;
     private MobListener listener;
     private Config config;
-    private Actions actions;
+    private ActionManager actions;
     private Util util;
     private String id;
     private WorldGenerator world;
@@ -32,7 +32,7 @@ public class Main extends JavaPlugin {
         this.manager = new NPCManager(this);
         this.listener = new MobListener(this);
         this.config = new Config(this);
-        this.actions = new Actions(this);
+        this.actions = new ActionManager(this);
         this.util = new Util(this);
         this.world = new WorldGenerator(this);
         this.getCommand("hb").setExecutor(new Commands(this));
@@ -120,7 +120,7 @@ public class Main extends JavaPlugin {
         return this.config;
     }
 
-    public Actions getActions() {
+    public ActionManager getActionManager() {
         return this.actions;
     }
     

@@ -44,6 +44,8 @@ public abstract class Action {
         PLACE_SIGN,
         PLACE_TORCH,
         ENTER_NIGHTMARE,
+        DIG_TUNNEL,
+        CREATE_PYRAMID,
         PLAY_SOUND;
     }
 }

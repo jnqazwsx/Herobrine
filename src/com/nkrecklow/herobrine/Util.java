@@ -19,7 +19,7 @@ public class Util extends Generic {
     }
     
     public static String formatString(String message) {
-        return ("[" + ChatColor.RED + "Herobrine" + ChatColor.WHITE + "] ");
+        return "[" + ChatColor.RED + "Herobrine" + ChatColor.WHITE + "] " + message;
     }
 
     public boolean shouldAct(Player player) {

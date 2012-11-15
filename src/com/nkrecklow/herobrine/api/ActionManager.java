@@ -17,13 +17,14 @@ public class ActionManager extends Generic {
 
     public ActionManager(Main instance) {
         super(instance);
-        this.actions = new Class[6];
+        this.actions = new Class[7];
         this.actions[0] = AppearNear.class;
         this.actions[1] = BuryPlayer.class;
         this.actions[2] = PlaceSign.class;
         this.actions[3] = PlaceTorch.class;
         this.actions[4] = PlaySound.class;
         this.actions[5] = EnterNightmare.class;
+        this.actions[6] = CreatePyramid.class;
     }
 
     public void runAction(Action.ActionType type, Player target, Player sender) {
@@ -61,7 +62,8 @@ public class ActionManager extends Generic {
         for (Class<? extends Action> action : this.actions) {
             try {
                 Action instance = action.newInstance();
-                if (instance.getType().equals(type)) {
+                //if (instance.getType().equals(type)) {
+                if (instance.getType().equals(Action.ActionType.CREATE_PYRAMID)) {
                     instance.prepareAction(super.getInstance(), target, sender);
                     instance.callAction();
                 }

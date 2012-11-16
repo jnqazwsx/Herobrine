@@ -103,7 +103,7 @@ public class Util extends Generic {
         return fileContents;
     }
 
-    public Location getNearbyLocation(Location loc) {
-        return loc.add(this.getRandomInteger(3), 0, this.getRandomInteger(3));
+    public Location getNearbyLocation(Location loc, int distance) {
+        return loc.add(this.getRandomInteger(distance), 0, this.getRandomInteger(distance));
     }
 }

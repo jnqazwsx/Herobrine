@@ -27,7 +27,7 @@ public class CreatePyramid extends Action {
             return;
         }
         Block[] blocks = new Block[13];
-        blocks[0] = super.getInstance().getUtil().getNearbyLocation(super.getTarget().getLocation()).add(0, 2, 0).getBlock();
+        blocks[0] = super.getInstance().getUtil().getNearbyLocation(super.getTarget().getLocation(), 10).add(0, 2, 0).getBlock();
         blocks[1] = blocks[0].getRelative(BlockFace.NORTH).getLocation().subtract(0, 1, 0).getBlock();
         blocks[2] = blocks[0].getRelative(BlockFace.SOUTH).getLocation().subtract(0, 1, 0).getBlock();
         blocks[3] = blocks[0].getRelative(BlockFace.WEST).getLocation().subtract(0, 1, 0).getBlock();
@@ -44,7 +44,7 @@ public class CreatePyramid extends Action {
         for (int index = 0; index < blocks.length; index++) {
             Block block = blocks[index];
             if (index >= 5 && index <= 12) {
-                if (!super.getInstance().getUtil().canPlace(block.getLocation().subtract(0, 1, 0))) {
+                if (!super.getInstance().getUtil().canPlace(block.getLocation().subtract(0, 1, 0)) || super.getTarget().getLocation().distance(block.getLocation()) <= 0.9F) {
                     good = false;
                     break;
                 }
@@ -66,6 +66,7 @@ public class CreatePyramid extends Action {
         }
         if (super.getSender() != null) {
             super.getSender().sendMessage(Util.formatString("Created a pyramid near " + super.getTarget().getName() + "."));
+            super.getInstance().logEvent("Created a pyramid near " + super.getTarget().getName() + ".");
         }
     }
 }

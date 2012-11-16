@@ -19,7 +19,7 @@ public class PlaceTorch extends Action {
             }
             return;
         }
-        Block torch = super.getInstance().getUtil().getNearbyLocation(super.getTarget().getLocation()).getBlock();
+        Block torch = super.getInstance().getUtil().getNearbyLocation(super.getTarget().getLocation(), 5).getBlock();
         Block below = torch.getLocation().subtract(0D, 1D, 0D).getBlock();
         if (torch.getType().equals(Material.AIR) && super.getInstance().getUtil().canPlace(below.getLocation())) {
             torch.setType(Material.REDSTONE_TORCH_ON);

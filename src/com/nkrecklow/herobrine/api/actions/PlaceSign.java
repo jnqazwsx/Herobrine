@@ -20,7 +20,7 @@ public class PlaceSign extends Action {
             }
             return;
         }
-        Block signPost = super.getInstance().getUtil().getNearbyLocation(super.getTarget().getLocation()).getBlock();
+        Block signPost = super.getInstance().getUtil().getNearbyLocation(super.getTarget().getLocation(), 5).getBlock();
         Block below = signPost.getLocation().subtract(0D, 1D, 0D).getBlock();
         String msg = super.getInstance().getConfiguration().getSignMessage();
         if (signPost.getType().equals(Material.AIR) && super.getInstance().getUtil().canPlace(below.getLocation())) {

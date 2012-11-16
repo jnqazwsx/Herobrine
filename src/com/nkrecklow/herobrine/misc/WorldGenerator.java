@@ -25,14 +25,14 @@ public class WorldGenerator extends Generic {
 
     public void generateWorld() {
         if (this.world == null) {
+            super.getInstance().log("Loading \"Nightmare World\", please wait...");
             WorldCreator creator = new WorldCreator("world_nightmare");
             creator.environment(World.Environment.THE_END);
             creator.generateStructures(false);
             creator.seed();
-            super.getInstance().log("Loading \"Nightmare World\", please wait...");
             creator.createWorld();
-            super.getInstance().log("The \"Nightmare World\" has been loaded!");
             this.world = super.getInstance().getServer().createWorld(creator);
+            super.getInstance().log("The \"Nightmare World\" has been loaded!");
         }
     }
 

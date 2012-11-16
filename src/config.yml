@@ -7,6 +7,8 @@ Herobrine:
   sendMessages: true
   # Modify the world (bury players, add torches, etc.)
   modifyWorld: true
+  # Can he build pyramids?
+  buildPyramids: true
   # Can he steal from chests?
   stealFromChests: true
   # What is his name? (This will affect his skin!)

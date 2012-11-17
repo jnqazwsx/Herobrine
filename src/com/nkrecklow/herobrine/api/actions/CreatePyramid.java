@@ -27,7 +27,7 @@ public class CreatePyramid extends Action {
             return;
         }
         Block[] blocks = new Block[14];
-        blocks[0] = super.getInstance().getUtil().getNearbyLocation(super.getTarget().getLocation(), 10).add(0, 2, 0).getBlock();
+        blocks[0] = super.getInstance().getUtil().getNearbyLocation(super.getTarget().getLocation(), 25).add(0, 2, 0).getBlock();
         blocks[1] = blocks[0].getRelative(BlockFace.NORTH).getLocation().subtract(0, 1, 0).getBlock();
         blocks[2] = blocks[0].getRelative(BlockFace.SOUTH).getLocation().subtract(0, 1, 0).getBlock();
         blocks[3] = blocks[0].getRelative(BlockFace.WEST).getLocation().subtract(0, 1, 0).getBlock();

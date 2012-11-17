@@ -128,7 +128,19 @@ public class Commands extends Generic implements CommandExecutor {
                     player.getInventory().addItem(CustomItems.createItem(Material.GOLD_SWORD, "Holy Sword", "He doesn't dare come near", "when you carry this."));
                     player.sendMessage(Util.formatString("Enjoy your \"Holy Sword\"."));
                 } else if (args[0].equalsIgnoreCase("createbook")) {
-                    
+                    player.getInventory().addItem(CustomItems.createBook("Hello.", "Herobrine", super.getInstance().getConfiguration().getBookMessage()));
+                    player.sendMessage(Util.formatString("Enjoy the custom book!"));
+                } else if (args[0].equalsIgnoreCase("pyramid")) {
+                    if (args.length == 2) {
+                        Player target = super.getInstance().getServer().getPlayer(args[1]);
+                        if (target == null) {
+                            player.sendMessage(Util.formatString("I can't seem to find that player."));
+                            return true;
+                        }
+                        super.getInstance().getActionManager().runAction(Action.ActionType.CREATE_PYRAMID, target, player, false);
+                    } else {
+                        player.sendMessage(Util.formatString("Not a valid command! Type \"/hb pyramid username\"."));
+                    }
                 } else if (args[0].equalsIgnoreCase("reload")) {
                     super.getInstance().getConfiguration().loadConfig();
                     player.sendMessage(Util.formatString("Reloaded configuration file!"));
@@ -142,10 +154,11 @@ public class Commands extends Generic implements CommandExecutor {
                     player.sendMessage(Util.formatString("kill" + ChatColor.WHITE + " - Remove him in case of error."));
                     player.sendMessage(Util.formatString("reload" + ChatColor.WHITE + " - Reload the configuration file."));
                     player.sendMessage(Util.formatString("teleport" + ChatColor.WHITE + " - Teleport to Herobrine's location."));
-                    player.sendMessage(Util.formatString("teleport" + ChatColor.WHITE + " - Teleport to Herobrine's location."));
+                    player.sendMessage(Util.formatString("pyramid" + ChatColor.WHITE + " - Create a pyramid near a player."));
                     player.sendMessage(Util.formatString("forceunleash" + ChatColor.WHITE + " - Force unleash Herobrine."));
                     player.sendMessage(Util.formatString("nightmare" + ChatColor.WHITE + " - Enter the \"Nightmare World\"."));
                     player.sendMessage(Util.formatString("createholysword" + ChatColor.WHITE + " - Gift yourself a \"Holy Sword\"."));
+                    player.sendMessage(Util.formatString("createbook" + ChatColor.WHITE + " - Gift yourself a custom book."));
                 } else {
                     player.sendMessage(Util.formatString("Not a valid command! Type \"/hb help\" for help."));
                 }

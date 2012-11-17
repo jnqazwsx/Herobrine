@@ -59,10 +59,9 @@ public class CreatePyramid extends Action {
         }
         for (int index = 0; index < blocks.length; index++) {
             Block block = blocks[index];
-            if (index == 0) {
-                block.setType(Material.FIRE);
-            } else if (index == 13) {
+            if (index == 13) {
                 block.setType(Material.NETHERRACK);
+                blocks[0].setType(Material.FIRE);
             } else {
                 block.setType(Material.SANDSTONE);
             }

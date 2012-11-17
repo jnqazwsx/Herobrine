@@ -49,7 +49,16 @@ public class WorldGenerator extends Generic {
     }
     
     public EntityType getRandomEntity() {
-        return this.allowedTypes.get(new Random().nextInt(this.allowedTypes.size() - 1));
+        EntityType entity = null;
+        while (entity == null) {
+            entity = this.allowedTypes.get(new Random().nextInt(this.allowedTypes.size() - 1));
+            if (entity.equals(EntityType.PLAYER)) {
+                entity = null;
+            } else {
+                break;
+            }
+        }
+        return entity;
     }
     
     public ArrayList<EntityType> getAllowedEntities() {

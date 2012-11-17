@@ -19,8 +19,12 @@ public class WorldGenerator extends Generic {
         this.allowedTypes = new ArrayList<EntityType>();
         this.allowedTypes.add(EntityType.BAT);
         this.allowedTypes.add(EntityType.CAVE_SPIDER);
-        this.allowedTypes.add(EntityType.GHAST);
+        this.allowedTypes.add(EntityType.BLAZE);
+        this.allowedTypes.add(EntityType.MAGMA_CUBE);
+        this.allowedTypes.add(EntityType.SLIME);
+        this.allowedTypes.add(EntityType.GIANT);
         this.allowedTypes.add(EntityType.PLAYER);
+        this.allowedTypes.add(EntityType.GHAST);
     }
 
     public void generateWorld() {

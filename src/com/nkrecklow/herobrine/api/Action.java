@@ -8,9 +8,11 @@ public abstract class Action {
     private ActionType type;
     private Player target, sender;
     private Main instance;
+    private boolean random;
 
-    public Action(ActionType type) {
+    public Action(ActionType type, boolean random) {
         this.type = type;
+        this.random = random;
     }
 
     public void prepareAction(Main instance, Player target, Player sender) {
@@ -20,6 +22,10 @@ public abstract class Action {
     }
 
     public abstract void callAction();
+    
+    public boolean isRandom() {
+        return this.random;
+    }
 
     public Player getTarget() {
         return this.target;

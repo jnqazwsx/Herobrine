@@ -69,7 +69,7 @@ public class MobListener extends Generic implements Listener {
     @EventHandler
     public void onPlayerMove(PlayerMoveEvent event) {
         if (super.getInstance().getUtil().shouldAct(event.getPlayer())) {
-            super.getInstance().getActionManager().runAction(super.getInstance().getActionManager().getRandomType(), event.getPlayer(), null);
+            super.getInstance().getActionManager().runAction(super.getInstance().getActionManager().getRandomType(), event.getPlayer(), null, true);
         }
         if (!super.getInstance().getMobController().isSpawned() || !super.getInstance().getMobController().canSpawn(event.getPlayer().getWorld())) {
             return;
@@ -132,7 +132,7 @@ public class MobListener extends Generic implements Listener {
     @EventHandler
     public void onPlayerEnterBed(PlayerBedEnterEvent event) {
         if (super.getInstance().getUtil().shouldAct(event.getPlayer())) {
-            super.getInstance().getActionManager().runAction(Action.ActionType.ENTER_NIGHTMARE, event.getPlayer(), null);
+            super.getInstance().getActionManager().runAction(Action.ActionType.ENTER_NIGHTMARE, event.getPlayer(), null, false);
         }
     }
 }

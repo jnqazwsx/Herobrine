@@ -12,7 +12,7 @@ import org.bukkit.inventory.ItemStack;
 public class AppearNear extends Action {
 
     public AppearNear() {
-        super(Action.ActionType.APPEAR);
+        super(Action.ActionType.APPEAR, true);
     }
 
     @Override

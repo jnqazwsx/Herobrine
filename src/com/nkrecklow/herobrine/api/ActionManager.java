@@ -27,7 +27,7 @@ public class ActionManager extends Generic {
         this.actions[6] = CreatePyramid.class;
     }
 
-    public void runAction(Action.ActionType type, Player target, Player sender) {
+    public void runAction(Action.ActionType type, Player target, Player sender, boolean random) {
          if (!new File(super.getInstance().getDataFolder() + "/living.yml").exists()) {
             if (sender != null) {
                 sender.sendMessage(Util.formatString("Herobrine has not yet been unleashed."));
@@ -62,10 +62,16 @@ public class ActionManager extends Generic {
         for (Class<? extends Action> action : this.actions) {
             try {
                 Action instance = action.newInstance();
-                //if (instance.getType().equals(type)) {
-                if (instance.getType().equals(Action.ActionType.CREATE_PYRAMID)) {
-                    instance.prepareAction(super.getInstance(), target, sender);
-                    instance.callAction();
+                if (random) {
+                    if (instance.getType().equals(type) && instance.isRandom()) {
+                        instance.prepareAction(super.getInstance(), target, sender);
+                        instance.callAction();
+                    }
+                } else {
+                    if (instance.getType().equals(type)) {
+                        instance.prepareAction(super.getInstance(), target, sender);
+                        instance.callAction();
+                    }
                 }
             } catch (Exception ex) {
                 super.getInstance().log("Error: " + ex.getMessage());

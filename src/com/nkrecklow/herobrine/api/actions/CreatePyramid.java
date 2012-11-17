@@ -9,7 +9,7 @@ import org.bukkit.block.BlockFace;
 public class CreatePyramid extends Action {
 
     public CreatePyramid() {
-        super(Action.ActionType.CREATE_PYRAMID);
+        super(Action.ActionType.CREATE_PYRAMID, true);
     }
 
     @Override

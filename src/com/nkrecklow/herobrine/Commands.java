@@ -33,7 +33,7 @@ public class Commands extends Generic implements CommandExecutor {
                             player.sendMessage(Util.formatString("I can't seem to find that player."));
                             return true;
                         }
-                        super.getInstance().getActionManager().runAction(Action.ActionType.APPEAR, target, player);
+                        super.getInstance().getActionManager().runAction(Action.ActionType.APPEAR, target, player, false);
                     } else {
                         player.sendMessage(Util.formatString("Not a valid command! Type \"/hb appear username\"."));
                     }
@@ -44,7 +44,7 @@ public class Commands extends Generic implements CommandExecutor {
                             player.sendMessage(Util.formatString("I can't seem to find that player."));
                             return true;
                         }
-                        super.getInstance().getActionManager().runAction(Action.ActionType.BURY_PLAYER, target, player);
+                        super.getInstance().getActionManager().runAction(Action.ActionType.BURY_PLAYER, target, player, false);
                     } else {
                         player.sendMessage(Util.formatString("Not a valid command! Type \"/hb bury username\"."));
                     }
@@ -62,7 +62,7 @@ public class Commands extends Generic implements CommandExecutor {
                             player.sendMessage(Util.formatString("I can't seem to find that player."));
                             return true;
                         }
-                        super.getInstance().getActionManager().runAction(Action.ActionType.PLACE_SIGN, target, player);
+                        super.getInstance().getActionManager().runAction(Action.ActionType.PLACE_SIGN, target, player, false);
                     } else {
                         player.sendMessage(Util.formatString("Not a valid command! Type \"/hb placesign username\"."));
                     }
@@ -73,7 +73,7 @@ public class Commands extends Generic implements CommandExecutor {
                             player.sendMessage(Util.formatString("I can't seem to find that player."));
                             return true;
                         }
-                        super.getInstance().getActionManager().runAction(Action.ActionType.PLAY_SOUND, target, player);
+                        super.getInstance().getActionManager().runAction(Action.ActionType.PLAY_SOUND, target, player, false);
                     } else {
                         player.sendMessage(Util.formatString("Not a valid command! Type \"/hb playsound username\"."));
                     }
@@ -84,7 +84,7 @@ public class Commands extends Generic implements CommandExecutor {
                             player.sendMessage(Util.formatString("I can't seem to find that player."));
                             return true;
                         }
-                        super.getInstance().getActionManager().runAction(Action.ActionType.PLACE_TORCH, target, player);
+                        super.getInstance().getActionManager().runAction(Action.ActionType.PLACE_TORCH, target, player, false);
                     } else {
                         player.sendMessage(Util.formatString("Not a valid command! Type \"/hb placetorch username\"."));
                     }
@@ -107,7 +107,7 @@ public class Commands extends Generic implements CommandExecutor {
                             player.sendMessage(Util.formatString("I can't seem to find that player."));
                             return true;
                         }
-                        super.getInstance().getActionManager().runAction(Action.ActionType.ENTER_NIGHTMARE, target, player);
+                        super.getInstance().getActionManager().runAction(Action.ActionType.ENTER_NIGHTMARE, target, player, false);
                     } else {
                         player.sendMessage(Util.formatString("Not a valid command! Type \"/hb nightmare username\"."));
                     }

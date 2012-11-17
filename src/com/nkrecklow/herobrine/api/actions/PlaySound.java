@@ -10,7 +10,7 @@ import org.bukkit.craftbukkit.entity.CraftPlayer;
 public class PlaySound extends Action {
 
     public PlaySound() {
-        super(Action.ActionType.PLAY_SOUND);
+        super(Action.ActionType.PLAY_SOUND, true);
     }
 
     @Override

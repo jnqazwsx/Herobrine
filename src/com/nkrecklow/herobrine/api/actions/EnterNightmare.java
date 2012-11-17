@@ -6,7 +6,7 @@ import com.nkrecklow.herobrine.api.Action;
 public class EnterNightmare extends Action {
 
     public EnterNightmare() {
-        super(Action.ActionType.ENTER_NIGHTMARE);
+        super(Action.ActionType.ENTER_NIGHTMARE, false);
     }
 
     @Override

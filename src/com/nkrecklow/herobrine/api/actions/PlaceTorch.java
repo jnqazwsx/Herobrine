@@ -8,7 +8,7 @@ import org.bukkit.block.Block;
 public class PlaceTorch extends Action {
 
     public PlaceTorch() {
-        super(Action.ActionType.PLACE_TORCH);
+        super(Action.ActionType.PLACE_TORCH, true);
     }
 
     @Override

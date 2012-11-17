@@ -59,6 +59,6 @@ Herobrine:
     - world_the_end
     - world_nightmare
   # Don't touch this, this is for me to use.
-  configBuild: 4.7
+  configBuild: 4.8
   # Allow me to collect server statistics.
   collectStats: true

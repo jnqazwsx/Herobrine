@@ -8,6 +8,8 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Item;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 public class AppearNear extends Action {
 
@@ -23,6 +25,7 @@ public class AppearNear extends Action {
             }
             return;
         }
+        super.getTarget().addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 100, 1));
         Location loc = super.getInstance().getUtil().getLocationInFrontOfPlayer(super.getTarget(), new Random().nextInt(10) + 3);
         super.getInstance().getMobController().spawnMob(loc);
         super.getInstance().getMobController().getMob().setTarget(super.getTarget().getName());

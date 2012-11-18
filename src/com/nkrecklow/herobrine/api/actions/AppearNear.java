@@ -24,7 +24,6 @@ public class AppearNear extends Action {
             return;
         }
         Location loc = super.getInstance().getUtil().getLocationInFrontOfPlayer(super.getTarget(), new Random().nextInt(10) + 3);
-        loc.setY(super.getTarget().getWorld().getHighestBlockYAt(loc));
         super.getInstance().getMobController().spawnMob(loc);
         super.getInstance().getMobController().getMob().setTarget(super.getTarget().getName());
         super.getInstance().getMobController().getMob().lookAtPlayer(super.getTarget());

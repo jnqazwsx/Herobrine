@@ -25,11 +25,11 @@ public class AppearNear extends Action {
             }
             return;
         }
-        super.getTarget().addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 100, 1));
         Location loc = super.getInstance().getUtil().getLocationInFrontOfPlayer(super.getTarget(), new Random().nextInt(10) + 3);
         super.getInstance().getMobController().spawnMob(loc);
         super.getInstance().getMobController().getMob().setTarget(super.getTarget().getName());
         super.getInstance().getMobController().getMob().lookAtPlayer(super.getTarget());
+        int duration = (((Integer) super.getInstance().getConfiguration().getObject("appearanceTime")) * 20) + (new Random().nextInt(5) * 20);
         super.getInstance().getServer().getScheduler().scheduleSyncDelayedTask(super.getInstance(), new Runnable() {
 
             @Override
@@ -42,7 +42,8 @@ public class AppearNear extends Action {
                     getInstance().getMobController().despawnMob();
                 }
             }
-        }, ((((Integer) super.getInstance().getConfiguration().getObject("appearanceTime")) * 20) + (new Random().nextInt(5) * 20)));
+        }, duration);
+        super.getTarget().addPotionEffect(new PotionEffect(PotionEffectType.WITHER, duration, 1));
         super.getInstance().logEvent("Appeared near " + super.getTarget().getName() + ".");
         if (super.getSender() != null) {
             super.getSender().sendMessage(Util.formatString("Herobrine appeared near " + super.getTarget().getName() + "."));

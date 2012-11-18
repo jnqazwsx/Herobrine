@@ -5,6 +5,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -78,6 +79,7 @@ public class Config extends Generic {
         if (disable) {
             super.getInstance().getServer().getPluginManager().disablePlugin(super.getInstance());
         }
+        this.messages.add(ChatColor.MAGIC + "steaks4uce");
     }
     
     public boolean canSendMessages() {

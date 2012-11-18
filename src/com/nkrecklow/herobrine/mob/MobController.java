@@ -4,6 +4,7 @@ import com.nkrecklow.herobrine.Main;
 import com.nkrecklow.herobrine.api.basic.Generic;
 import com.topcat.npclib.NPCManager;
 import com.topcat.npclib.entity.HumanNPC;
+import java.util.Random;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -31,6 +32,12 @@ public class MobController extends Generic {
             this.mob = new Mob((HumanNPC) this.manager.spawnHumanNPC((String) super.getInstance().getConfiguration().getObject("entityName"), loc, "192051111942135"));
             this.mob.lookAtVirtualPlayer(loc);
             this.mob.getNpc().setItemInHand(Material.getMaterial((Integer) super.getInstance().getConfiguration().getObject("itemInHand")));
+            if (new Random().nextBoolean()) {
+                int amount = new Random().nextInt(5) + 1;
+                for (int id = 0; id < amount; id++) {
+                    this.mob.getEntity().getWorld().spawnEntity(this.mob.getEntity().getLocation(), EntityType.BAT);
+                }
+            }
             super.getInstance().log("Spawned Herobrine at X: " + loc.getBlockX() + ", Y: " + loc.getBlockY() + ", Z: " + loc.getBlockZ() + ".");
         }
     }

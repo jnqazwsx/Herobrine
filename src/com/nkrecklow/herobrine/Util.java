@@ -17,7 +17,7 @@ public class Util extends Generic {
     public Util(Main instance) {
         super(instance);
     }
-    
+
     public static String formatString(String message) {
         return "[" + ChatColor.RED + "Herobrine" + ChatColor.WHITE + "] " + message;
     }

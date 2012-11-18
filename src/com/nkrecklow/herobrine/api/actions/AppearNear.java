@@ -26,10 +26,10 @@ public class AppearNear extends Action {
             return;
         }
         Location loc = super.getInstance().getUtil().getLocationInFrontOfPlayer(super.getTarget(), new Random().nextInt(10) + 3);
-        super.getInstance().getMobController().spawnMob(loc);
+        int duration = (((Integer) super.getInstance().getConfiguration().getObject("appearanceTime")) * 20) + (new Random().nextInt(5) * 20);
+        super.getInstance().getMobController().spawnMob(loc, duration);
         super.getInstance().getMobController().getMob().setTarget(super.getTarget().getName());
         super.getInstance().getMobController().getMob().lookAtPlayer(super.getTarget());
-        int duration = (((Integer) super.getInstance().getConfiguration().getObject("appearanceTime")) * 20) + (new Random().nextInt(5) * 20);
         super.getInstance().getServer().getScheduler().scheduleSyncDelayedTask(super.getInstance(), new Runnable() {
 
             @Override

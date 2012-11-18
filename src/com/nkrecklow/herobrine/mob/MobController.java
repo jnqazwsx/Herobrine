@@ -28,7 +28,7 @@ public class MobController extends Generic {
         }
     }
 
-    public void spawnMob(Location loc, int duration) {
+    public void spawnMob(Location loc) {
         if (this.mob == null) {
             this.mob = new Mob((HumanNPC) this.manager.spawnHumanNPC((String) super.getInstance().getConfiguration().getObject("entityName"), loc, "192051111942135"));
             this.mob.lookAtVirtualPlayer(loc);
@@ -38,9 +38,6 @@ public class MobController extends Generic {
                 for (int id = 0; id < amount; id++) {
                     this.mob.getEntity().getWorld().spawnEntity(this.mob.getEntity().getLocation(), EntityType.BAT);
                 }
-            }
-            if (new Random().nextBoolean()) {
-                this.mob.getEntity().setFireTicks(duration);
             }
             super.getInstance().log("Spawned Herobrine at X: " + loc.getBlockX() + ", Y: " + loc.getBlockY() + ", Z: " + loc.getBlockZ() + ".");
         }

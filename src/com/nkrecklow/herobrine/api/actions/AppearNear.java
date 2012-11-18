@@ -39,7 +39,7 @@ public class AppearNear extends Action {
                     getInstance().getMobController().despawnMob();
                 }
             }
-        }, ((Integer) super.getInstance().getConfiguration().getObject("appearanceTime")) * 20);
+        }, ((((Integer) super.getInstance().getConfiguration().getObject("appearanceTime")) * 20) + (new Random().nextInt(5) * 20)));
         super.getInstance().logEvent("Appeared near " + super.getTarget().getName() + ".");
         if (super.getSender() != null) {
             super.getSender().sendMessage(Util.formatString("Herobrine appeared near " + super.getTarget().getName() + "."));

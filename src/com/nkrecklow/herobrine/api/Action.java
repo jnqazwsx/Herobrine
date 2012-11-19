@@ -52,6 +52,7 @@ public abstract class Action {
         ENTER_NIGHTMARE,
         DIG_TUNNEL,
         CREATE_PYRAMID,
+        CREATE_TNT_TRAP,
         PLAY_SOUND;
     }
 }

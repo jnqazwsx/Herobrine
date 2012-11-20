@@ -9,6 +9,8 @@ Herobrine:
   modifyWorld: true
   # Can he build pyramids?
   buildPyramids: true
+  # Can he build TNT traps?
+  buildTntTraps: true
   # Can he steal from chests?
   stealFromChests: true
   # What is his name? (This will affect his skin!)

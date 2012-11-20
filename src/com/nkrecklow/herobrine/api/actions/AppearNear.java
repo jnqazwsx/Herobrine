@@ -42,9 +42,7 @@ public class AppearNear extends Action {
                 getInstance().getMobController().despawnMob();
             }
         }, duration);
-        if (new Random().nextBoolean()) {
-            super.getTarget().addPotionEffect(new PotionEffect(PotionEffectType.WITHER, duration, 1));
-        }
+        super.getTarget().addPotionEffect(new PotionEffect(PotionEffectType.WITHER, duration, 1));
         super.getInstance().logEvent("Appeared near " + super.getTarget().getName() + ".");
         if (super.getSender() != null) {
             super.getSender().sendMessage(Util.formatString("Herobrine appeared near " + super.getTarget().getName() + "."));

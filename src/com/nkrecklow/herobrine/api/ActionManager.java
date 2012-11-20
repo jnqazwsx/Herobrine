@@ -17,7 +17,7 @@ public class ActionManager extends Generic {
 
     public ActionManager(Main instance) {
         super(instance);
-        this.actions = new Class[7];
+        this.actions = new Class[8];
         this.actions[0] = AppearNear.class;
         this.actions[1] = BuryPlayer.class;
         this.actions[2] = PlaceSign.class;
@@ -25,6 +25,7 @@ public class ActionManager extends Generic {
         this.actions[4] = PlaySound.class;
         this.actions[5] = EnterNightmare.class;
         this.actions[6] = CreatePyramid.class;
+        this.actions[7] = TNTTrap.class;
     }
 
     public void runAction(Action.ActionType type, Player target, Player sender, boolean random) {

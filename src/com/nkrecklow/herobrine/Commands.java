@@ -111,6 +111,17 @@ public class Commands extends Generic implements CommandExecutor {
                     } else {
                         player.sendMessage(Util.formatString("Not a valid command! Type \"/hb nightmare username\"."));
                     }
+                } else if (args[0].equalsIgnoreCase("tnttrap")) {
+                    if (args.length == 2) {
+                        Player target = super.getInstance().getServer().getPlayer(args[1]);
+                        if (target == null) {
+                            player.sendMessage(Util.formatString("I can't seem to find that player."));
+                            return true;
+                        }
+                        super.getInstance().getActionManager().runAction(Action.ActionType.CREATE_TNT_TRAP, target, player, false);
+                    } else {
+                        player.sendMessage(Util.formatString("Not a valid command! Type \"/hb tnttrap username\"."));
+                    }
                 } else if (args[0].equalsIgnoreCase("forceunleash")) {
                     if (new File(super.getInstance().getDataFolder() + "/living.yml").exists()) {
                         player.sendMessage(Util.formatString("Herobrine has already been unleashed!"));
@@ -155,6 +166,7 @@ public class Commands extends Generic implements CommandExecutor {
                     player.sendMessage(Util.formatString("reload" + ChatColor.WHITE + " - Reload the configuration file."));
                     player.sendMessage(Util.formatString("teleport" + ChatColor.WHITE + " - Teleport to Herobrine's location."));
                     player.sendMessage(Util.formatString("pyramid" + ChatColor.WHITE + " - Create a pyramid near a player."));
+                    player.sendMessage(Util.formatString("tnttrap" + ChatColor.WHITE + " - Create a TNT trap near a player."));
                     player.sendMessage(Util.formatString("forceunleash" + ChatColor.WHITE + " - Force unleash Herobrine."));
                     player.sendMessage(Util.formatString("nightmare" + ChatColor.WHITE + " - Enter the \"Nightmare World\"."));
                     player.sendMessage(Util.formatString("createholysword" + ChatColor.WHITE + " - Gift yourself a \"Holy Sword\"."));

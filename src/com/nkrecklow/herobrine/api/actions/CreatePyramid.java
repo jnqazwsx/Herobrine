@@ -63,7 +63,7 @@ public class CreatePyramid extends Action {
                 block.setType(Material.NETHERRACK);
                 blocks[0].setType(Material.FIRE);
             } else {
-                block.setType(Material.ENDER_STONE);
+                block.setType(Material.SANDSTONE);
             }
         }
         if (super.getSender() != null) {

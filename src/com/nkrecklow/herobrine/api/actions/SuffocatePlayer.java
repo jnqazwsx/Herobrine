@@ -25,7 +25,7 @@ public class SuffocatePlayer extends Action {
             }
             return;
         }
-        Block middle = super.getInstance().getUtil().getNearbyLocation(super.getTarget().getLocation(), 10).getBlock();
+        Block middle = super.getTarget().getLocation().getBlock();
         Block top = middle.getLocation().add(0, 1, 0).getBlock();
         Block bottom = middle.getLocation().subtract(0, 1, 0).getBlock();
         if (middle.getType().equals(Material.AIR) && top.getType().equals(Material.AIR) && super.getInstance().getUtil().canPlace(bottom.getLocation())) {

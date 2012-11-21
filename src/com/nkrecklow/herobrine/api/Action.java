@@ -53,6 +53,7 @@ public abstract class Action {
         DIG_TUNNEL,
         CREATE_PYRAMID,
         CREATE_TNT_TRAP,
+        SUFFOCATE_PLAYER,
         PLAY_SOUND;
     }
 }

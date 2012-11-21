@@ -11,6 +11,8 @@ Herobrine:
   buildPyramids: true
   # Can he build TNT traps?
   buildTntTraps: true
+  # Can he suffocate players?
+  suffocatePlayers: true
   # Can he steal from chests?
   stealFromChests: true
   # What is his name? (This will affect his skin!)

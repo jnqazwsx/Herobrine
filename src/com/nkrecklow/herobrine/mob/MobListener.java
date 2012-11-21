@@ -37,6 +37,9 @@ public class MobListener extends Generic implements Listener {
             return;
         }
         if (new File(super.getInstance().getDataFolder() + "/living.yml").exists()) {
+            for (Player player : super.getInstance().getServer().getOnlinePlayers()) {
+                    super.getInstance().getMobController().getMob().sendMessage("I'm already here.", player);
+                }
             return;
         }
         if ((Boolean) super.getInstance().getConfiguration().getObject("ignoreCreativePlayers") && event.getPlayer().getGameMode().equals(GameMode.CREATIVE)) {
@@ -48,6 +51,15 @@ public class MobListener extends Generic implements Listener {
             super.getInstance().logEvent("Someone lit an altar.");
             if (this.altarUses < 2) {
                 this.altarUses++;
+                if (this.altarUses <= 1) {
+                    for (Player player : super.getInstance().getServer().getOnlinePlayers()) {
+                        super.getInstance().getMobController().getMob().sendMessage("How dare you challenge me...", player);
+                    }
+                } else {
+                    for (Player player : super.getInstance().getServer().getOnlinePlayers()) {
+                        super.getInstance().getMobController().getMob().sendMessage("You shouldn't do this...", player);
+                    }
+                }
             } else {
                 nether.getWorld().createExplosion(nether.getLocation(), 4F);
                 event.getPlayer().getWorld().setStorm(true);

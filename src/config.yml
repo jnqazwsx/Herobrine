@@ -62,7 +62,7 @@ Herobrine:
     - world_nether
     - world_the_end
     - world_nightmare
-  # Don't touch this, this is for me to use.
+  # This is the version that this config is designed to work with.
   configBuild: 4.8
-  # Allow me to collect server statistics.
+  # Allow me to collect server statistics (pretty please!).
   collectStats: true

@@ -168,6 +168,7 @@ public class Commands extends Generic implements CommandExecutor {
                     player.sendMessage(Util.formatString("Reloaded configuration file!"));
                     super.getInstance().log("Reloaded configuration file!");
                 } else if (args[0].equalsIgnoreCase("help")) {
+                    player.sendMessage(Util.formatString(ChatColor.RED + "----------" + ChatColor.WHITE + " Herobrine " + ChatColor.RED + "----------"));
                     player.sendMessage(Util.formatString("appear" + ChatColor.WHITE + " - Appear near a certain player."));
                     player.sendMessage(Util.formatString("bury" + ChatColor.WHITE + " - Bury a certain player alive."));
                     player.sendMessage(Util.formatString("placesign" + ChatColor.WHITE + " - Create a sign with a message."));
@@ -183,6 +184,7 @@ public class Commands extends Generic implements CommandExecutor {
                     player.sendMessage(Util.formatString("suffocate" + ChatColor.WHITE + " - Attempt to suffocate the player."));
                     player.sendMessage(Util.formatString("createholysword" + ChatColor.WHITE + " - Gift yourself a \"Holy Sword\"."));
                     player.sendMessage(Util.formatString("createbook" + ChatColor.WHITE + " - Gift yourself a custom book."));
+                    player.sendMessage(Util.formatString(ChatColor.RED + "-------------------------------"));
                 } else {
                     player.sendMessage(Util.formatString("Not a valid command! Type \"/hb help\" for help."));
                 }

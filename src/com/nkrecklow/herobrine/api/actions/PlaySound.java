@@ -16,9 +16,22 @@ public class PlaySound extends Action {
     @Override
     public void callAction() {
         ArrayList<String> sounds = new ArrayList<String>();
-        sounds.add("step.stone");
-        sounds.add("step.gravel");
+        sounds.add("step.stone1");
+        sounds.add("step.gravel1");
+        sounds.add("step.grass1");
+        sounds.add("step.wood1");
+        sounds.add("step.cloth1");
+        sounds.add("step.sand1");
+        sounds.add("portal.portal");
+        sounds.add("portal.travel");
         sounds.add("random.breath");
+        sounds.add("random.burp");
+        sounds.add("random.chestopen");
+        sounds.add("random.chestclosed");
+        sounds.add("random.door_close");
+        sounds.add("random.break");
+        sounds.add("random.door_open");
+        sounds.add("random.eat1");
         Packet62NamedSoundEffect packet = new Packet62NamedSoundEffect(sounds.get(new Random().nextInt(sounds.size() - 1)), super.getTarget().getLocation().getX(), super.getTarget().getLocation().getY(), super.getTarget().getLocation().getZ(), 1F, 1F);
         ((CraftPlayer) super.getTarget()).getHandle().netServerHandler.sendPacket(packet);
         super.getInstance().logEvent("Played a sound near " + super.getTarget().getName() + ".");

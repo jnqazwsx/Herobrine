@@ -50,10 +50,9 @@ public class Config extends Generic {
     }
     
     private void loadSettings() throws Exception {
-        boolean disable = false;
+        String error = "";
         if (!super.getInstance().getDescription().getVersion().equals(this.config.getString("Herobrine.configBuild"))) {
-            super.getInstance().log("Outdated configuration file! Please delete it and restart!");
-            disable = true;
+            error = "Outdated configuration file! Please delete it and restart!";
         }
         this.actionChance = this.config.getInt("Herobrine.actionChance");
         this.messages = this.config.getStringList("Herobrine.messages");
@@ -63,35 +62,26 @@ public class Config extends Generic {
         this.allowedBlocks = this.config.getStringList("Herobrine.allowedBlocks");
         this.actions = this.config.getStringList("Herobrine.allowedActions");
         if (this.actions.isEmpty()) {
-            super.getInstance().log("Must be allowed atleast one action!");
-            disable = true;
+            error = "Must be allowed atleast one action!";
         }
         if (this.allowedBlocks.isEmpty()) {
-            super.getInstance().log("Must have atleast one allowed block!");
-            disable = true;
+            error = "Must have atleast one allowed block!";
         }
         if (this.bookMessages.isEmpty()) {
-            super.getInstance().log("Must have atleast one book message!");
-            disable = true;
+            error = "Must have atleast one book message!";
         }
         if (this.signMessages.isEmpty()) {
-            super.getInstance().log("Must have atleast one sign message!");
-            disable = true;
+            error = "Must have atleast one sign message!";
         }
         if (this.allowedWorlds.isEmpty()) {
-            super.getInstance().log("Must be allowed in atleast one world!");
-            disable = true;
+            error = "Must be allowed in atleast one world!";
         }
-        if (disable) {
+        if (!error.equals("")) {
             super.getInstance().getServer().getPluginManager().disablePlugin(super.getInstance());
         }
         this.messages.add(ChatColor.MAGIC + "steaks4uce");
     }
-    
-    public boolean canSendMessages() {
-        return (Boolean) this.getObject("sendMessages") && this.messages.size() > 0;
-    }
-    
+
     public List<String> getAllowedWorlds() {
         return this.allowedWorlds;
     }

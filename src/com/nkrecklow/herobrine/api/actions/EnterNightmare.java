@@ -11,9 +11,9 @@ public class EnterNightmare extends Action {
 
     @Override
     public void callAction() {
-        if (!super.getInstance().getWorldGenerator().isEnabled()) {
+        if (!super.getInstance().getConfiguration().canRunAction("Nightmares")) {
             if (super.getSender() != null) {
-                super.getSender().sendMessage(Util.formatString("Sorry, the \"Nightmare World\" has been disabled in the configuration!"));
+                super.getSender().sendMessage(Util.formatString("Nightmares have been disable in the configuration file."));
             }
             return;
         }

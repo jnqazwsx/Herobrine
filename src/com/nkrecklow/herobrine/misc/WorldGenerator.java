@@ -44,10 +44,6 @@ public class WorldGenerator extends Generic {
         return this.world != null;
     }
 
-    public boolean isEnabled() {
-        return (Boolean) super.getInstance().getConfiguration().getObject("nightmareWorldEnabled");
-    }
-    
     public EntityType getRandomEntity() {
         EntityType entity = null;
         while (entity == null) {

@@ -29,21 +29,18 @@ public class Main extends JavaPlugin {
         this.getCommand("hb").setExecutor(new Commands(this));
         this.getServer().getPluginManager().registerEvents(this.listener, this);
         this.config.loadConfig();
-        if (this.world.isEnabled()) {
-            if (!this.world.exists()) {
-                this.world.generateWorld();
-            }
+        if (!this.world.exists()) {
+            this.world.generateWorld();
         }
         if ((Boolean) this.config.getObject("collectStats")) {
             this.getServer().getScheduler().scheduleAsyncRepeatingTask(this, new Runnable() {
-                
                 @Override
                 public void run() {
                     new Snooper(Main.this).start();
                 }
             }, 0L, 600L);
         }
-        if (this.world.isEnabled() && this.world.exists()) {
+        if (this.world.exists()) {
             this.getServer().getScheduler().scheduleAsyncRepeatingTask(this, new Runnable() {
                 
                 @Override
@@ -68,11 +65,11 @@ public class Main extends JavaPlugin {
     public void log(String data) {
         Logger.getLogger("Minecraft").info(ChatColor.stripColor(Util.formatString(data)));
     }
-    
+
     public MobController getMobController() {
         return this.controller;
     }
-    
+
     public Util getUtil() {
         return this.util;
     }
@@ -84,7 +81,7 @@ public class Main extends JavaPlugin {
     public ActionManager getActionManager() {
         return this.actions;
     }
-    
+
     public WorldGenerator getWorldGenerator() {
         return this.world;
     }

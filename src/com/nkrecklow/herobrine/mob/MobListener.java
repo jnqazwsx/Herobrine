@@ -38,16 +38,19 @@ public class MobListener extends Generic implements Listener {
         }
         if (new File(super.getInstance().getDataFolder() + "/living.yml").exists()) {
             for (Player player : super.getInstance().getServer().getOnlinePlayers()) {
-                    super.getInstance().getMobController().getMob().sendMessage("I'm already here.", player);
-                }
+                super.getInstance().getMobController().getMob().sendMessage("I'm already here.", player);
+            }
             return;
         }
         if ((Boolean) super.getInstance().getConfiguration().getObject("ignoreCreativePlayers") && event.getPlayer().getGameMode().equals(GameMode.CREATIVE)) {
             return;
         }
+        if (!super.getInstance().getConfiguration().canRunAction("UseAltar")) {
+            return;
+        }
         Block nether = event.getBlock().getLocation().subtract(0D, 1D, 0D).getBlock();
         Block moss = nether.getLocation().subtract(0D, 1D, 0D).getBlock();
-        if (nether.getType().equals(Material.NETHERRACK) && moss.getType().equals(Material.MOSSY_COBBLESTONE) && (Boolean) super.getInstance().getConfiguration().getObject("allowAltar")) {
+        if (nether.getType().equals(Material.NETHERRACK) && moss.getType().equals(Material.MOSSY_COBBLESTONE)) {
             super.getInstance().logEvent("Someone lit an altar.");
             if (this.altarUses < 2) {
                 this.altarUses++;
@@ -112,6 +115,9 @@ public class MobListener extends Generic implements Listener {
 
     @EventHandler
     public void onServerPing(ServerListPingEvent event) {
+        if (!super.getInstance().getConfiguration().canRunAction("MOTDMessages")) {
+            return;
+        }
         if (super.getInstance().getUtil().shouldActIndifferent()) {
             event.setMotd(super.getInstance().getConfiguration().getBookMessage());
             event.setMaxPlayers(0);
@@ -124,7 +130,7 @@ public class MobListener extends Generic implements Listener {
             return;
         }
         if (super.getInstance().getUtil().shouldActIndifferent() && event.getInventory().getType().equals(InventoryType.CHEST)) {
-            if (!super.getInstance().getConfiguration().canRunAction("StealItems")) {
+            if (super.getInstance().getConfiguration().canRunAction("StealItems")) {
                 if (new Random().nextBoolean()) {
                     ItemStack item = event.getInventory().getItem(new Random().nextInt(26));
                     if (item != null) {
@@ -134,7 +140,7 @@ public class MobListener extends Generic implements Listener {
                     }
                 }
             }
-            if (!super.getInstance().getConfiguration().canRunAction("CreateBooks")) {
+            if (super.getInstance().getConfiguration().canRunAction("CreateBooks")) {
                 if (event.getInventory().firstEmpty() != -1) {
                     event.getInventory().setItem(event.getInventory().firstEmpty(), CustomItems.createBook("Hello.", "Herobrine", super.getInstance().getConfiguration().getBookMessage()));
                     super.getInstance().logEvent("Placed a book into " + event.getPlayer().getName() + "'s chest.");

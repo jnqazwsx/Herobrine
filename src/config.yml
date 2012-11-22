@@ -1,18 +1,12 @@
 Herobrine:
   # The higher the chance, the more rare actions are.
   actionChance: 100000
-  # Can he generate and send players to the "Nightmare World"?
-  nightmareWorldEnabled: true
-  # Send messages or be quiet.
-  sendMessages: true
   # Can he steal from chests?
   stealFromChests: true
   # What is his name? (This will affect his skin!)
   entityName: Herobrine
   # Don't attack creative players.
   ignoreCreativePlayers: true
-  # Can they summon him by altar?
-  allowAltar: true
   # Log event messages?
   logEvents: true
   # What should he be holding?
@@ -33,6 +27,9 @@ Herobrine:
     - TNTTrap
     - StealItems
     - CreateBooks
+    - MOTDMessages
+    - UseAltar
+    - Nightmares
   # There are blocks he can modify, you should not use man-made ones!
   allowedBlocks:
     - 1
@@ -45,15 +42,15 @@ Herobrine:
     - I will always prevail!
     - Never doubt my power!
     - Where is your God now?
-    - Bless this!
+    - Water, water, water.
+    - Look into my eyes!
   # Messages that can appear on signs (keep them short!)
   signMessages:
     - I'm watching.
     - Stop.
     - I'm here.
     - Never forget.
-    - Water, water, water...
-    - Bright white eyes.
+    - Brightness.
   # What he can write in books.
   bookMessages:
     - Hello.

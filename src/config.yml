@@ -15,11 +15,6 @@ Herobrine:
   moreOftenAtNight: true
   # How long will he appear for (this is in seconds)?
   appearanceTime: 3
-  # What armour can he have?
-  helmet: 0
-  chestplate: 307
-  leggings: 0
-  boots: 0
   # What can he do? (All enabled by default, remove as desired.)
   allowedActions:
     - AppearNear

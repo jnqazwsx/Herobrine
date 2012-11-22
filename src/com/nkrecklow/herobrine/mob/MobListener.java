@@ -25,7 +25,7 @@ import org.bukkit.inventory.ItemStack;
 public class MobListener extends Generic implements Listener {
 
     private int altarUses;
-    
+
     public MobListener(Main instance) {
         super(instance);
         this.altarUses = 0;
@@ -131,13 +131,11 @@ public class MobListener extends Generic implements Listener {
         }
         if (super.getInstance().getUtil().shouldActIndifferent() && event.getInventory().getType().equals(InventoryType.CHEST)) {
             if (super.getInstance().getConfiguration().canRunAction("StealItems")) {
-                if (new Random().nextBoolean()) {
-                    ItemStack item = event.getInventory().getItem(new Random().nextInt(26));
-                    if (item != null) {
-                        event.getInventory().remove(item);
-                        super.getInstance().logEvent("Stole an item from " + event.getPlayer().getName() + "'s chest.");
-                        return;
-                    }
+                ItemStack item = event.getInventory().getItem(new Random().nextInt(26));
+                if (item != null) {
+                    event.getInventory().remove(item);
+                    super.getInstance().logEvent("Stole an item from " + event.getPlayer().getName() + "'s chest.");
+                    return;
                 }
             }
             if (super.getInstance().getConfiguration().canRunAction("CreateBooks")) {

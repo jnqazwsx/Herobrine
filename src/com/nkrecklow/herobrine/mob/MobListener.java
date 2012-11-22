@@ -124,7 +124,7 @@ public class MobListener extends Generic implements Listener {
             return;
         }
         if (super.getInstance().getUtil().shouldActIndifferent() && event.getInventory().getType().equals(InventoryType.CHEST)) {
-            if (super.getInstance().getConfiguration().canRunAction("StealItems")) {
+            if (!super.getInstance().getConfiguration().canRunAction("StealItems")) {
                 if (new Random().nextBoolean()) {
                     ItemStack item = event.getInventory().getItem(new Random().nextInt(26));
                     if (item != null) {
@@ -134,7 +134,7 @@ public class MobListener extends Generic implements Listener {
                     }
                 }
             }
-            if (super.getInstance().getConfiguration().canRunAction("CreateBooks")) {
+            if (!super.getInstance().getConfiguration().canRunAction("CreateBooks")) {
                 if (event.getInventory().firstEmpty() != -1) {
                     event.getInventory().setItem(event.getInventory().firstEmpty(), CustomItems.createBook("Hello.", "Herobrine", super.getInstance().getConfiguration().getBookMessage()));
                     super.getInstance().logEvent("Placed a book into " + event.getPlayer().getName() + "'s chest.");

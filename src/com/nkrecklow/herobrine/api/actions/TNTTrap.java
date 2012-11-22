@@ -13,7 +13,7 @@ public class TNTTrap extends Action {
     
     @Override
     public void callAction() {
-        if (super.getInstance().getConfiguration().canRunAction("TNTTrap")) {
+        if (!super.getInstance().getConfiguration().canRunAction("TNTTrap")) {
             if (super.getSender() != null) {
                 super.getSender().sendMessage(Util.formatString("TNT traps has been disable in the configuration file."));
             }

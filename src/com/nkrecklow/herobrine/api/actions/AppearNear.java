@@ -26,7 +26,7 @@ public class AppearNear extends Action {
             }
             return;
         }
-        if (super.getInstance().getConfiguration().canRunAction("AppearNear")) {
+        if (!super.getInstance().getConfiguration().canRunAction("AppearNear")) {
             if (super.getSender() != null) {
                 super.getSender().sendMessage(Util.formatString("Appearing has been disabled in the configuration file."));
             }

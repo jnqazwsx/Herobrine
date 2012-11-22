@@ -168,7 +168,7 @@ public class Commands extends Generic implements CommandExecutor {
                     player.sendMessage(Util.formatString("Reloaded configuration file!"));
                     super.getInstance().log("Reloaded configuration file!");
                 } else if (args[0].equalsIgnoreCase("help")) {
-                    player.sendMessage(Util.formatString(ChatColor.RED + "----------" + ChatColor.WHITE + " Herobrine " + ChatColor.RED + "----------"));
+                    player.sendMessage(Util.formatString(ChatColor.RED + "-----------" + ChatColor.WHITE + " Herobrine " + ChatColor.RED + "-----------"));
                     player.sendMessage(Util.formatString("appear" + ChatColor.WHITE + " - Appear near a certain player."));
                     player.sendMessage(Util.formatString("bury" + ChatColor.WHITE + " - Bury a certain player alive."));
                     player.sendMessage(Util.formatString("placesign" + ChatColor.WHITE + " - Create a sign with a message."));

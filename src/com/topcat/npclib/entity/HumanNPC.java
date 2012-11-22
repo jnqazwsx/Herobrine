@@ -17,8 +17,13 @@ import org.bukkit.inventory.PlayerInventory;
 import com.topcat.npclib.NPCUtils;
 import com.topcat.npclib.nms.NPCEntity;
 
+import net.minecraft.server.EntityLiving;
+import org.bukkit.craftbukkit.entity.CraftLivingEntity;
+import org.bukkit.craftbukkit.inventory.CraftItemStack;
+
 public class HumanNPC extends NPC {
-    private net.minecraft.server.ItemStack[] previousEquipment = { null, null, null, null, null };
+    
+        private net.minecraft.server.ItemStack[] previousEquipment = { null, null, null, null, null };
 
 	public HumanNPC(NPCEntity npcEntity) {
 		super(npcEntity);
@@ -39,6 +44,11 @@ public class HumanNPC extends NPC {
 	public void setItemInHand(Material m, short damage) {
 		((HumanEntity) getEntity().getBukkitEntity()).setItemInHand(new ItemStack(m, 1, damage));
 	}
+        
+        public void setEquipment(Material m, int slot) {
+                EntityLiving entity = ((CraftLivingEntity) super.getBukkitEntity()).getHandle();
+                entity.setEquipment(slot, ((CraftItemStack) new ItemStack(m, 1)).getHandle());
+        }
 
 	public void setName(String name) {
 		((NPCEntity) getEntity()).name = name;
@@ -53,36 +63,22 @@ public class HumanNPC extends NPC {
 	}
 
 	public void updateEquipment() {
-        /*
-	    for (int i = 0; i < previousEquipment.length; i++) {
-            net.minecraft.server.ItemStack previous = previousEquipment[i];
-            net.minecraft.server.ItemStack current = ((EntityPlayer)getEntity()).getEquipment(i);
-            if (previous != current) {
-                NPCUtils.sendPacketNearby(getBukkitEntity().getLocation(), new Packet5EntityEquipment(getEntity().id, i, current));
-                previousEquipment[i] = current;
-            }
+                int changes = 0;
+                for (int i = 0; i < previousEquipment.length; i++) {
+                        net.minecraft.server.ItemStack previous = previousEquipment[i];
+                        net.minecraft.server.ItemStack current = ((EntityPlayer)getEntity()).getEquipment(i);
+                        if (current == null) { 
+                                continue; 
+                        }
+                        if (!net.minecraft.server.ItemStack.equals(previous, current) || (previous != null && !previous.equals(current))) {
+                                NPCUtils.sendPacketNearby(getBukkitEntity().getLocation(), new Packet5EntityEquipment(getEntity().id, i, current));
+                                changes++;
+                        }
+                }
+                if (changes > 0) {
+                        previousEquipment = Arrays.copyOf(((EntityPlayer)getEntity()).getEquipment(), previousEquipment.length);
+                }
         }
-        */
-	    
-        /**/
-        int changes = 0;
-        
-        for (int i = 0; i < previousEquipment.length; i++) {
-            net.minecraft.server.ItemStack previous = previousEquipment[i];
-            net.minecraft.server.ItemStack current = ((EntityPlayer)getEntity()).getEquipment(i);
-            if (current == null) { continue; }
-            
-            if (!net.minecraft.server.ItemStack.equals(previous, current) || (previous != null && !previous.equals(current))) {
-                NPCUtils.sendPacketNearby(getBukkitEntity().getLocation(), new Packet5EntityEquipment(getEntity().id, i, current));
-                ++changes;
-            }
-        }
-        
-        if (changes > 0) {
-            previousEquipment = Arrays.copyOf(((EntityPlayer)getEntity()).getEquipment(), previousEquipment.length);
-        }
-        /**/
-    }
 
 	public void putInBed(Location bed) {
 		getEntity().setPosition(bed.getX(), bed.getY(), bed.getZ());

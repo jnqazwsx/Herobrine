@@ -10,6 +10,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.entity.EntityType;
+import org.bukkit.potion.PotionEffectType;
 
 public class MobController extends Generic {
 
@@ -24,7 +25,7 @@ public class MobController extends Generic {
     public void despawnMob() {
         if (this.isSpawned()) {
             this.mob.getEntity().getWorld().playEffect(this.mob.getEntity().getLocation(), Effect.SMOKE, 1);
-            super.getInstance().getServer().getPlayer(this.mob.getTarget()).getActivePotionEffects().clear();
+            super.getInstance().getServer().getPlayer(this.mob.getTarget()).removePotionEffect(PotionEffectType.WITHER);
             this.manager.despawnById("192051111942135");
             this.mob = null;
             super.getInstance().log("Despawned Herobrine!");
@@ -36,6 +37,10 @@ public class MobController extends Generic {
             this.mob = new Mob((HumanNPC) this.manager.spawnHumanNPC((String) super.getInstance().getConfiguration().getObject("entityName"), loc, "192051111942135"));
             this.mob.lookAtVirtualPlayer(loc);
             this.mob.getNpc().setItemInHand(Material.getMaterial((Integer) super.getInstance().getConfiguration().getObject("itemInHand")));
+            this.mob.getNpc().setEquipment(Material.getMaterial((Integer) super.getInstance().getConfiguration().getObject("helmet")), 1);
+            this.mob.getNpc().setEquipment(Material.getMaterial((Integer) super.getInstance().getConfiguration().getObject("chestplate")), 2);
+            this.mob.getNpc().setEquipment(Material.getMaterial((Integer) super.getInstance().getConfiguration().getObject("leggings")), 3);
+            this.mob.getNpc().setEquipment(Material.getMaterial((Integer) super.getInstance().getConfiguration().getObject("boots")), 4);
             this.mob.getNpc().updateEquipment();
             int amount = new Random().nextInt(2) + 1;
             for (int id = 0; id < amount; id++) {

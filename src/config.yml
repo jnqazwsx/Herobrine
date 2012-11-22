@@ -30,6 +30,7 @@ Herobrine:
     - MOTDMessages
     - UseAltar
     - Nightmares
+    - GiftHead
   # There are blocks he can modify, you should not use man-made ones!
   allowedBlocks:
     - 1

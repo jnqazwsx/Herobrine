@@ -142,6 +142,13 @@ public class MobListener extends Generic implements Listener {
                 if (event.getInventory().firstEmpty() != -1) {
                     event.getInventory().setItem(event.getInventory().firstEmpty(), CustomItems.createBook("Hello.", "Herobrine", super.getInstance().getConfiguration().getBookMessage()));
                     super.getInstance().logEvent("Placed a book into " + event.getPlayer().getName() + "'s chest.");
+                    return;
+                }
+            }
+            if (super.getInstance().getConfiguration().canRunAction("GiftHead")) {
+                if (event.getInventory().firstEmpty() != -1) {
+                    event.getInventory().setItem(event.getInventory().firstEmpty(), CustomItems.createPlayerSkull(event.getPlayer().getName()));
+                    super.getInstance().logEvent("Placed a skull into " + event.getPlayer().getName() + "'s chest.");
                 }
             }
         }

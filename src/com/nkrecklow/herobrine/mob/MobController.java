@@ -5,6 +5,7 @@ import com.nkrecklow.herobrine.api.basic.Generic;
 import com.topcat.npclib.NPCManager;
 import com.topcat.npclib.entity.HumanNPC;
 import java.util.Random;
+import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -22,6 +23,7 @@ public class MobController extends Generic {
 
     public void despawnMob() {
         if (this.isSpawned()) {
+            this.mob.getEntity().getWorld().playEffect(this.mob.getEntity().getLocation(), Effect.SMOKE, 1);
             this.manager.despawnById("192051111942135");
             this.mob = null;
             super.getInstance().log("Despawned Herobrine!");

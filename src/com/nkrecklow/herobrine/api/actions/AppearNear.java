@@ -42,18 +42,19 @@ public class AppearNear extends Action {
             
             @Override
             public void run() {
-                if (new Random().nextInt(100) == 0) {
-                    Item droppedItem = getInstance().getMobController().getMob().getEntity().getWorld().dropItem(getInstance().getMobController().getMob().getEntity().getLocation(), new ItemStack(Material.STONE, 1));
-                    droppedItem.setItemStack(CustomItems.createItem(Material.GOLD_SWORD, "Holy Sword", "He doesn't dare come near", "when you carry this."));
+                if (getInstance().getMobController().isSpawned()) {
+                    if (new Random().nextInt(100) == 0) {
+                        Item droppedItem = getInstance().getMobController().getMob().getEntity().getWorld().dropItem(getInstance().getMobController().getMob().getEntity().getLocation(), new ItemStack(Material.STONE, 1));
+                        droppedItem.setItemStack(CustomItems.createItem(Material.GOLD_SWORD, "Holy Sword", "He doesn't dare come near", "when you carry this."));
+                    }
+                    getInstance().getMobController().despawnMob();
                 }
-                getInstance().getMobController().getMob().getEntity().getWorld().playEffect(getInstance().getMobController().getMob().getEntity().getLocation(), Effect.SMOKE, 5);
-                getInstance().getMobController().despawnMob();
             }
         }, duration);
-        super.getTarget().addPotionEffect(new PotionEffect(PotionEffectType.WITHER, duration, 1));
+        super.getTarget().addPotionEffect(new PotionEffect(PotionEffectType.WITHER, duration, 0));
         super.getInstance().logEvent("Appeared near " + super.getTarget().getName() + ".");
         if (super.getSender() != null) {
-            super.getSender().sendMessage(Util.formatString("Herobrine appeared near " + super.getTarget().getName() + "."));
+            super.getSender().sendMessage(Util.formatString("Appeared near " + super.getTarget().getName() + "."));
         }
     }
 }

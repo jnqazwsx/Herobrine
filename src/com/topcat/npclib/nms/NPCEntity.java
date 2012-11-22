@@ -40,36 +40,6 @@ public class NPCEntity extends EntityPlayer {
 	}
 
 	@Override
-	public boolean c(EntityHuman entity) {
-		EntityTargetEvent event = new NpcEntityTargetEvent(getBukkitEntity(), entity.getBukkitEntity(), NpcEntityTargetEvent.NpcTargetReason.NPC_RIGHTCLICKED);
-		CraftServer server = ((WorldServer) world).getServer();
-		server.getPluginManager().callEvent(event);
-
-		return super.c(entity);
-	}
-
-	@Override
-	public void b_(EntityHuman entity) {
-		if ((lastBounceId != entity.id || System.currentTimeMillis() - lastBounceTick > 1000) && entity.getBukkitEntity().getLocation().distanceSquared(getBukkitEntity().getLocation()) <= 1) {
-			EntityTargetEvent event = new NpcEntityTargetEvent(getBukkitEntity(), entity.getBukkitEntity(), NpcEntityTargetEvent.NpcTargetReason.NPC_BOUNCED);
-			CraftServer server = ((WorldServer) world).getServer();
-			server.getPluginManager().callEvent(event);
-
-			lastBounceTick = System.currentTimeMillis();
-			lastBounceId = entity.id;
-		}
-		
-		if (lastTargetId == -1 || lastTargetId != entity.id) {
-			EntityTargetEvent event = new NpcEntityTargetEvent(getBukkitEntity(), entity.getBukkitEntity(), NpcEntityTargetEvent.NpcTargetReason.CLOSEST_PLAYER);
-			CraftServer server = ((WorldServer) world).getServer();
-			server.getPluginManager().callEvent(event);
-			lastTargetId = entity.id;
-		}
-
-		super.b_(entity);
-	}
-
-	@Override
 	public void c(Entity entity) {
 		if (lastBounceId != entity.id || System.currentTimeMillis() - lastBounceTick > 1000) {
 			EntityTargetEvent event = new NpcEntityTargetEvent(getBukkitEntity(), entity.getBukkitEntity(), NpcEntityTargetEvent.NpcTargetReason.NPC_BOUNCED);

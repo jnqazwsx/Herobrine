@@ -36,16 +36,16 @@ public class MobListener extends Generic implements Listener {
         if (!super.getInstance().getMobController().canSpawn(event.getBlock().getWorld()) || !event.getCause().equals(IgniteCause.FLINT_AND_STEEL)) {
             return;
         }
-        if (new File(super.getInstance().getDataFolder() + "/living.yml").exists()) {
-            for (Player player : super.getInstance().getServer().getOnlinePlayers()) {
-                super.getInstance().getMobController().getMob().sendMessage("I'm already here.", player);
-            }
+        if (!super.getInstance().getConfiguration().canRunAction("UseAltar")) {
             return;
         }
         if ((Boolean) super.getInstance().getConfiguration().getObject("ignoreCreativePlayers") && event.getPlayer().getGameMode().equals(GameMode.CREATIVE)) {
             return;
         }
-        if (!super.getInstance().getConfiguration().canRunAction("UseAltar")) {
+        if (new File(super.getInstance().getDataFolder() + "/living.yml").exists()) {
+            for (Player player : super.getInstance().getServer().getOnlinePlayers()) {
+                super.getInstance().getMobController().getMob().sendMessage("I'm already here.", player);
+            }
             return;
         }
         Block nether = event.getBlock().getLocation().subtract(0D, 1D, 0D).getBlock();

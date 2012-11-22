@@ -13,9 +13,9 @@ public class PlaceTorch extends Action {
 
     @Override
     public void callAction() {
-        if (!(Boolean) super.getInstance().getConfiguration().getObject("modifyWorld")) {
+        if (super.getInstance().getConfiguration().canRunAction("PlaceTorch")) {
             if (super.getSender() != null) {
-                super.getSender().sendMessage(Util.formatString("Can't modify that world (\"" + super.getTarget().getWorld().getName() + "\")."));
+                super.getSender().sendMessage(Util.formatString("Placing torches has been disable in the configuration file."));
             }
             return;
         }

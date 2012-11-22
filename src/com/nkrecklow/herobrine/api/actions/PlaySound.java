@@ -15,6 +15,12 @@ public class PlaySound extends Action {
 
     @Override
     public void callAction() {
+        if (super.getInstance().getConfiguration().canRunAction("PlaySound")) {
+            if (super.getSender() != null) {
+                super.getSender().sendMessage(Util.formatString("Playing sounds has been disable in the configuration file."));
+            }
+            return;
+        }
         ArrayList<String> sounds = new ArrayList<String>();
         sounds.add("step.stone1");
         sounds.add("step.gravel1");

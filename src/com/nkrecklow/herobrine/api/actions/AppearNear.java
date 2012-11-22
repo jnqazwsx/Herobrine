@@ -26,6 +26,12 @@ public class AppearNear extends Action {
             }
             return;
         }
+        if (super.getInstance().getConfiguration().canRunAction("AppearNear")) {
+            if (super.getSender() != null) {
+                super.getSender().sendMessage(Util.formatString("Appearing has been disabled in the configuration file."));
+            }
+            return;
+        }
         Location loc = super.getInstance().getUtil().getLocationInFrontOfPlayer(super.getTarget(), new Random().nextInt(10) + 3);
         int duration = (((Integer) super.getInstance().getConfiguration().getObject("appearanceTime")) * 20) + (new Random().nextInt(5) * 20);
         loc.setY(loc.getWorld().getHighestBlockYAt(loc));

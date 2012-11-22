@@ -5,14 +5,6 @@ Herobrine:
   nightmareWorldEnabled: true
   # Send messages or be quiet.
   sendMessages: true
-  # Modify the world (bury players, add torches, etc.)
-  modifyWorld: true
-  # Can he build pyramids?
-  buildPyramids: true
-  # Can he build TNT traps?
-  buildTntTraps: true
-  # Can he suffocate players?
-  suffocatePlayers: true
   # Can he steal from chests?
   stealFromChests: true
   # What is his name? (This will affect his skin!)
@@ -29,6 +21,18 @@ Herobrine:
   moreOftenAtNight: true
   # How long will he appear for (this is in seconds)?
   appearanceTime: 3
+  # What can he do? (All enabled by default, remove as desired.)
+  allowedActions:
+    - AppearNear
+    - BuryPlayer
+    - CreatePyramid
+    - PlaceSign
+    - PlaceTorch
+    - PlaySound
+    - SuffocatePlayer
+    - TNTTrap
+    - StealItems
+    - CreateBooks
   # There are blocks he can modify, you should not use man-made ones!
   allowedBlocks:
     - 1

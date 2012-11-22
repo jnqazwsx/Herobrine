@@ -13,15 +13,9 @@ public class TNTTrap extends Action {
     
     @Override
     public void callAction() {
-        if (!(Boolean) super.getInstance().getConfiguration().getObject("modifyWorld")) {
+        if (super.getInstance().getConfiguration().canRunAction("TNTTrap")) {
             if (super.getSender() != null) {
-                super.getSender().sendMessage(Util.formatString("Can't modify that world (\"" + super.getTarget().getWorld().getName() + "\")."));
-            }
-            return;
-        }
-        if (!(Boolean) super.getInstance().getConfiguration().getObject("buildTntTraps")) {
-            if (super.getSender() != null) {
-                super.getSender().sendMessage(Util.formatString("Building TNT traps has been disable in the configuration file."));
+                super.getSender().sendMessage(Util.formatString("TNT traps has been disable in the configuration file."));
             }
             return;
         }

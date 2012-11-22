@@ -13,13 +13,7 @@ public class SuffocatePlayer extends Action {
     
     @Override
     public void callAction() {
-        if (!(Boolean) super.getInstance().getConfiguration().getObject("modifyWorld")) {
-            if (super.getSender() != null) {
-                super.getSender().sendMessage(Util.formatString("Can't modify that world (\"" + super.getTarget().getWorld().getName() + "\")."));
-            }
-            return;
-        }
-        if (!(Boolean) super.getInstance().getConfiguration().getObject("suffocatePlayers")) {
+        if (super.getInstance().getConfiguration().canRunAction("SuffocatePlayer")) {
             if (super.getSender() != null) {
                 super.getSender().sendMessage(Util.formatString("Suffocating players has been disable in the configuration file."));
             }

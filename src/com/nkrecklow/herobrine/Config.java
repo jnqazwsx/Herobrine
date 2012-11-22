@@ -12,7 +12,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 public class Config extends Generic {
 
     private int actionChance;
-    private List<String> messages, allowedWorlds, signMessages, bookMessages, allowedBlocks;
+    private List<String> messages, allowedWorlds, signMessages, bookMessages, allowedBlocks, actions;
     private YamlConfiguration config;
     
     public Config(Main instance) {
@@ -22,6 +22,7 @@ public class Config extends Generic {
         this.signMessages = new ArrayList<String>();
         this.bookMessages = new ArrayList<String>();
         this.allowedBlocks = new ArrayList<String>();
+        this.actions = new ArrayList<String>();
     }
     
     public void loadConfig() {
@@ -60,6 +61,11 @@ public class Config extends Generic {
         this.allowedWorlds = this.config.getStringList("Herobrine.allowedWorlds");
         this.bookMessages = this.config.getStringList("Herobrine.bookMessages");
         this.allowedBlocks = this.config.getStringList("Herobrine.allowedBlocks");
+        this.actions = this.config.getStringList("Herobrine.allowedActions");
+        if (this.actions.isEmpty()) {
+            super.getInstance().log("Must be allowed atleast one action!");
+            disable = true;
+        }
         if (this.allowedBlocks.isEmpty()) {
             super.getInstance().log("Must have atleast one allowed block!");
             disable = true;
@@ -134,5 +140,9 @@ public class Config extends Generic {
             super.getInstance().getServer().getPluginManager().disablePlugin(super.getInstance());
             return null;
         }
+    }
+    
+    public boolean canRunAction(String name) {
+        return this.actions.contains(name);
     }
 }

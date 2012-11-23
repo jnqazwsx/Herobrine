@@ -17,12 +17,6 @@ public class EnterNightmare extends Action {
             }
             return;
         }
-        if (!super.getInstance().getWorldGenerator().exists()) {
-            if (super.getSender() != null) {
-                super.getSender().sendMessage(Util.formatString("Sorry, the \"Nightmare World\" hasn't been generated, restart the server to generate it!"));
-            }
-            return;
-        }
         super.getTarget().teleport(super.getInstance().getWorldGenerator().getWorld().getSpawnLocation());
         super.getInstance().logEvent("Teleported \"" + super.getTarget().getName() + "\" to the \"Nightmare World\"!");
         super.getTarget().sendMessage(Util.formatString("Welcome, " + super.getTarget().getName() + " to the \"Nightmare World\"!"));

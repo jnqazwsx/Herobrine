@@ -27,21 +27,15 @@ public class WorldGenerator extends Generic {
         this.allowedTypes.add(EntityType.GHAST);
     }
 
-    public void generateWorld() {
-        if (this.world == null) {
-            super.getInstance().log("Loading \"Nightmare World\", please wait...");
-            WorldCreator creator = new WorldCreator("world_nightmare");
-            creator.environment(World.Environment.THE_END);
-            creator.generateStructures(false);
-            creator.seed();
-            creator.createWorld();
-            this.world = super.getInstance().getServer().createWorld(creator);
-            super.getInstance().log("The \"Nightmare World\" has been loaded!");
-        }
-    }
-
-    public boolean exists() {
-        return this.world != null;
+    public void loadWorld() {
+        super.getInstance().log("Loading \"Nightmare World\", please wait...");
+        WorldCreator creator = new WorldCreator("world_nightmare");
+        creator.environment(World.Environment.THE_END);
+        creator.generateStructures(false);
+        creator.seed();
+        creator.createWorld();
+        this.world = super.getInstance().getServer().createWorld(creator);
+        super.getInstance().log("The \"Nightmare World\" has been loaded!");
     }
 
     public EntityType getRandomEntity() {
@@ -56,7 +50,7 @@ public class WorldGenerator extends Generic {
         }
         return entity;
     }
-    
+
     public ArrayList<EntityType> getAllowedEntities() {
         return this.allowedTypes;
     }

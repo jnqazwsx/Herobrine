@@ -29,31 +29,28 @@ public class Main extends JavaPlugin {
         this.getCommand("hb").setExecutor(new Commands(this));
         this.getServer().getPluginManager().registerEvents(this.listener, this);
         this.config.loadConfig();
-        if (!this.world.exists()) {
-            this.world.generateWorld();
-        }
+        this.world.loadWorld();
         if ((Boolean) this.config.getObject("collectStats")) {
             this.getServer().getScheduler().scheduleAsyncRepeatingTask(this, new Runnable() {
+                
                 @Override
                 public void run() {
                     new Snooper(Main.this).start();
                 }
             }, 0L, 600L);
         }
-        if (this.world.exists()) {
-            this.getServer().getScheduler().scheduleAsyncRepeatingTask(this, new Runnable() {
+        this.getServer().getScheduler().scheduleAsyncRepeatingTask(this, new Runnable() {
                 
-                @Override
-                public void run() {
-                    for (LivingEntity entity : world.getWorld().getLivingEntities()) {
-                        if (!world.getAllowedEntities().contains(entity.getType())) {
-                            entity.remove();
-                            world.getWorld().spawnEntity(entity.getLocation(), world.getRandomEntity());
-                        }
+            @Override
+            public void run() {
+                for (LivingEntity entity : world.getWorld().getLivingEntities()) {
+                    if (!world.getAllowedEntities().contains(entity.getType())) {
+                        entity.remove();
+                        world.getWorld().spawnEntity(entity.getLocation(), world.getRandomEntity());
                     }
                 }
-            }, 0L, 100L);
-        }
+            }
+        }, 0L, 100L);
     }
 
     public void logEvent(String data) {

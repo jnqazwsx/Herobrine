@@ -39,6 +39,9 @@ public class Util extends Generic {
         if (player.getWorld().getName().equals("world_nightmare")) {
             chance = chance / 4;
         }
+        if (chance < 1000) {
+            chance = 1000;
+        }
         return new Random().nextInt(chance) == 0;
     }
 

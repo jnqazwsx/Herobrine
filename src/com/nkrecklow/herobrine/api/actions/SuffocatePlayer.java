@@ -13,7 +13,7 @@ public class SuffocatePlayer extends Action {
     
     @Override
     public void callAction() {
-        if (!super.getInstance().getConfiguration().canRunAction("SuffocatePlayer")) {
+        if (!super.getInstance().getConfiguration().canRunAction("SuffocatePlayers")) {
             if (super.getSender() != null) {
                 super.getSender().sendMessage(Util.formatString("Suffocating players has been disable in the configuration file."));
             }

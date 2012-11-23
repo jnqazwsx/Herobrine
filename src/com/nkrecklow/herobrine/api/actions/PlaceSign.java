@@ -14,7 +14,7 @@ public class PlaceSign extends Action {
 
     @Override
     public void callAction() {
-        if (!super.getInstance().getConfiguration().canRunAction("PlaceSign")) {
+        if (!super.getInstance().getConfiguration().canRunAction("PlaceSigns")) {
             if (super.getSender() != null) {
                 super.getSender().sendMessage(Util.formatString("Placing signs has been disable in the configuration file."));
             }

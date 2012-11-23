@@ -14,9 +14,9 @@ public class CreatePyramid extends Action {
 
     @Override
     public void callAction() {
-        if (!super.getInstance().getConfiguration().canRunAction("CreatePyramid")) {
+        if (!super.getInstance().getConfiguration().canRunAction("CreatePyramids")) {
             if (super.getSender() != null) {
-                super.getSender().sendMessage(Util.formatString("Building pyramids has been disable in the configuration file."));
+                super.getSender().sendMessage(Util.formatString("Creating pyramids has been disable in the configuration file."));
             }
             return;
         }

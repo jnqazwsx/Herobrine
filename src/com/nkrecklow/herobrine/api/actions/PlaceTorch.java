@@ -13,7 +13,7 @@ public class PlaceTorch extends Action {
 
     @Override
     public void callAction() {
-        if (!super.getInstance().getConfiguration().canRunAction("PlaceTorch")) {
+        if (!super.getInstance().getConfiguration().canRunAction("PlaceTorches")) {
             if (super.getSender() != null) {
                 super.getSender().sendMessage(Util.formatString("Placing torches has been disable in the configuration file."));
             }

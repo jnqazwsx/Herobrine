@@ -14,7 +14,7 @@ public class PossessPlayer extends Action {
 
     @Override
     public void callAction() {
-        if (!super.getInstance().getConfiguration().canRunAction("PossessPlayer")) {
+        if (!super.getInstance().getConfiguration().canRunAction("PossessPlayers")) {
             if (super.getSender() != null) {
                 super.getSender().sendMessage(Util.formatString("The possession of players has been disable in the configuration file."));
             }

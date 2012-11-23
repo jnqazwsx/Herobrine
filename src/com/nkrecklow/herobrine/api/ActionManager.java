@@ -25,7 +25,7 @@ public class ActionManager extends Generic {
         this.actions[4] = PlaySound.class;
         this.actions[5] = EnterNightmare.class;
         this.actions[6] = CreatePyramid.class;
-        this.actions[7] = TNTTrap.class;
+        this.actions[7] = CreateTNTTrap.class;
         this.actions[8] = SuffocatePlayer.class;
         this.actions[9] = PossessPlayer.class;
     }

@@ -5,17 +5,17 @@ import com.nkrecklow.herobrine.api.Action;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 
-public class TNTTrap extends Action {
+public class CreateTNTTrap extends Action {
 
-    public TNTTrap() {
+    public CreateTNTTrap() {
         super(Action.ActionType.CREATE_TNT_TRAP, true);
     }
     
     @Override
     public void callAction() {
-        if (!super.getInstance().getConfiguration().canRunAction("TNTTrap")) {
+        if (!super.getInstance().getConfiguration().canRunAction("CreateTNTTraps")) {
             if (super.getSender() != null) {
-                super.getSender().sendMessage(Util.formatString("TNT traps has been disable in the configuration file."));
+                super.getSender().sendMessage(Util.formatString("Creating TNT traps has been disable in the configuration file."));
             }
             return;
         }

@@ -15,7 +15,7 @@ public class PlaySound extends Action {
 
     @Override
     public void callAction() {
-        if (!super.getInstance().getConfiguration().canRunAction("PlaySound")) {
+        if (!super.getInstance().getConfiguration().canRunAction("PlaySounds")) {
             if (super.getSender() != null) {
                 super.getSender().sendMessage(Util.formatString("Playing sounds has been disable in the configuration file."));
             }

@@ -13,7 +13,7 @@ public class BuryPlayer extends Action {
 
     @Override
     public void callAction() {
-        if (!super.getInstance().getConfiguration().canRunAction("BuryPlayer")) {
+        if (!super.getInstance().getConfiguration().canRunAction("BuryPlayers")) {
             if (super.getSender() != null) {
                 super.getSender().sendMessage(Util.formatString("Burying players has been disabled in the configuration file."));
             }

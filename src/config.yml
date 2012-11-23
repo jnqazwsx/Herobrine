@@ -17,21 +17,21 @@ Herobrine:
   appearanceTime: 3
   # What can he do? (All enabled by default, remove as desired.)
   allowedActions:
-    - AppearNear
-    - BuryPlayer
-    - CreatePyramid
-    - PlaceSign
-    - PlaceTorch
-    - PlaySound
-    - SuffocatePlayer
-    - TNTTrap
+    - AppearNearPlayers
+    - SuffocatePlayers
+    - BuryPlayers
+    - PossessPlayers
+    - CreatePyramids
+    - CreateTNTTraps
+    - PlaceSigns
+    - PlaceTorches
+    - PlaySounds
     - StealItems
     - CreateBooks
     - MOTDMessages
     - UseAltar
     - Nightmares
-    - GiftHead
-    - PossessPlayer
+    - GiftHeads
   # There are blocks he can modify, you should not use man-made ones!
   allowedBlocks:
     - 1

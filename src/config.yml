@@ -31,6 +31,7 @@ Herobrine:
     - UseAltar
     - Nightmares
     - GiftHead
+    - PossessPlayer
   # There are blocks he can modify, you should not use man-made ones!
   allowedBlocks:
     - 1

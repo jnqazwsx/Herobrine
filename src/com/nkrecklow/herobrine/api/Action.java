@@ -54,6 +54,7 @@ public abstract class Action {
         CREATE_PYRAMID,
         CREATE_TNT_TRAP,
         SUFFOCATE_PLAYER,
+        POSSESS_PLAYER,
         PLAY_SOUND;
     }
 }

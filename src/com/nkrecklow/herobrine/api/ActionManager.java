@@ -17,7 +17,7 @@ public class ActionManager extends Generic {
 
     public ActionManager(Main instance) {
         super(instance);
-        this.actions = new Class[9];
+        this.actions = new Class[10];
         this.actions[0] = AppearNear.class;
         this.actions[1] = BuryPlayer.class;
         this.actions[2] = PlaceSign.class;
@@ -27,6 +27,7 @@ public class ActionManager extends Generic {
         this.actions[6] = CreatePyramid.class;
         this.actions[7] = TNTTrap.class;
         this.actions[8] = SuffocatePlayer.class;
+        this.actions[9] = PossessPlayer.class;
     }
 
     public void runAction(Action.ActionType type, Player target, Player sender, boolean random) {
@@ -68,14 +69,14 @@ public class ActionManager extends Generic {
                     if (instance.getType().equals(type) && instance.isRandom()) {
                         instance.prepareAction(super.getInstance(), target, sender);
                         instance.callAction();
-                        System.out.println("Running: " + instance.toString());
+                        super.getInstance().log("Running: " + type.toString());
                         break;
                     }
                 } else {
                     if (instance.getType().equals(type)) {
                         instance.prepareAction(super.getInstance(), target, sender);
                         instance.callAction();
-                        System.out.println("Running: " + instance.toString());
+                        super.getInstance().log("Running: " + type.toString());
                         break;
                     }
                 }

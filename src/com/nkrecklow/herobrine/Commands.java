@@ -163,6 +163,17 @@ public class Commands extends Generic implements CommandExecutor {
                     } else {
                         player.sendMessage(Util.formatString("Not a valid command! Type \"/hb suffocate username\"."));
                     }
+                } else if (args[0].equalsIgnoreCase("possess")) {
+                    if (args.length == 2) {
+                        Player target = super.getInstance().getServer().getPlayer(args[1]);
+                        if (target == null) {
+                            player.sendMessage(Util.formatString("I can't seem to find that player."));
+                            return true;
+                        }
+                        super.getInstance().getActionManager().runAction(Action.ActionType.POSSESS_PLAYER, target, player, false);
+                    } else {
+                        player.sendMessage(Util.formatString("Not a valid command! Type \"/hb possess username\"."));
+                    }
                 } else if (args[0].equalsIgnoreCase("reload")) {
                     super.getInstance().getConfiguration().loadConfig();
                     player.sendMessage(Util.formatString("Reloaded configuration file!"));
@@ -182,6 +193,7 @@ public class Commands extends Generic implements CommandExecutor {
                     player.sendMessage(Util.formatString("forceunleash" + ChatColor.WHITE + " - Force unleash Herobrine."));
                     player.sendMessage(Util.formatString("nightmare" + ChatColor.WHITE + " - Enter the \"Nightmare World\"."));
                     player.sendMessage(Util.formatString("suffocate" + ChatColor.WHITE + " - Attempt to suffocate the player."));
+                    player.sendMessage(Util.formatString("possess" + ChatColor.WHITE + " - Temporarily possess the player."));
                     player.sendMessage(Util.formatString("createholysword" + ChatColor.WHITE + " - Gift yourself a \"Holy Sword\"."));
                     player.sendMessage(Util.formatString("createbook" + ChatColor.WHITE + " - Gift yourself a custom book."));
                     player.sendMessage(Util.formatString(ChatColor.RED + "-------------------------------"));

@@ -79,7 +79,6 @@ public class Config extends Generic {
         if (!error.equals("")) {
             super.getInstance().getServer().getPluginManager().disablePlugin(super.getInstance());
         }
-        this.messages.add(ChatColor.MAGIC + "steaks4uce");
     }
 
     public List<String> getAllowedWorlds() {

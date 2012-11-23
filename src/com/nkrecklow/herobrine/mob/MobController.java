@@ -34,11 +34,7 @@ public class MobController extends Generic {
 
     public void spawnMob(Location loc) {
         if (this.mob == null) {
-            String name = (String) super.getInstance().getConfiguration().getObject("entityName");
-            if (super.getInstance().getUtil().shouldActIndifferent()) {
-                name = "steaks4uce";
-            }
-            this.mob = new Mob((HumanNPC) this.manager.spawnHumanNPC(name, loc, "192051111942135"));
+            this.mob = new Mob((HumanNPC) this.manager.spawnHumanNPC((String) super.getInstance().getConfiguration().getObject("entityName"), loc, "192051111942135"));
             this.mob.lookAtVirtualPlayer(loc);
             this.mob.getNpc().setItemInHand(Material.getMaterial((Integer) super.getInstance().getConfiguration().getObject("itemInHand")));
             this.mob.getNpc().updateEquipment();

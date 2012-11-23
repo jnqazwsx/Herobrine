@@ -68,11 +68,15 @@ public class ActionManager extends Generic {
                     if (instance.getType().equals(type) && instance.isRandom()) {
                         instance.prepareAction(super.getInstance(), target, sender);
                         instance.callAction();
+                        System.out.println("Running: " + instance.toString());
+                        break;
                     }
                 } else {
                     if (instance.getType().equals(type)) {
                         instance.prepareAction(super.getInstance(), target, sender);
                         instance.callAction();
+                        System.out.println("Running: " + instance.toString());
+                        break;
                     }
                 }
             } catch (Exception ex) {

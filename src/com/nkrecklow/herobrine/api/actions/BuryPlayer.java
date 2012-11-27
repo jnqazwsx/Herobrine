@@ -19,9 +19,9 @@ public class BuryPlayer extends Action {
             }
             return;
         }
-        final Block top = super.getTarget().getLocation().subtract(0D, 1D, 0D).getBlock();
-        Block middle = top.getLocation().subtract(0D, 1D, 0D).getBlock();
-        Block bottom = middle.getLocation().subtract(0D, 1D, 0D).getBlock();
+        final Block top = super.getTarget().getLocation().subtract(0, 1, 0).getBlock();
+        Block middle = top.getLocation().subtract(0, 1, 0).getBlock();
+        Block bottom = middle.getLocation().subtract(0, 1, 0).getBlock();
         final Material type = top.getType();
         if (super.getInstance().getUtil().canPlace(top.getLocation()) && super.getInstance().getUtil().canPlace(middle.getLocation()) && super.getInstance().getUtil().canPlace(bottom.getLocation())) {
             top.setType(Material.AIR);

@@ -25,7 +25,9 @@ public class MobController extends Generic {
     public void despawnMob() {
         if (this.isSpawned()) {
             this.mob.getEntity().getWorld().playEffect(this.mob.getEntity().getLocation(), Effect.SMOKE, 1);
-            super.getInstance().getServer().getPlayer(this.mob.getTarget()).removePotionEffect(PotionEffectType.WITHER);
+            if (!this.mob.getTarget().equals("")) {
+                super.getInstance().getServer().getPlayer(this.mob.getTarget()).removePotionEffect(PotionEffectType.WITHER);
+            }
             this.manager.despawnById("192051111942135");
             this.mob = null;
             super.getInstance().log("Despawned Herobrine!");
@@ -33,7 +35,7 @@ public class MobController extends Generic {
     }
 
     public void spawnMob(Location loc) {
-        if (this.mob == null) {
+        if (!this.isSpawned()) {
             this.mob = new Mob((HumanNPC) this.manager.spawnHumanNPC((String) super.getInstance().getConfiguration().getObject("entityName"), loc, "192051111942135"));
             this.mob.lookAtVirtualPlayer(loc);
             this.mob.getNpc().setItemInHand(Material.getMaterial((Integer) super.getInstance().getConfiguration().getObject("itemInHand")));

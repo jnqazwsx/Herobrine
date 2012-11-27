@@ -42,6 +42,10 @@ public abstract class Action {
     public ActionType getType() {
         return this.type;
     }
+    
+    public boolean hasSender() {
+        return this.sender != null;
+    }
 
     public enum ActionType {
 

@@ -1,21 +1,19 @@
 package com.nkrecklow.herobrine.misc;
 
 import com.nkrecklow.herobrine.Main;
-import com.nkrecklow.herobrine.api.basic.Generic;
 import java.util.ArrayList;
 import java.util.Random;
 import org.bukkit.World;
 import org.bukkit.WorldCreator;
 import org.bukkit.entity.EntityType;
 
-public class WorldGenerator extends Generic {
+public class WorldGenerator {
 
     private World world;
     private ArrayList<EntityType> allowedTypes;
 
-    public WorldGenerator(Main instance) {
-        super(instance);
-        this.world = super.getInstance().getServer().getWorld("world_nightmare");
+    public WorldGenerator() {
+        this.world = Main.getInstance().getServer().getWorld("world_nightmare");
         this.allowedTypes = new ArrayList<EntityType>();
         this.allowedTypes.add(EntityType.BAT);
         this.allowedTypes.add(EntityType.CAVE_SPIDER);
@@ -28,14 +26,14 @@ public class WorldGenerator extends Generic {
     }
 
     public void loadWorld() {
-        super.getInstance().log("Loading \"Nightmare World\", please wait...");
+        Main.getInstance().log("Loading \"Nightmare World\", please wait...");
         WorldCreator creator = new WorldCreator("world_nightmare");
         creator.environment(World.Environment.THE_END);
         creator.generateStructures(false);
         creator.seed();
         creator.createWorld();
-        this.world = super.getInstance().getServer().createWorld(creator);
-        super.getInstance().log("The \"Nightmare World\" has been loaded!");
+        this.world = Main.getInstance().getServer().createWorld(creator);
+        Main.getInstance().log("The \"Nightmare World\" has been loaded!");
     }
 
     public EntityType getRandomEntity() {

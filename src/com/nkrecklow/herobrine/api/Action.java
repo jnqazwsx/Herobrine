@@ -1,13 +1,11 @@
 package com.nkrecklow.herobrine.api;
 
-import com.nkrecklow.herobrine.Main;
 import org.bukkit.entity.Player;
 
 public abstract class Action {
 
     private ActionType type;
     private Player target, sender;
-    private Main instance;
     private boolean random;
 
     public Action(ActionType type, boolean random) {
@@ -15,8 +13,7 @@ public abstract class Action {
         this.random = random;
     }
 
-    public void prepareAction(Main instance, Player target, Player sender) {
-        this.instance = instance;
+    public void prepareAction(Player target, Player sender) {
         this.target = target;
         this.sender = sender;
     }
@@ -33,10 +30,6 @@ public abstract class Action {
 
     public Player getSender() {
         return this.sender;
-    }
-
-    public Main getInstance() {
-        return this.instance;
     }
 
     public ActionType getType() {

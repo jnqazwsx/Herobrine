@@ -1,22 +1,19 @@
 package com.nkrecklow.herobrine;
 
-import com.nkrecklow.herobrine.api.basic.Generic;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.YamlConfiguration;
 
-public class Config extends Generic {
+public class Config {
 
     private int actionChance;
     private List<String> messages, allowedWorlds, signMessages, bookMessages, allowedBlocks, actions;
     private YamlConfiguration config;
     
-    public Config(Main instance) {
-        super(instance);
+    public Config() {
         this.messages = new ArrayList<String>();
         this.allowedWorlds = new ArrayList<String>();
         this.signMessages = new ArrayList<String>();
@@ -27,31 +24,31 @@ public class Config extends Generic {
     
     public void loadConfig() {
         try {
-            File dir = super.getInstance().getDataFolder();
+            File dir = Main.getInstance().getDataFolder();
             File file = new File(dir + "/config.yml");
             if (!dir.exists()) {
                 if (!dir.mkdir()) {
-                    super.getInstance().log("Failed to create directory!");
+                    Main.getInstance().log("Failed to create directory!");
                 }
             }
             if (file.exists()) {
                 this.config = YamlConfiguration.loadConfiguration(file);
                 this.loadSettings();
             } else {
-                super.getInstance().saveResource("config.yml", false);
+                Main.getInstance().saveResource("config.yml", false);
             }
             if (this.config == null) {
                 this.config = YamlConfiguration.loadConfiguration(file);
                 this.loadSettings();
             }
         } catch (Exception ex) {
-            super.getInstance().log("Error: " + ex.getMessage());
+            Main.getInstance().log("Error: " + ex.getMessage());
         }
     }
     
     private void loadSettings() throws Exception {
         String error = "";
-        if (!super.getInstance().getDescription().getVersion().equals(this.config.getString("Herobrine.configBuild"))) {
+        if (!Main.getInstance().getDescription().getVersion().equals(this.config.getString("Herobrine.configBuild"))) {
             error = "Outdated configuration file! Please delete it and restart!";
         }
         this.actionChance = this.config.getInt("Herobrine.actionChance");
@@ -77,7 +74,7 @@ public class Config extends Generic {
             error = "Must be allowed in atleast one world!";
         }
         if (!error.equals("")) {
-            super.getInstance().getServer().getPluginManager().disablePlugin(super.getInstance());
+            Main.getInstance().getServer().getPluginManager().disablePlugin(Main.getInstance());
         }
     }
 
@@ -125,8 +122,8 @@ public class Config extends Generic {
         try {
             return this.config.get("Herobrine." + name);
         } catch (Exception ex) {
-            super.getInstance().log("You need to delete Herobrine's configuration file and restart/reload!");
-            super.getInstance().getServer().getPluginManager().disablePlugin(super.getInstance());
+            Main.getInstance().log("You need to delete Herobrine's configuration file and restart/reload!");
+            Main.getInstance().getServer().getPluginManager().disablePlugin(Main.getInstance());
             return null;
         }
     }

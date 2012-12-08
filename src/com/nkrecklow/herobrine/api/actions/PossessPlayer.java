@@ -1,5 +1,6 @@
 package com.nkrecklow.herobrine.api.actions;
 
+import com.nkrecklow.herobrine.Main;
 import com.nkrecklow.herobrine.Util;
 import com.nkrecklow.herobrine.api.Action;
 import java.util.Random;
@@ -14,7 +15,7 @@ public class PossessPlayer extends Action {
 
     @Override
     public void callAction() {
-        if (!super.getInstance().getConfiguration().canRunAction("PossessPlayers")) {
+        if (!Main.getInstance().getConfiguration().canRunAction("PossessPlayers")) {
             if (super.getSender() != null) {
                 super.getSender().sendMessage(Util.formatString("The possession of players has been disable in the configuration file."));
             }
@@ -27,7 +28,7 @@ public class PossessPlayer extends Action {
         super.getTarget().addPotionEffect(new PotionEffect(PotionEffectType.HUNGER, time, 1));
         super.getTarget().addPotionEffect(new PotionEffect(PotionEffectType.SLOW, time, 1));
         super.getTarget().addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, time, 1));
-        super.getInstance().logEvent("Possessed " + super.getTarget().getName() + "!");
+        Main.getInstance().logEvent("Possessed " + super.getTarget().getName() + "!");
         if (super.getSender() != null) {
             super.getSender().sendMessage(Util.formatString("Possessed " + super.getTarget().getName() + "!"));
         }

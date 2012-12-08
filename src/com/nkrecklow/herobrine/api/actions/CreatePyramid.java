@@ -1,5 +1,6 @@
 package com.nkrecklow.herobrine.api.actions;
 
+import com.nkrecklow.herobrine.Main;
 import com.nkrecklow.herobrine.Util;
 import com.nkrecklow.herobrine.api.Action;
 import org.bukkit.Material;
@@ -14,14 +15,14 @@ public class CreatePyramid extends Action {
 
     @Override
     public void callAction() {
-        if (!super.getInstance().getConfiguration().canRunAction("CreatePyramids")) {
-            if (super.getSender() != null) {
+        if (!Main.getInstance().getConfiguration().canRunAction("CreatePyramids")) {
+            if (super.hasSender()) {
                 super.getSender().sendMessage(Util.formatString("Creating pyramids has been disable in the configuration file."));
             }
             return;
         }
         Block[] blocks = new Block[14];
-        blocks[0] = super.getInstance().getUtil().getNearbyLocation(super.getTarget().getLocation(), 25).add(0, 2, 0).getBlock();
+        blocks[0] = Util.getNearbyLocation(super.getTarget().getLocation(), 25).add(0, 2, 0).getBlock();
         blocks[1] = blocks[0].getRelative(BlockFace.NORTH).getLocation().subtract(0, 1, 0).getBlock();
         blocks[2] = blocks[0].getRelative(BlockFace.SOUTH).getLocation().subtract(0, 1, 0).getBlock();
         blocks[3] = blocks[0].getRelative(BlockFace.WEST).getLocation().subtract(0, 1, 0).getBlock();
@@ -39,14 +40,14 @@ public class CreatePyramid extends Action {
         for (int index = 0; index < blocks.length; index++) {
             Block block = blocks[index];
             if (index >= 5 && index <= 12) {
-                if (!super.getInstance().getUtil().canPlace(block.getLocation().subtract(0, 1, 0)) || super.getTarget().getLocation().distance(block.getLocation()) <= 0.9F) {
+                if (!Util.canPlace(block.getLocation().subtract(0, 1, 0)) || super.getTarget().getLocation().distance(block.getLocation()) <= 0.9F) {
                     good = false;
                     break;
                 }
             }
         }
         if (!good) {
-            if (super.getSender() != null) {
+            if (super.hasSender()) {
                 super.getSender().sendMessage(Util.formatString("Failed to find a proper pyramid location."));
             }
             return;
@@ -60,9 +61,9 @@ public class CreatePyramid extends Action {
                 block.setType(Material.SANDSTONE);
             }
         }
-        if (super.getSender() != null) {
+        Main.getInstance().logEvent("Created a pyramid near " + super.getTarget().getName() + ".");
+        if (super.hasSender()) {
             super.getSender().sendMessage(Util.formatString("Created a pyramid near " + super.getTarget().getName() + "."));
-            super.getInstance().logEvent("Created a pyramid near " + super.getTarget().getName() + ".");
         }
     }
 }

@@ -1,6 +1,5 @@
 package com.nkrecklow.herobrine;
 
-import com.nkrecklow.herobrine.api.basic.Generic;
 import java.io.BufferedInputStream;
 import java.io.DataInputStream;
 import java.net.URL;
@@ -12,20 +11,16 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
-public class Util extends Generic {
-
-    public Util(Main instance) {
-        super(instance);
-    }
+public class Util {
 
     public static String formatString(String message) {
         return "[" + ChatColor.RED + "Herobrine" + ChatColor.WHITE + "] " + message;
     }
 
-    public boolean shouldAct(Player player) {
-        int chance = super.getInstance().getConfiguration().getActionChance();
-        if (player.getWorld().getTime() >= 13000 && player.getWorld().getTime() <= 14200 && (Boolean) super.getInstance().getConfiguration().getObject("moreOftenAtNight")) {
-            chance = super.getInstance().getConfiguration().getActionChance() / 4;
+    public static boolean shouldAct(Player player) {
+        int chance = Main.getInstance().getConfiguration().getActionChance();
+        if (player.getWorld().getTime() >= 13000 && player.getWorld().getTime() <= 14200 && (Boolean) Main.getInstance().getConfiguration().getObject("moreOftenAtNight")) {
+            chance = Main.getInstance().getConfiguration().getActionChance() / 4;
         }
         boolean alone = false;
         for (Entity entity : player.getNearbyEntities(10D, 10D, 10D)) {
@@ -35,7 +30,7 @@ public class Util extends Generic {
             }
         }
         if (alone) {
-            chance = super.getInstance().getConfiguration().getActionChance() / 2;
+            chance = Main.getInstance().getConfiguration().getActionChance() / 2;
         }
         if (player.getWorld().getName().equals("world_nightmare")) {
             chance = chance / 4;
@@ -46,15 +41,15 @@ public class Util extends Generic {
         return new Random().nextInt(chance) == 0;
     }
 
-    public boolean shouldActIndifferent() {
-        return new Random().nextInt(super.getInstance().getConfiguration().getActionChance()) == 0;
+    public static boolean shouldActIndifferent() {
+        return new Random().nextInt(Main.getInstance().getConfiguration().getActionChance()) == 0;
     }
 
-    public boolean canPlace(Location loc) {
-        return super.getInstance().getConfiguration().getAllowedBlocks().contains(loc.getBlock().getType());
+    public static boolean canPlace(Location loc) {
+        return Main.getInstance().getConfiguration().getAllowedBlocks().contains(loc.getBlock().getType());
     }
 
-    public int getRandomInteger(int max) {
+    public static int getRandomInteger(int max) {
         if (new Random().nextBoolean()) {
             return -new Random().nextInt(max) + 1;
         } else {
@@ -62,7 +57,7 @@ public class Util extends Generic {
         }
     }
 
-    public Location getLocationInFrontOfPlayer(Player player, int blocks) {
+    public static Location getLocationInFrontOfPlayer(Player player, int blocks) {
         double rot = (player.getLocation().getYaw() - 90) % 360;
         if (rot < 0) {
             rot += 360.0;
@@ -90,7 +85,7 @@ public class Util extends Generic {
         }
     }
 
-    public ArrayList<String> getWebsiteContents(URL url) throws Exception {
+    public static ArrayList<String> getWebsiteContents(URL url) throws Exception {
         ArrayList<String> fileContents = new ArrayList<String>();
         if (url != null) {
             DataInputStream fileReader = new DataInputStream(new BufferedInputStream(url.openStream()));
@@ -107,7 +102,7 @@ public class Util extends Generic {
         return fileContents;
     }
 
-    public Location getNearbyLocation(Location loc, int distance) {
-        return loc.add(this.getRandomInteger(distance), 0, this.getRandomInteger(distance));
+    public static Location getNearbyLocation(Location loc, int distance) {
+        return loc.add(Util.getRandomInteger(distance), 0, Util.getRandomInteger(distance));
     }
 }

@@ -11,22 +11,22 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class Main extends JavaPlugin {
 
+    private static Main instance;
     private MobListener listener;
     private Config config;
     private ActionManager actions;
-    private Util util;
     private WorldGenerator world;
     private MobController controller;
 
     @Override
     public void onEnable() {
-        this.listener = new MobListener(this);
-        this.controller = new MobController(this);
-        this.config = new Config(this);
-        this.actions = new ActionManager(this);
-        this.util = new Util(this);
-        this.world = new WorldGenerator(this);
-        this.getCommand("hb").setExecutor(new Commands(this));
+        Main.instance = this;
+        this.listener = new MobListener();
+        this.controller = new MobController();
+        this.config = new Config();
+        this.actions = new ActionManager();
+        this.world = new WorldGenerator();
+        this.getCommand("hb").setExecutor(new Commands());
         this.getServer().getPluginManager().registerEvents(this.listener, this);
         this.config.loadConfig();
         this.world.loadWorld();
@@ -35,7 +35,7 @@ public class Main extends JavaPlugin {
                 
                 @Override
                 public void run() {
-                    new Snooper(Main.this).start();
+                    new Snooper().start();
                 }
             }, 0L, 600L);
         }
@@ -66,11 +66,7 @@ public class Main extends JavaPlugin {
     public MobController getMobController() {
         return this.controller;
     }
-
-    public Util getUtil() {
-        return this.util;
-    }
-
+    
     public Config getConfiguration() {
         return this.config;
     }
@@ -81,5 +77,9 @@ public class Main extends JavaPlugin {
 
     public WorldGenerator getWorldGenerator() {
         return this.world;
+    }
+    
+    public static Main getInstance() {
+        return Main.instance;
     }
 }

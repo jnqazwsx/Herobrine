@@ -1,5 +1,6 @@
 package com.nkrecklow.herobrine.api.actions;
 
+import com.nkrecklow.herobrine.Main;
 import com.nkrecklow.herobrine.Util;
 import com.nkrecklow.herobrine.api.Action;
 import org.bukkit.Material;
@@ -13,7 +14,7 @@ public class SuffocatePlayer extends Action {
     
     @Override
     public void callAction() {
-        if (!super.getInstance().getConfiguration().canRunAction("SuffocatePlayers")) {
+        if (!Main.getInstance().getConfiguration().canRunAction("SuffocatePlayers")) {
             if (super.getSender() != null) {
                 super.getSender().sendMessage(Util.formatString("Suffocating players has been disable in the configuration file."));
             }
@@ -22,7 +23,7 @@ public class SuffocatePlayer extends Action {
         Block middle = super.getTarget().getLocation().getBlock();
         Block top = middle.getLocation().add(0, 1, 0).getBlock();
         Block bottom = middle.getLocation().subtract(0, 1, 0).getBlock();
-        if (middle.getType().equals(Material.AIR) && top.getType().equals(Material.AIR) && super.getInstance().getUtil().canPlace(bottom.getLocation())) {
+        if (middle.getType().equals(Material.AIR) && top.getType().equals(Material.AIR) && Util.canPlace(bottom.getLocation())) {
             middle.setType(Material.SAND);
             top.setType(Material.SAND);
         } else {
@@ -33,7 +34,7 @@ public class SuffocatePlayer extends Action {
         }
         if (super.getSender() != null) {
             super.getSender().sendMessage(Util.formatString("Tried to suffocate " + super.getTarget().getName() + "."));
-            super.getInstance().logEvent("Tried to suffocate " + super.getTarget().getName() + ".");
+            Main.getInstance().logEvent("Tried to suffocate " + super.getTarget().getName() + ".");
         }
     }
 }

@@ -1,5 +1,6 @@
 package com.nkrecklow.herobrine.api.actions;
 
+import com.nkrecklow.herobrine.Main;
 import com.nkrecklow.herobrine.Util;
 import com.nkrecklow.herobrine.api.Action;
 import com.nkrecklow.herobrine.misc.CustomItems;
@@ -19,40 +20,40 @@ public class AppearNear extends Action {
 
     @Override
     public void callAction() {
-        if (super.getInstance().getMobController().isSpawned()) {
-            if (super.getSender() != null) {
+        if (Main.getInstance().getMobController().isSpawned()) {
+            if (super.hasSender()) {
                 super.getSender().sendMessage(Util.formatString("Herobrine is currently busy."));
             }
             return;
         }
-        if (!super.getInstance().getConfiguration().canRunAction("AppearNearPlayers")) {
-            if (super.getSender() != null) {
+        if (!Main.getInstance().getConfiguration().canRunAction("AppearNearPlayers")) {
+            if (super.hasSender()) {
                 super.getSender().sendMessage(Util.formatString("Appearing has been disabled in the configuration file."));
             }
             return;
         }
-        Location loc = super.getInstance().getUtil().getLocationInFrontOfPlayer(super.getTarget(), new Random().nextInt(10) + 3);
-        int duration = (((Integer) super.getInstance().getConfiguration().getObject("appearanceTime")) * 20) + (new Random().nextInt(5) * 20);
+        Location loc = Util.getLocationInFrontOfPlayer(super.getTarget(), new Random().nextInt(10) + 3);
+        int duration = (((Integer) Main.getInstance().getConfiguration().getObject("appearanceTime")) * 20) + (new Random().nextInt(5) * 20);
         loc.setY(loc.getWorld().getHighestBlockYAt(loc));
-        super.getInstance().getMobController().spawnMob(loc);
-        super.getInstance().getMobController().getMob().setTarget(super.getTarget().getName());
-        super.getInstance().getMobController().getMob().lookAtPlayer(super.getTarget());
-        super.getInstance().getServer().getScheduler().scheduleSyncDelayedTask(super.getInstance(), new Runnable() {
+        Main.getInstance().getMobController().spawnMob(loc);
+        Main.getInstance().getMobController().getMob().setTarget(super.getTarget().getName());
+        Main.getInstance().getMobController().getMob().lookAtPlayer(super.getTarget());
+        Main.getInstance().getServer().getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new Runnable() {
             
             @Override
             public void run() {
-                if (getInstance().getMobController().isSpawned()) {
+                if (Main.getInstance().getMobController().isSpawned()) {
                     if (new Random().nextInt(100) == 0) {
-                        Item droppedItem = getInstance().getMobController().getMob().getEntity().getWorld().dropItem(getInstance().getMobController().getMob().getEntity().getLocation(), new ItemStack(Material.STONE, 1));
+                        Item droppedItem = Main.getInstance().getMobController().getMob().getEntity().getWorld().dropItem(Main.getInstance().getMobController().getMob().getEntity().getLocation(), new ItemStack(Material.STONE, 1));
                         droppedItem.setItemStack(CustomItems.createItem(Material.GOLD_SWORD, "Holy Sword", "He doesn't dare come near", "when you carry this."));
                     }
-                    getInstance().getMobController().despawnMob();
+                    Main.getInstance().getMobController().despawnMob();
                 }
             }
         }, duration);
         super.getTarget().addPotionEffect(new PotionEffect(PotionEffectType.WITHER, duration, 0));
-        super.getInstance().logEvent("Appeared near " + super.getTarget().getName() + ".");
-        if (super.getSender() != null) {
+        Main.getInstance().logEvent("Appeared near " + super.getTarget().getName() + ".");
+        if (super.hasSender()) {
             super.getSender().sendMessage(Util.formatString("Appeared near " + super.getTarget().getName() + "."));
         }
     }

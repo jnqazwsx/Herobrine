@@ -1,8 +1,8 @@
 package com.nkrecklow.herobrine.mob;
 
 import com.nkrecklow.herobrine.Main;
+import com.nkrecklow.herobrine.Util;
 import com.nkrecklow.herobrine.api.Action;
-import com.nkrecklow.herobrine.api.basic.Generic;
 import com.nkrecklow.herobrine.misc.CustomItems;
 import java.io.File;
 import java.util.Random;
@@ -22,59 +22,58 @@ import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.event.server.ServerListPingEvent;
 import org.bukkit.inventory.ItemStack;
 
-public class MobListener extends Generic implements Listener {
+public class MobListener implements Listener {
 
     private int altarUses;
 
-    public MobListener(Main instance) {
-        super(instance);
+    public MobListener() {
         this.altarUses = 0;
     }
 
     @EventHandler
     public void onBlockIgnite(BlockIgniteEvent event) {
-        if (!super.getInstance().getMobController().canSpawn(event.getBlock().getWorld()) || !event.getCause().equals(IgniteCause.FLINT_AND_STEEL)) {
+        if (!Main.getInstance().getMobController().canSpawn(event.getBlock().getWorld()) || !event.getCause().equals(IgniteCause.FLINT_AND_STEEL)) {
             return;
         }
-        if (!super.getInstance().getConfiguration().canRunAction("UseAltar")) {
+        if (!Main.getInstance().getConfiguration().canRunAction("UseAltar")) {
             return;
         }
-        if ((Boolean) super.getInstance().getConfiguration().getObject("ignoreCreativePlayers") && event.getPlayer().getGameMode().equals(GameMode.CREATIVE)) {
+        if ((Boolean) Main.getInstance().getConfiguration().getObject("ignoreCreativePlayers") && event.getPlayer().getGameMode().equals(GameMode.CREATIVE)) {
             return;
         }
-        if (new File(super.getInstance().getDataFolder() + "/living.yml").exists()) {
-            for (Player player : super.getInstance().getServer().getOnlinePlayers()) {
-                super.getInstance().getMobController().getMob().sendMessage("I'm already here.", player);
+        if (new File(Main.getInstance().getDataFolder() + "/living.yml").exists()) {
+            for (Player player : Main.getInstance().getServer().getOnlinePlayers()) {
+                Main.getInstance().getMobController().getMob().sendMessage("I'm already here.", player);
             }
             return;
         }
         Block nether = event.getBlock().getLocation().subtract(0D, 1D, 0D).getBlock();
         Block moss = nether.getLocation().subtract(0D, 1D, 0D).getBlock();
         if (nether.getType().equals(Material.NETHERRACK) && moss.getType().equals(Material.MOSSY_COBBLESTONE)) {
-            super.getInstance().logEvent("Someone lit an altar.");
+            Main.getInstance().logEvent("Someone lit an altar.");
             if (this.altarUses < 2) {
                 this.altarUses++;
                 if (this.altarUses <= 1) {
-                    for (Player player : super.getInstance().getServer().getOnlinePlayers()) {
-                        super.getInstance().getMobController().getMob().sendMessage("How dare you challenge me...", player);
+                    for (Player player : Main.getInstance().getServer().getOnlinePlayers()) {
+                        Main.getInstance().getMobController().getMob().sendMessage("How dare you challenge me...", player);
                     }
                 } else {
-                    for (Player player : super.getInstance().getServer().getOnlinePlayers()) {
-                        super.getInstance().getMobController().getMob().sendMessage("You shouldn't do this...", player);
+                    for (Player player : Main.getInstance().getServer().getOnlinePlayers()) {
+                        Main.getInstance().getMobController().getMob().sendMessage("You shouldn't do this...", player);
                     }
                 }
             } else {
                 nether.getWorld().createExplosion(nether.getLocation(), 4F);
                 event.getPlayer().getWorld().setStorm(true);
                 event.getPlayer().getWorld().setTime(14200L);
-                for (Player player : super.getInstance().getServer().getOnlinePlayers()) {
-                    super.getInstance().getMobController().getMob().sendMessage("I have been unleashed at last...", player);
+                for (Player player : Main.getInstance().getServer().getOnlinePlayers()) {
+                    Main.getInstance().getMobController().getMob().sendMessage("I have been unleashed at last...", player);
                 }
                 try {
-                    new File(super.getInstance().getDataFolder() + "/living.yml").createNewFile();
-                    super.getInstance().log("Herobrine has been unleashed!");
+                    new File(Main.getInstance().getDataFolder() + "/living.yml").createNewFile();
+                    Main.getInstance().log("Herobrine has been unleashed!");
                 } catch (Exception ex) {
-                    super.getInstance().log("Error: " + ex.getMessage());
+                    Main.getInstance().log("Error: " + ex.getMessage());
                 }
                 this.altarUses = 0;
             }
@@ -83,72 +82,72 @@ public class MobListener extends Generic implements Listener {
 
     @EventHandler
     public void onPlayerMove(PlayerMoveEvent event) {
-        if (super.getInstance().getUtil().shouldAct(event.getPlayer())) {
-            super.getInstance().getActionManager().runAction(super.getInstance().getActionManager().getRandomType(), event.getPlayer(), null, true);
+        if (Util.shouldAct(event.getPlayer())) {
+            Main.getInstance().getActionManager().runAction(Main.getInstance().getActionManager().getRandomType(), event.getPlayer(), null, true);
         }
-        if (!super.getInstance().getMobController().isSpawned() || !super.getInstance().getMobController().canSpawn(event.getPlayer().getWorld())) {
+        if (!Main.getInstance().getMobController().isSpawned() || !Main.getInstance().getMobController().canSpawn(event.getPlayer().getWorld())) {
             return;
         }
-        if (super.getInstance().getMobController().getMob().getTarget().equals(event.getPlayer().getName())) {
-            if ((Boolean) super.getInstance().getConfiguration().getObject("ignoreCreativePlayers") && event.getPlayer().getGameMode().equals(GameMode.CREATIVE)) {
-                super.getInstance().getMobController().despawnMob();
+        if (Main.getInstance().getMobController().getMob().getTarget().equals(event.getPlayer().getName())) {
+            if ((Boolean) Main.getInstance().getConfiguration().getObject("ignoreCreativePlayers") && event.getPlayer().getGameMode().equals(GameMode.CREATIVE)) {
+                Main.getInstance().getMobController().despawnMob();
                 return;
             }
-            super.getInstance().getMobController().getMob().lookAtPlayer(event.getPlayer());
-            if (event.getPlayer().getLocation().distance(super.getInstance().getMobController().getMob().getEntity().getLocation()) <= 3D) {
-                super.getInstance().getMobController().despawnMob();
+            Main.getInstance().getMobController().getMob().lookAtPlayer(event.getPlayer());
+            if (event.getPlayer().getLocation().distance(Main.getInstance().getMobController().getMob().getEntity().getLocation()) <= 3D) {
+                Main.getInstance().getMobController().despawnMob();
             }
         }
     }
 
     @EventHandler
     public void onPlayerTeleport(PlayerTeleportEvent event) {
-        if (!super.getInstance().getMobController().isSpawned()) {
+        if (!Main.getInstance().getMobController().isSpawned()) {
             return;
         }
-        if (super.getInstance().getMobController().getMob().getTarget().equals(event.getPlayer().getName())) {
-            if (!event.getTo().getWorld().equals(super.getInstance().getMobController().getMob().getEntity().getWorld())) {
-                super.getInstance().getMobController().despawnMob();
+        if (Main.getInstance().getMobController().getMob().getTarget().equals(event.getPlayer().getName())) {
+            if (!event.getTo().getWorld().equals(Main.getInstance().getMobController().getMob().getEntity().getWorld())) {
+                Main.getInstance().getMobController().despawnMob();
             }
         }
     }
 
     @EventHandler
     public void onServerPing(ServerListPingEvent event) {
-        if (!super.getInstance().getConfiguration().canRunAction("MOTDMessages")) {
+        if (!Main.getInstance().getConfiguration().canRunAction("MOTDMessages")) {
             return;
         }
-        if (super.getInstance().getUtil().shouldActIndifferent()) {
-            event.setMotd(super.getInstance().getConfiguration().getBookMessage());
+        if (Util.shouldActIndifferent()) {
+            event.setMotd(Main.getInstance().getConfiguration().getBookMessage());
             event.setMaxPlayers(0);
         }
     }
 
     @EventHandler
     public void onInventoryClose(InventoryCloseEvent event) {
-        if (!super.getInstance().getMobController().canSpawn(event.getPlayer().getWorld())) {
+        if (!Main.getInstance().getMobController().canSpawn(event.getPlayer().getWorld())) {
             return;
         }
-        if (super.getInstance().getUtil().shouldActIndifferent() && event.getInventory().getType().equals(InventoryType.CHEST)) {
-            if (super.getInstance().getConfiguration().canRunAction("StealItems") && new Random().nextBoolean()) {
+        if (Util.shouldActIndifferent() && event.getInventory().getType().equals(InventoryType.CHEST)) {
+            if (Main.getInstance().getConfiguration().canRunAction("StealItems") && new Random().nextBoolean()) {
                 ItemStack item = event.getInventory().getItem(new Random().nextInt(26));
                 if (item != null) {
                     event.getInventory().remove(item);
-                    super.getInstance().logEvent("Stole an item from " + event.getPlayer().getName() + "'s chest.");
+                    Main.getInstance().logEvent("Stole an item from " + event.getPlayer().getName() + "'s chest.");
                     return;
                 }
             }
-            if (super.getInstance().getConfiguration().canRunAction("CreateBooks") && new Random().nextBoolean()) {
+            if (Main.getInstance().getConfiguration().canRunAction("CreateBooks") && new Random().nextBoolean()) {
                 if (event.getInventory().firstEmpty() != -1) {
-                    event.getInventory().setItem(event.getInventory().firstEmpty(), CustomItems.createBook("Hello.", "Herobrine", super.getInstance().getConfiguration().getBookMessage()));
-                    super.getInstance().logEvent("Placed a book into " + event.getPlayer().getName() + "'s chest.");
+                    event.getInventory().setItem(event.getInventory().firstEmpty(), CustomItems.createBook("Hello.", "Herobrine", Main.getInstance().getConfiguration().getBookMessage()));
+                    Main.getInstance().logEvent("Placed a book into " + event.getPlayer().getName() + "'s chest.");
                     return;
                 }
             }
-            if (super.getInstance().getConfiguration().canRunAction("GiftHeads") && new Random().nextBoolean()) {
+            if (Main.getInstance().getConfiguration().canRunAction("GiftHeads") && new Random().nextBoolean()) {
                 if (event.getInventory().firstEmpty() != -1) {
                     event.getInventory().setItem(event.getInventory().firstEmpty(), CustomItems.createPlayerSkull(event.getPlayer().getName()));
-                    super.getInstance().logEvent("Placed a skull into " + event.getPlayer().getName() + "'s chest.");
+                    Main.getInstance().logEvent("Placed a skull into " + event.getPlayer().getName() + "'s chest.");
                 }
             }
         }
@@ -156,8 +155,8 @@ public class MobListener extends Generic implements Listener {
 
     @EventHandler
     public void onPlayerEnterBed(PlayerBedEnterEvent event) {
-        if (super.getInstance().getUtil().shouldAct(event.getPlayer())) {
-            super.getInstance().getActionManager().runAction(Action.ActionType.ENTER_NIGHTMARE, event.getPlayer(), null, false);
+        if (Util.shouldAct(event.getPlayer())) {
+            Main.getInstance().getActionManager().runAction(Action.ActionType.ENTER_NIGHTMARE, event.getPlayer(), null, false);
         }
     }
 }

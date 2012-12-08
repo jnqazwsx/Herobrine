@@ -1,5 +1,6 @@
 package com.nkrecklow.herobrine.api.actions;
 
+import com.nkrecklow.herobrine.Main;
 import com.nkrecklow.herobrine.Util;
 import com.nkrecklow.herobrine.api.Action;
 import java.util.ArrayList;
@@ -15,7 +16,7 @@ public class PlaySound extends Action {
 
     @Override
     public void callAction() {
-        if (!super.getInstance().getConfiguration().canRunAction("PlaySounds")) {
+        if (!Main.getInstance().getConfiguration().canRunAction("PlaySounds")) {
             if (super.getSender() != null) {
                 super.getSender().sendMessage(Util.formatString("Playing sounds has been disable in the configuration file."));
             }
@@ -40,7 +41,7 @@ public class PlaySound extends Action {
         sounds.add("random.eat1");
         Packet62NamedSoundEffect packet = new Packet62NamedSoundEffect(sounds.get(new Random().nextInt(sounds.size() - 1)), super.getTarget().getLocation().getX(), super.getTarget().getLocation().getY(), super.getTarget().getLocation().getZ(), 1F, 1F);
         ((CraftPlayer) super.getTarget()).getHandle().netServerHandler.sendPacket(packet);
-        super.getInstance().logEvent("Played a sound near " + super.getTarget().getName() + ".");
+        Main.getInstance().logEvent("Played a sound near " + super.getTarget().getName() + ".");
         if (super.getSender() != null) {
             super.getSender().sendMessage(Util.formatString("Played a sound near " + super.getTarget().getName() + "."));
         }

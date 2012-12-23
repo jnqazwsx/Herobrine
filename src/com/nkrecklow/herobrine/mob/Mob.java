@@ -1,6 +1,7 @@
 package com.nkrecklow.herobrine.mob;
 
 import com.topcat.npclib.entity.HumanNPC;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -17,7 +18,7 @@ public class Mob implements Listener {
     }
     
     public void sendMessage(String message, Player player) {
-        player.sendMessage("<Herobrine> " + message);
+        player.sendMessage("<" + ChatColor.RED + "Herobrine" + ChatColor.WHITE + "> " + message);
     }
 
     public void lookAtVirtualPlayer(Location loc) {
@@ -40,10 +41,6 @@ public class Mob implements Listener {
     public HumanNPC getNpc() {
         return this.npc;
     }
-    
-    /*public net.minecraft.server.Entity getVanillaEntity() {
-        return this.npc.getEntity();
-    }*/
     
     public Entity getEntity() {
         return this.npc.getBukkitEntity();

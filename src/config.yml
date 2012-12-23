@@ -1,8 +1,6 @@
 Herobrine:
   # The higher the chance, the more rare actions are.
   actionChance: 100000
-  # Can he steal from chests?
-  stealFromChests: true
   # What is his name? (This will affect his skin!)
   entityName: Herobrine
   # Don't attack creative players.

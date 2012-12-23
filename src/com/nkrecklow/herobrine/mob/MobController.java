@@ -28,7 +28,7 @@ public class MobController {
             }
             this.manager.despawnById("192051111942135");
             this.mob = null;
-            Main.getInstance().log("Despawned Herobrine!");
+            Main.getInstance().log("Despawned Herobrine.");
         }
     }
 
@@ -38,7 +38,7 @@ public class MobController {
             this.mob.lookAtVirtualPlayer(loc);
             this.mob.getNpc().setItemInHand(Material.getMaterial((Integer) Main.getInstance().getConfiguration().getObject("itemInHand")));
             this.mob.getNpc().updateEquipment();
-            int amount = new Random().nextInt(2) + 1;
+            int amount = new Random().nextInt(4) + 1;
             for (int id = 0; id < amount; id++) {
                 this.mob.getEntity().getWorld().spawnEntity(this.mob.getEntity().getLocation(), EntityType.BAT);
             }

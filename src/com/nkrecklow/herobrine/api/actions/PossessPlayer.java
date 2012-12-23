@@ -28,9 +28,9 @@ public class PossessPlayer extends Action {
         super.getTarget().addPotionEffect(new PotionEffect(PotionEffectType.HUNGER, time, 1));
         super.getTarget().addPotionEffect(new PotionEffect(PotionEffectType.SLOW, time, 1));
         super.getTarget().addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, time, 1));
-        Main.getInstance().logEvent("Possessed " + super.getTarget().getName() + "!");
+        Main.getInstance().logEvent("Possessed " + super.getTarget().getName() + ".");
         if (super.getSender() != null) {
-            super.getSender().sendMessage(Util.formatString("Possessed " + super.getTarget().getName() + "!"));
+            super.getSender().sendMessage(Util.formatString("Possessed " + super.getTarget().getName() + "."));
         }
     }
 }

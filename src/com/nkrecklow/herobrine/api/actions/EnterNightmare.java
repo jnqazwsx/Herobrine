@@ -20,9 +20,9 @@ public class EnterNightmare extends Action {
         }
         super.getTarget().teleport(Main.getInstance().getWorldGenerator().getWorld().getSpawnLocation());
         super.getTarget().sendMessage(Util.formatString("Welcome, " + super.getTarget().getName() + " to the \"Nightmare World\"!"));
-        Main.getInstance().logEvent("Teleported \"" + super.getTarget().getName() + "\" to the \"Nightmare World\"!");
+        Main.getInstance().logEvent("Teleported \"" + super.getTarget().getName() + "\" to the \"Nightmare World\".");
         if (super.hasSender()) {
-            super.getSender().sendMessage(Util.formatString("Teleported \"" + super.getTarget().getName() + "\" to the \"Nightmare World\"!"));
+            super.getSender().sendMessage(Util.formatString("Teleported \"" + super.getTarget().getName() + "\" to the \"Nightmare World\"."));
         }
     }
 }

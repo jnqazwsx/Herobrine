@@ -5,8 +5,8 @@ import com.nkrecklow.herobrine.Util;
 import com.nkrecklow.herobrine.api.Action;
 import java.util.ArrayList;
 import java.util.Random;
-import net.minecraft.server.Packet62NamedSoundEffect;
-import org.bukkit.craftbukkit.entity.CraftPlayer;
+import net.minecraft.server.v1_4_5.Packet62NamedSoundEffect;
+import org.bukkit.craftbukkit.v1_4_5.entity.CraftPlayer;
 
 public class PlaySound extends Action {
 

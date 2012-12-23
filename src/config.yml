@@ -27,11 +27,10 @@ Herobrine:
     - PlaceTorches
     - PlaySounds
     - StealItems
-    - CreateBooks
     - MOTDMessages
     - UseAltar
     - Nightmares
-    - GiftHeads
+    - RearrangeChests
   # There are blocks he can modify, you should not use man-made ones!
   allowedBlocks:
     - 1
@@ -44,7 +43,7 @@ Herobrine:
     - I will always prevail!
     - Never doubt my power!
     - Where is your God now?
-    - Water, water, water.
+    - Water, water, water...
     - Look into my eyes!
   # Messages that can appear on signs (keep them short!)
   signMessages:

@@ -41,9 +41,9 @@ public class Mob implements Listener {
         return this.npc;
     }
     
-    public net.minecraft.server.Entity getVanillaEntity() {
+    /*public net.minecraft.server.Entity getVanillaEntity() {
         return this.npc.getEntity();
-    }
+    }*/
     
     public Entity getEntity() {
         return this.npc.getBukkitEntity();

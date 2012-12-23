@@ -3,11 +3,9 @@ package com.nkrecklow.herobrine.api;
 import com.nkrecklow.herobrine.Main;
 import com.nkrecklow.herobrine.Util;
 import com.nkrecklow.herobrine.api.actions.*;
-import com.nkrecklow.herobrine.misc.CustomItems;
 import java.io.File;
 import java.util.Random;
 import org.bukkit.GameMode;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
 public class ActionManager {
@@ -45,12 +43,6 @@ public class ActionManager {
         if (!Main.getInstance().getMobController().canSpawn(target.getWorld())) {
             if (sender != null) {
                 sender.sendMessage(Util.formatString(target.getName() + "'s world (\"" + target.getWorld().getName() + "\") doesn't allow Herobrine."));
-            }
-            return;
-        }
-        if (target.getInventory().contains(CustomItems.createItem(Material.GOLD_SWORD, "Holy Sword", "He doesn't dare come near", "when you carry this."))) {
-            if (sender != null) {
-                sender.sendMessage(Util.formatString(target.getName() + " has a \"Holy Sword\", event stopped."));
             }
             return;
         }

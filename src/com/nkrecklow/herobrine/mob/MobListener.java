@@ -3,8 +3,10 @@ package com.nkrecklow.herobrine.mob;
 import com.nkrecklow.herobrine.Main;
 import com.nkrecklow.herobrine.Util;
 import com.nkrecklow.herobrine.api.Action;
-import com.nkrecklow.herobrine.misc.CustomItems;
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Random;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -137,18 +139,15 @@ public class MobListener implements Listener {
                     return;
                 }
             }
-            if (Main.getInstance().getConfiguration().canRunAction("CreateBooks") && new Random().nextBoolean()) {
-                if (event.getInventory().firstEmpty() != -1) {
-                    event.getInventory().setItem(event.getInventory().firstEmpty(), CustomItems.createBook("Hello.", "Herobrine", Main.getInstance().getConfiguration().getBookMessage()));
-                    Main.getInstance().logEvent("Placed a book into " + event.getPlayer().getName() + "'s chest.");
-                    return;
+            if (Main.getInstance().getConfiguration().canRunAction("RearrangeChests") && new Random().nextBoolean()) {
+                ArrayList<ItemStack> items = new ArrayList<ItemStack>();
+                items.addAll(Arrays.asList(event.getInventory().getContents()));
+                Collections.shuffle(items, new Random(System.nanoTime()));
+                event.getInventory().clear();
+                for (ItemStack item : items) {
+                    event.getInventory().addItem(item);
                 }
-            }
-            if (Main.getInstance().getConfiguration().canRunAction("GiftHeads") && new Random().nextBoolean()) {
-                if (event.getInventory().firstEmpty() != -1) {
-                    event.getInventory().setItem(event.getInventory().firstEmpty(), CustomItems.createPlayerSkull(event.getPlayer().getName()));
-                    Main.getInstance().logEvent("Placed a skull into " + event.getPlayer().getName() + "'s chest.");
-                }
+                Main.getInstance().logEvent("Rearranged " + event.getPlayer().getName() + "'s chest.");
             }
         }
     }

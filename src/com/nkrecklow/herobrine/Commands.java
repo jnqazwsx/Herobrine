@@ -1,7 +1,6 @@
 package com.nkrecklow.herobrine;
 
 import com.nkrecklow.herobrine.api.Action;
-import com.nkrecklow.herobrine.misc.CustomItems;
 import java.io.File;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -130,12 +129,6 @@ public class Commands implements CommandExecutor {
                             player.sendMessage(Util.formatString("Error: " + ex.getMessage()));
                         }
                     }
-                } else if (args[0].equalsIgnoreCase("createholysword")) {
-                    player.getInventory().addItem(CustomItems.createItem(Material.GOLD_SWORD, "Holy Sword", "He doesn't dare come near", "when you carry this."));
-                    player.sendMessage(Util.formatString("Enjoy your \"Holy Sword\"."));
-                } else if (args[0].equalsIgnoreCase("createbook")) {
-                    player.getInventory().addItem(CustomItems.createBook("Hello.", "Herobrine", Main.getInstance().getConfiguration().getBookMessage()));
-                    player.sendMessage(Util.formatString("Enjoy the custom book!"));
                 } else if (args[0].equalsIgnoreCase("pyramid")) {
                     if (args.length == 2) {
                         Player target = Main.getInstance().getServer().getPlayer(args[1]);
@@ -189,8 +182,6 @@ public class Commands implements CommandExecutor {
                     player.sendMessage(Util.formatString("nightmare" + ChatColor.WHITE + " - Enter the \"Nightmare World\"."));
                     player.sendMessage(Util.formatString("suffocate" + ChatColor.WHITE + " - Attempt to suffocate the player."));
                     player.sendMessage(Util.formatString("possess" + ChatColor.WHITE + " - Temporarily possess the player."));
-                    player.sendMessage(Util.formatString("createholysword" + ChatColor.WHITE + " - Gift yourself a \"Holy Sword\"."));
-                    player.sendMessage(Util.formatString("createbook" + ChatColor.WHITE + " - Gift yourself a custom book."));
                     player.sendMessage(Util.formatString(ChatColor.RED + "-------------------------------"));
                 } else {
                     player.sendMessage(Util.formatString("Not a valid command! Type \"/hb help\" for help."));
